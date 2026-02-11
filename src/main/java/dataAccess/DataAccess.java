@@ -19,7 +19,7 @@ import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
 import configuration.UtilDate;
-import domain.Seller;
+import domain.User;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
@@ -78,9 +78,9 @@ public class DataAccess  {
 		try { 
 	       
 		    //Create sellers 
-			Seller seller1=new Seller("seller1@gmail.com","Aitor Fernandez");
-			Seller seller2=new Seller("seller22@gmail.com","Ane Gaztañaga");
-			Seller seller3=new Seller("seller3@gmail.com","Test Seller");
+			User seller1=new User("seller1@gmail.com", "Aitor Fernandez", "1234");
+			User seller2=new User("seller22@gmail.com", "Ane Gaztañaga", "1234");
+			User seller3=new User("seller3@gmail.com", "Test Seller", "1234");
 
 			
 			//Create products
@@ -141,7 +141,7 @@ public class DataAccess  {
 
 			db.getTransaction().begin();
 			
-			Seller seller = db.find(Seller.class, sellerEmail);
+			User seller = db.find(User.class, sellerEmail);
 			if (seller.doesSaleExist(title)) {
 				db.getTransaction().commit();
 				throw new SaleAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.SaleAlreadyExist"));

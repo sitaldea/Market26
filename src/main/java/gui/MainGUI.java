@@ -27,7 +27,8 @@ public class MainGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel jContentPane = null;
-	private JButton jButtonCreateQuery = null;
+	private JButton jButtonLogin = null;
+	private JButton jButtonRegister = null;
 	private JButton jButtonQueryQueries = null;
 
     private static BLFacade appFacadeInterface;
@@ -90,14 +91,24 @@ public class MainGUI extends JFrame {
 		panel.add(rdbtnNewRadioButton_2);
 		panel.add(rdbtnNewRadioButton);
 		
-		jButtonCreateQuery = new JButton();
-		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
-		jButtonCreateQuery.addActionListener(new java.awt.event.ActionListener() {
+		jButtonLogin = new JButton();
+		jButtonLogin.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Login"));
+		jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new CreateSaleGUI(sellerMail);
+				JFrame a = new LoginGUI();
 				a.setVisible(true);
 			}
 		});
+		
+		jButtonRegister = new JButton();
+		jButtonRegister.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Register"));
+		jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				JFrame a = new RegisterGUI();
+				a.setVisible(true);
+			}
+		});
+		
 		
 		jButtonQueryQueries = new JButton();
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
@@ -110,9 +121,10 @@ public class MainGUI extends JFrame {
 		});
 		
 		jContentPane = new JPanel();
-		jContentPane.setLayout(new GridLayout(4, 1, 0, 0));
+		jContentPane.setLayout(new GridLayout(5, 1, 0, 0));
 		jContentPane.add(jLabelSelectOption);
-		jContentPane.add(jButtonCreateQuery);
+		jContentPane.add(jButtonLogin);
+		jContentPane.add(jButtonRegister);
 		jContentPane.add(jButtonQueryQueries);
 		jContentPane.add(panel);
 		
@@ -131,7 +143,8 @@ public class MainGUI extends JFrame {
 	private void paintAgain() {
 		jLabelSelectOption.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
-		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
+		jButtonLogin.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Login"));
+		jButtonRegister.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Register"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")+ ": "+sellerMail);
 	}
 	
