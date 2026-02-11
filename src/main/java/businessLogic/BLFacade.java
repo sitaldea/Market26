@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Sale;
+import domain.User;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -61,7 +62,7 @@ public interface BLFacade  {
 	 */	
 	@WebMethod public void initializeBD();
 	
-	@WebMethod public boolean isLogin(String email, String password);
+	@WebMethod public User isLogin(String email, String password);
 		
 	@WebMethod public Image downloadImage(String imageName);
 	

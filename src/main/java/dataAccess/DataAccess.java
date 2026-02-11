@@ -251,11 +251,16 @@ public void open(){
         return resizedImage;
     }
 	
-	public boolean isLogin(String email, String password) {
-		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.email=email?1 AND u.password=?2", User.class);   
+	public User isLogin(String email, String password) {
+		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.email=?1 AND u.password=?2", User.class);   
 		query.setParameter(1, email);
-		query.setParameter(2,password);
-		return query.getResultList().isEmpty();
+		query.setParameter(2, password);
+		if(!query.getResultList().isEmpty()) {
+			return query.getResultList().get(0);
+		} else {
+			return null;
+		}
+		
 	}
 	
 	public void close(){

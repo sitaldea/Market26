@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import businessLogic.BLFacade;
+import domain.User;
+
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -13,6 +17,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.JOptionPane;
 
 public class LoginGUI extends JFrame {
 
@@ -72,6 +77,17 @@ public class LoginGUI extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				BLFacade facade = MainGUI.getBusinessLogic();
+				String email = textFieldEmail.getText();
+				String pass = new String(passwordFieldPass.getPassword());
+				User s = facade.isLogin(email, pass);
+				if(s!=null) {
+					dispose();
+					MainGUIErregistratuta a = new MainGUIErregistratuta();
+					a.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(LoginGUI.this, "Email or password incorrect.", "Login failed", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnNewButton.setBounds(144, 168, 156, 49);
