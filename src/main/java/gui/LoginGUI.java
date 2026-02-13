@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JOptionPane;
@@ -26,21 +27,6 @@ public class LoginGUI extends JFrame {
 	private JTextField textFieldEmail;
 	private JPasswordField passwordFieldPass;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginGUI frame = new LoginGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -83,7 +69,7 @@ public class LoginGUI extends JFrame {
 				User s = facade.isLogin(email, pass);
 				if(s!=null) {
 					dispose();
-					MainGUIErregistratuta a = new MainGUIErregistratuta();
+					MainGUIErregistratuta a = new MainGUIErregistratuta(s.getEmail());
 					a.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(LoginGUI.this, "Email or password incorrect.", "Login failed", JOptionPane.ERROR_MESSAGE);
