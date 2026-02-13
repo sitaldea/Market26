@@ -33,6 +33,7 @@ public class MainGUIErregistratuta extends JFrame {
 		contentPane.setLayout(new GridLayout(4, 0, 0, 0));
 		
 		JLabel lblNewLabel = new JLabel("Aukeratu");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton_1 = new JButton("Create Sale");
