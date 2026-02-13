@@ -47,7 +47,7 @@ public class RegisterGUI extends JFrame {
 		
 		JLabel lblNewLabel_2 = new JLabel("Errepikatu pasahitza:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(38, 134, 120, 12);
+		lblNewLabel_2.setBounds(38, 134, 120, 18);
 		contentPane.add(lblNewLabel_2);
 		
 		textFieldEmail = new JTextField();
