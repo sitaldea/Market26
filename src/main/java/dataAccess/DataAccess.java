@@ -78,9 +78,9 @@ public class DataAccess  {
 		try { 
 	       
 		    //Create sellers 
-			User seller1=new User("seller1@gmail.com", "Aitor Fernandez", "1234");
-			User seller2=new User("seller22@gmail.com", "Ane Gaztañaga", "1234");
-			User seller3=new User("seller3@gmail.com", "Test Seller", "1234");
+			User seller1=new User("seller1@gmail.com", "Aitor Fernandez", "1234", "666666666");
+			User seller2=new User("seller22@gmail.com", "Ane Gaztañaga", "1234", "655555555");
+			User seller3=new User("seller3@gmail.com", "Test Seller", "1234", "644444444");
 
 			
 			//Create products
@@ -266,6 +266,24 @@ public void open(){
 	public void close(){
 		db.close();
 		System.out.println("DataAcess closed");
+	}
+
+	public void addUser(String email, String password, String name, String telefonoa) {
+     	db.getTransaction().begin();
+		User user = new User(email, name, password, telefonoa);
+		db.persist(user);
+		db.getTransaction().commit();		
+	}
+	
+	public User getUser(String email) {
+		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.email=?1", User.class);   
+		query.setParameter(1, email);
+		if(!query.getResultList().isEmpty()) {
+			return query.getResultList().get(0);
+		} else {
+			return null;
+		}
+		
 	}
 	
 }

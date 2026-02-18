@@ -63,9 +63,11 @@ public interface BLFacade  {
 	@WebMethod public void initializeBD();
 	
 	@WebMethod public User isLogin(String email, String password);
+	
+	@WebMethod public void addUser(String email, String password, String name, String telefonoa);
 		
 	@WebMethod public Image downloadImage(String imageName);
-	
 
+	@WebMethod public User getUser(String email);
 	
 }

@@ -23,7 +23,8 @@ public class User implements Serializable {
 	@XmlID
 	@Id 
 	private String email;
-	private String name; 
+	private String name;
+	private String telefonoa;
 	private String password;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
@@ -33,10 +34,11 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(String email, String name, String password) {
+	public User(String email, String name, String password, String telefonoa) {
 		this.email = email;
 		this.name = name;
 		this.password = password;
+		this.telefonoa = telefonoa;
 	}
 	
 	
@@ -108,16 +110,26 @@ public class User implements Serializable {
 		
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (email != other.email)
-			return false;
-		return true;
+	    if (this == obj)
+	        return true;
+	    if (obj == null || getClass() != obj.getClass())
+	        return false;
+	    User other = (User) obj;
+	    return email != null && email.equals(other.email);
+	}
+
+	@Override
+	public int hashCode() {
+	    return email != null ? email.hashCode() : 0;
+	}
+
+
+	public String getTelefonoa() {
+		return telefonoa;
+	}
+
+	public void setTelefonoa(String telefonoa) {
+		this.telefonoa = telefonoa;
 	}
 
 	

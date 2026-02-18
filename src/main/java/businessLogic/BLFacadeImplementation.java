@@ -113,6 +113,22 @@ public class BLFacadeImplementation  implements BLFacade {
 		User res = dbManager.isLogin(email, password);
 		dbManager.close();
 		return res;
+	}
+
+	@Override
+	public void addUser(String email, String password, String name, String telefonoa) {
+		dbManager.open();
+		dbManager.addUser(email, password, name, telefonoa);
+		dbManager.close();
 	} 
+	
+	@Override
+	public User getUser(String email) {
+		dbManager.open();
+		User res = dbManager.getUser(email);
+		dbManager.close();
+		return res;
+	}
+    
 }
 
