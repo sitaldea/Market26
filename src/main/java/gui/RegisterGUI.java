@@ -18,6 +18,8 @@ public class RegisterGUI extends JFrame {
 	private JTextField textFieldEmail;
 	private JPasswordField passwordFieldPass;
 	private JPasswordField passwordFieldPass2;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -37,36 +39,56 @@ public class RegisterGUI extends JFrame {
 		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblEmail.setBounds(38, 50, 80, 12);
+		lblEmail.setBounds(38, 67, 80, 12);
 		contentPane.add(lblEmail);
 		
-		JLabel lblNewLabel_1 = new JLabel("Pasahitza:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(38, 91, 67, 12);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblPasahitza = new JLabel("Pasahitza:");
+		lblPasahitza.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPasahitza.setBounds(38, 140, 67, 12);
+		contentPane.add(lblPasahitza);
 		
-		JLabel lblNewLabel_2 = new JLabel("Errepikatu pasahitza:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(38, 134, 120, 18);
-		contentPane.add(lblNewLabel_2);
+		JLabel lblPasahitzaRep = new JLabel("Errepikatu pasahitza:");
+		lblPasahitzaRep.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPasahitzaRep.setBounds(38, 179, 120, 18);
+		contentPane.add(lblPasahitzaRep);
 		
 		textFieldEmail = new JTextField();
-		textFieldEmail.setBounds(157, 48, 237, 18);
+		textFieldEmail.setBounds(157, 65, 237, 18);
 		contentPane.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
 		passwordFieldPass = new JPasswordField();
-		passwordFieldPass.setBounds(157, 89, 237, 18);
+		passwordFieldPass.setBounds(157, 138, 237, 18);
 		contentPane.add(passwordFieldPass);
 		
 		passwordFieldPass2 = new JPasswordField();
-		passwordFieldPass2.setBounds(157, 132, 237, 18);
+		passwordFieldPass2.setBounds(157, 180, 237, 18);
 		contentPane.add(passwordFieldPass2);
 		
 		JButton btnErregistratu = new JButton("Erregistratu");
 		btnErregistratu.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnErregistratu.setBounds(157, 188, 116, 33);
+		btnErregistratu.setBounds(157, 220, 116, 33);
 		contentPane.add(btnErregistratu);
+		
+		JLabel lblTelefonoa = new JLabel("Telefonoa:");
+		lblTelefonoa.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblTelefonoa.setBounds(38, 105, 80, 12);
+		contentPane.add(lblTelefonoa);
+		
+		JLabel lblIzena = new JLabel("Izena:");
+		lblIzena.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblIzena.setBounds(38, 29, 44, 12);
+		contentPane.add(lblIzena);
+		
+		textField = new JTextField();
+		textField.setBounds(157, 103, 237, 18);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(157, 27, 237, 18);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
 
 	}
 }
