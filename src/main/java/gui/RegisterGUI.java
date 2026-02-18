@@ -75,7 +75,7 @@ public class RegisterGUI extends JFrame {
 		lblTelefonoa.setBounds(38, 105, 80, 12);
 		contentPane.add(lblTelefonoa);
 		
-		JLabel lblIzena = new JLabel("Izena:");
+		JLabel lblIzena = new JLabel("Izena");
 		lblIzena.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblIzena.setBounds(38, 29, 44, 12);
 		contentPane.add(lblIzena);
