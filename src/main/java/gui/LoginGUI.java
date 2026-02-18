@@ -40,26 +40,26 @@ public class LoginGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblEmail = new JLabel("Email:");
+		JLabel lblEmail = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.Email"));
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblEmail.setBounds(46, 52, 65, 12);
+		lblEmail.setBounds(46, 52, 130, 12);
 		contentPane.add(lblEmail);
 		
-		JLabel lblPassword = new JLabel("Password:");
+		JLabel lblPassword = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.Password"));
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblPassword.setBounds(46, 97, 65, 12);
+		lblPassword.setBounds(46, 97, 130, 12);
 		contentPane.add(lblPassword);
 		
 		textFieldEmail = new JTextField();
-		textFieldEmail.setBounds(144, 49, 233, 18);
+		textFieldEmail.setBounds(186, 49, 191, 18);
 		contentPane.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
 		passwordFieldPass = new JPasswordField();
-		passwordFieldPass.setBounds(144, 94, 233, 18);
+		passwordFieldPass.setBounds(186, 94, 191, 18);
 		contentPane.add(passwordFieldPass);
 		
-		JButton btnNewButton = new JButton("Login egin");
+		JButton btnNewButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Login"));
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -72,7 +72,7 @@ public class LoginGUI extends JFrame {
 					MainGUIErregistratuta a = new MainGUIErregistratuta(s.getEmail());
 					a.setVisible(true);
 				} else {
-					JOptionPane.showMessageDialog(LoginGUI.this, "Email or password incorrect.", "Login failed", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(LoginGUI.this, ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.ErrorQueary"), ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.Error"), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

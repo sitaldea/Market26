@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 
 public class RegisterGUI extends JFrame {
@@ -44,17 +45,17 @@ public class RegisterGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblEmail = new JLabel("Email:");
+		JLabel lblEmail = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Email"));
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblEmail.setBounds(38, 67, 80, 12);
+		lblEmail.setBounds(38, 67, 109, 12);
 		contentPane.add(lblEmail);
 		
-		JLabel lblPasahitza = new JLabel("Pasahitza:");
+		JLabel lblPasahitza = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Password"));
 		lblPasahitza.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblPasahitza.setBounds(38, 140, 67, 12);
+		lblPasahitza.setBounds(38, 140, 109, 12);
 		contentPane.add(lblPasahitza);
 		
-		JLabel lblPasahitzaRep = new JLabel("Errepikatu pasahitza:");
+		JLabel lblPasahitzaRep = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.ConfirmPassword"));
 		lblPasahitzaRep.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblPasahitzaRep.setBounds(38, 179, 120, 18);
 		contentPane.add(lblPasahitzaRep);
@@ -77,7 +78,7 @@ public class RegisterGUI extends JFrame {
 		mensaje.setBounds(157, 250, 300, 18);
 		contentPane.add(mensaje);
 		
-		JButton btnErregistratu = new JButton("Erregistratu");
+		JButton btnErregistratu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Register"));
 		btnErregistratu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 		        BLFacade facade = MainGUI.getBusinessLogic();
@@ -89,26 +90,26 @@ public class RegisterGUI extends JFrame {
 
 		        if(email.isEmpty() || telefonoa.isEmpty() || izena.isEmpty() || pasword1.isEmpty() || pasword2.isEmpty()) {
 		            mensaje.setForeground(Color.RED);
-		            mensaje.setText("Eremu guztiak bete behar dira");
+		            mensaje.setText(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.ErrorQueary"));
 		            return;
 		        }
 
 		        User u = facade.getUser(email);
 		        if(u != null) {
 		            mensaje.setForeground(Color.RED);
-		            mensaje.setText("Email hori dagoeneko erregistratuta dago");
+		            mensaje.setText(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.ErrorEmail"));
 		            return;
 		        }
 
 		        if(!pasword1.equals(pasword2)) {
 		            mensaje.setForeground(Color.RED);
-		            mensaje.setText("Pasahitzak ez dira berdinak");
+		            mensaje.setText(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.ErrorPassword"));
 		            return;
 		        }
 
 		        facade.addUser(email, pasword1, izena, telefonoa);
 		        mensaje.setForeground(new Color(0, 128, 0));
-		        mensaje.setText("Erregistroa ondo burutu da");
+		        mensaje.setText(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Ondo"));
 
 		        textFieldEmail.setText("");
 		        textTelefonoa.setText("");
@@ -121,14 +122,14 @@ public class RegisterGUI extends JFrame {
 		btnErregistratu.setBounds(97, 220, 116, 33);
 		contentPane.add(btnErregistratu);
 		
-		JLabel lblTelefonoa = new JLabel("Telefonoa:");
+		JLabel lblTelefonoa = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Telephone"));
 		lblTelefonoa.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblTelefonoa.setBounds(38, 105, 80, 12);
+		lblTelefonoa.setBounds(38, 105, 109, 12);
 		contentPane.add(lblTelefonoa);
 		
-		JLabel lblIzena = new JLabel("Izena:");
+		JLabel lblIzena = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Name"));
 		lblIzena.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblIzena.setBounds(38, 29, 44, 12);
+		lblIzena.setBounds(38, 29, 109, 12);
 		contentPane.add(lblIzena);
 		
 		textTelefonoa = new JTextField();
@@ -141,7 +142,7 @@ public class RegisterGUI extends JFrame {
 		contentPane.add(textIzena);
 		textIzena.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Itxi");
+		JButton btnNewButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.CancelButton"));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

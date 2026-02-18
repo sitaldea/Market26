@@ -44,14 +44,12 @@ public class MainGUIErregistratuta extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(5, 0, 0, 0));
 
-		lblSelectOption = new JLabel(
-				ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
+		lblSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
 		lblSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblSelectOption);
 
 		btnCreateSale = new JButton();
-		btnCreateSale.setText(
-				ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
+		btnCreateSale.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
 		btnCreateSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame a = new CreateSaleGUI("a");
@@ -61,8 +59,7 @@ public class MainGUIErregistratuta extends JFrame {
 		contentPane.add(btnCreateSale);
 
 		btnQuearySale = new JButton();
-		btnQuearySale.setText(
-				ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
+		btnQuearySale.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		btnQuearySale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame a = new QuerySalesGUI();
