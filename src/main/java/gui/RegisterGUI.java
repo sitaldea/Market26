@@ -39,7 +39,7 @@ public class RegisterGUI extends JFrame {
 	 */
 	public RegisterGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 466, 300);
+		setBounds(100, 100, 631, 397);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -47,35 +47,35 @@ public class RegisterGUI extends JFrame {
 		
 		JLabel lblEmail = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Email"));
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblEmail.setBounds(38, 67, 109, 12);
+		lblEmail.setBounds(93, 67, 109, 12);
 		contentPane.add(lblEmail);
 		
 		JLabel lblPasahitza = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Password"));
 		lblPasahitza.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblPasahitza.setBounds(38, 140, 109, 12);
+		lblPasahitza.setBounds(93, 140, 109, 12);
 		contentPane.add(lblPasahitza);
 		
 		JLabel lblPasahitzaRep = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.ConfirmPassword"));
 		lblPasahitzaRep.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblPasahitzaRep.setBounds(38, 179, 120, 18);
+		lblPasahitzaRep.setBounds(89, 179, 120, 18);
 		contentPane.add(lblPasahitzaRep);
 		
 		textFieldEmail = new JTextField();
-		textFieldEmail.setBounds(157, 65, 237, 18);
+		textFieldEmail.setBounds(212, 65, 237, 18);
 		contentPane.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
 		passwordFieldPass = new JPasswordField();
-		passwordFieldPass.setBounds(157, 138, 237, 18);
+		passwordFieldPass.setBounds(212, 138, 237, 18);
 		contentPane.add(passwordFieldPass);
 		
 		passwordFieldPass2 = new JPasswordField();
-		passwordFieldPass2.setBounds(157, 180, 237, 18);
+		passwordFieldPass2.setBounds(212, 180, 237, 18);
 		contentPane.add(passwordFieldPass2);
 		
 		JLabel mensaje = new JLabel("");
 		mensaje.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		mensaje.setBounds(157, 250, 300, 18);
+		mensaje.setBounds(161, 312, 300, 18);
 		contentPane.add(mensaje);
 		
 		JButton btnErregistratu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Register"));
@@ -119,26 +119,26 @@ public class RegisterGUI extends JFrame {
 		    }
 		});
 		btnErregistratu.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnErregistratu.setBounds(97, 220, 116, 33);
+		btnErregistratu.setBounds(167, 248, 116, 33);
 		contentPane.add(btnErregistratu);
 		
 		JLabel lblTelefonoa = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Telephone"));
 		lblTelefonoa.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblTelefonoa.setBounds(38, 105, 109, 12);
+		lblTelefonoa.setBounds(93, 105, 109, 12);
 		contentPane.add(lblTelefonoa);
 		
 		JLabel lblIzena = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Name"));
 		lblIzena.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblIzena.setBounds(38, 29, 109, 12);
+		lblIzena.setBounds(93, 38, 109, 12);
 		contentPane.add(lblIzena);
 		
 		textTelefonoa = new JTextField();
-		textTelefonoa.setBounds(157, 103, 237, 18);
+		textTelefonoa.setBounds(212, 103, 237, 18);
 		contentPane.add(textTelefonoa);
 		textTelefonoa.setColumns(10);
 		
 		textIzena = new JTextField();
-		textIzena.setBounds(157, 27, 237, 18);
+		textIzena.setBounds(212, 36, 237, 18);
 		contentPane.add(textIzena);
 		textIzena.setColumns(10);
 		
@@ -148,7 +148,7 @@ public class RegisterGUI extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton.setBounds(250, 220, 128, 33);
+		btnNewButton.setBounds(333, 249, 128, 33);
 		contentPane.add(btnNewButton);
 
 	}

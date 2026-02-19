@@ -11,6 +11,7 @@ import businessLogic.BLFacade;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -30,6 +31,7 @@ public class MainGUI extends JFrame {
 	private JButton jButtonLogin = null;
 	private JButton jButtonRegister = null;
 	private JButton jButtonQueryQueries = null;
+	private String userMail;
 
     private static BLFacade appFacadeInterface;
 	
@@ -53,6 +55,8 @@ public class MainGUI extends JFrame {
 	public MainGUI() {
 		super();
 		
+		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.mainTitle"));
+		this.userMail = this.getTitle();
 		this.setSize(495, 290);
 		jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
 		jLabelSelectOption.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -112,7 +116,7 @@ public class MainGUI extends JFrame {
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new QuerySalesGUI();
+				JFrame a = new QuerySalesGUI(userMail);
 
 				a.setVisible(true);
 			}
@@ -141,6 +145,8 @@ public class MainGUI extends JFrame {
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonLogin.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Login"));
 		jButtonRegister.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Register"));
+		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.mainTitle"));
+		this.userMail = this.getTitle();
 	}
 	
 } // @jve:decl-index=0:visual-constraint="0,0"

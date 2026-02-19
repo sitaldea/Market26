@@ -29,6 +29,10 @@ public class User implements Serializable {
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> sales=new ArrayList<Sale>();
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<Sale> erositakoak=new ArrayList<Sale>();
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<DiruKontua> kontuak=new ArrayList<DiruKontua>();
 
 	public User() {
 		super();
@@ -93,6 +97,17 @@ public class User implements Serializable {
         sales.add(sale);
         return sale;
 	}
+	
+	public void addErositakoa(Sale sale) {
+		erositakoak.add(sale);
+	}
+	
+	public void addDiruKontua(String kontuZenb, double diruKop) {
+		DiruKontua kontu=new DiruKontua(kontuZenb, diruKop, this);
+		kontuak.add(kontu);
+	}
+	
+	
 	/**
 	 * This method checks if the ride already exists for that driver
 	 * 

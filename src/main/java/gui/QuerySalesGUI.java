@@ -28,6 +28,7 @@ public class QuerySalesGUI extends JFrame {
 	private DefaultTableModel tableModelProducts;
 
 	private JFrame thisFrame; 
+	private String userMail;
 
 	private String[] columnNamesProducts = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.Title"), 
@@ -38,7 +39,8 @@ public class QuerySalesGUI extends JFrame {
 	private JTextField jTextFieldSearch;
 	
 
-	public QuerySalesGUI() {
+	public QuerySalesGUI(String mail) {
+		this.userMail = mail;
 		tableProducts.setEnabled(false);
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
@@ -73,6 +75,8 @@ public class QuerySalesGUI extends JFrame {
 		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(200);
 		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(10);
 		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(70);
+
+		setTitle(userMail);
 
 
 		tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(3)); // not shown in JTable
@@ -131,7 +135,7 @@ public class QuerySalesGUI extends JFrame {
 		            	Point point = mouseEvent.getPoint();
 				        int row = table.rowAtPoint(point);
 		            	Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
-			            new ShowSaleGUI(s);
+						new ShowSaleGUI(s, userMail);
 		            }
 		        }
 		 });

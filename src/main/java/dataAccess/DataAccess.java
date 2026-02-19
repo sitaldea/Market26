@@ -81,6 +81,10 @@ public class DataAccess  {
 			User seller1=new User("seller1@gmail.com", "Aitor Fernandez", "1234", "666666666");
 			User seller2=new User("seller22@gmail.com", "Ane Gaztañaga", "1234", "655555555");
 			User seller3=new User("seller3@gmail.com", "Test Seller", "1234", "644444444");
+			
+			seller1.addDiruKontua("ES45678923245", 100);
+			seller2.addDiruKontua("ES09245762456", 20);
+			seller3.addDiruKontua("ES44764463247", 453);
 
 			
 			//Create products
@@ -263,6 +267,19 @@ public void open(){
 		
 	}
 	
+	public User isLogin(String email) {
+		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.email=?1", User.class);   
+		query.setParameter(1, email);
+		if(!query.getResultList().isEmpty()) {
+			return query.getResultList().get(0);
+		} else {
+			return null;
+		}
+		
+	}
+	
+	
+	
 	public void close(){
 		db.close();
 		System.out.println("DataAcess closed");
@@ -285,5 +302,40 @@ public void open(){
 		}
 		
 	}
+
+	public void buyProduct(Sale sale, String kontuZenb) {
+		User u;
+		double diruKop = 0;
+		db.getTransaction().begin();
+		u = doesAccountNumber(kontuZenb);
+		if(u!=null) {
+			diruKop = getDiruKop(kontuZenb);
+			if(diruKop>=sale.getPrice()) {
+				
+			}
+		}
+		
+
+		db.getTransaction().commit();		
+	}
 	
+	public User doesAccountNumber(String zenb) {
+		TypedQuery<User> query = db.createQuery("SELECT u FROM User u JOIN u.DiruKontua d WHERE d.kontuZenb=?1", User.class);
+		query.setParameter(1, zenb);
+		if(!query.getResultList().isEmpty()) {
+			return query.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	public double getDiruKop(String zenb) {
+		TypedQuery<Double> query = db.createQuery("SELECT d.diruKop FROM User u JOIN uDiruKontua d WHERE d.kontuZenb=?1", Double.class);
+		query.setParameter(1, zenb);
+		if(!query.getResultList().isEmpty()) {
+			return query.getResultList().get(0);
+		} else {
+			return 0;
+		}
+	}
 }

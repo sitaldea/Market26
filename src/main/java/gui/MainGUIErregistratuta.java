@@ -62,7 +62,7 @@ public class MainGUIErregistratuta extends JFrame {
 		btnQuearySale.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		btnQuearySale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame a = new QuerySalesGUI();
+				JFrame a = new QuerySalesGUI(userMail);
 				a.setVisible(true);
 			}
 		});

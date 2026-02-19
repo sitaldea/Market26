@@ -129,6 +129,30 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return res;
 	}
-    
+	
+	public User isLogin(String email) {
+		dbManager.open();
+		User res = dbManager.isLogin(email);
+		dbManager.close();
+		return res;
+	}
+
+	@Override
+	public void buyProduct(Sale sale, String kontuZenb) {
+		dbManager.open();
+		dbManager.buyProduct(sale, kontuZenb);
+		dbManager.close();
+	}
+
+	@Override
+	public User doesAccountNumber(String zenb) {
+		dbManager.open();
+		User res = dbManager.doesAccountNumber(zenb);
+		dbManager.close();
+		return res;
+	}
+		
+	
+	
 }
 

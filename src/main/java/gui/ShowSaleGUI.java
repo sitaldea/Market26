@@ -23,6 +23,7 @@ public class ShowSaleGUI extends JFrame {
 	private static final String basePath="src/main/resources/images/";
 	
 	private static final long serialVersionUID = 1L;
+	private String userMail;
 
 	private JTextField fieldTitle=new JTextField();
 	private JTextField fieldDescription=new JTextField();
@@ -45,7 +46,8 @@ public class ShowSaleGUI extends JFrame {
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
 	
-	public ShowSaleGUI(Sale sale) { 
+	public ShowSaleGUI(Sale sale, String mail) { 
+		this.userMail = mail;
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
@@ -76,9 +78,10 @@ public class ShowSaleGUI extends JFrame {
 		jLabelMsg.setBounds(new Rectangle(275, 214, 305, 20));
 		jLabelMsg.setForeground(Color.red);
 
-		jLabelError.setBounds(new Rectangle(6, 231, 320, 20));
+		jLabelError.setBounds(new Rectangle(6, 249, 320, 20));
 		jLabelError.setForeground(Color.red);
 		
+		setTitle(userMail);
 
 		this.getContentPane().add(jLabelMsg, null);
 		this.getContentPane().add(jLabelError, null);
@@ -110,14 +113,14 @@ public class ShowSaleGUI extends JFrame {
 		fieldDescription.setColumns(10);
 		
 		panel_1 = new JPanel();
-		panel_1.setBounds(318, 166, 180, 160);
+		panel_1.setBounds(362, 166, 180, 160);
 		getContentPane().add(panel_1);
 		
 		labelStatus.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		labelStatus.setBounds(37, 231, 289, 16);
+		labelStatus.setBounds(6, 231, 346, 16);
 		getContentPane().add(labelStatus);
 		
-		
+
 		BLFacade facade = MainGUI.getBusinessLogic();
 		String file=sale.getFile();
 		if (file!=null) {
@@ -130,6 +133,22 @@ public class ShowSaleGUI extends JFrame {
 		statusField = new JLabel(Utils.getStatus(sale.getStatus())); 
 		statusField.setBounds(137, 191, 92, 16);
 		getContentPane().add(statusField);
+		
+		JButton btnErosi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.Erosi")); 
+		btnErosi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(facade.isLogin(userMail) == null) {
+					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.CantBuyOwnProduct"));				
+				}else {
+					BuyProductGUI buyProductGUI = new BuyProductGUI(sale, userMail);
+					buyProductGUI.setVisible(true);
+					thisFrame.setVisible(false);
+				}
+
+			}
+		});
+		btnErosi.setBounds(140, 268, 114, 30);
+		getContentPane().add(btnErosi);
 		setVisible(true);
 	}	 
 	public BufferedImage rescale(BufferedImage originalImage)
@@ -140,7 +159,5 @@ public class ShowSaleGUI extends JFrame {
         g.dispose();
         return resizedImage;
     }
-	
-	
 }
 
