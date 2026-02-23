@@ -105,6 +105,7 @@ public class CreateSaleGUI extends JFrame {
 					}
 			}
 		});
+		jButtonClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		jButtonClose.setBounds(new Rectangle(328, 228, 101, 30));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -153,6 +154,7 @@ public class CreateSaleGUI extends JFrame {
 		getContentPane().add(jComboBoxStatus);
 		
 		JButton btnNewButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.LoadPicture")); //$NON-NLS-1$ //$NON-NLS-2$
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();

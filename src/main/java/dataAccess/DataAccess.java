@@ -40,29 +40,27 @@ public class DataAccess  {
 	ConfigXML c=ConfigXML.getInstance();
 
      public DataAccess()  {
-		if (c.isDatabaseInitialized()) {
-			String fileName=c.getDbFilename();
-
-			File fileToDelete= new File(fileName);
-			if(fileToDelete.delete()){
-				File fileToDeleteTemp= new File(fileName+"$");
-				fileToDeleteTemp.delete();
-				System.out.println("File deleted");
-			 } else {
-				 System.out.println("Operation failed");
-				}
-		}
+		String fileName = c.getDbFilename();
+		File dbFile = new File(fileName);
+		boolean exists = dbFile.exists();
 		open();
-		if  (c.isDatabaseInitialized()) 
-			initializeDB();
+
+		if (c.isDatabaseInitialized()) {
+			if (!exists) {
+				initializeDB();
+			} else {
+				System.out.println("Database file already exists; skipping initialization.");
+			}
+		}
+
 		System.out.println("DataAccess created => isDatabaseLocal: "+c.isDatabaseLocal()+" isDatabaseInitialized: "+c.isDatabaseInitialized());
 
 		close();
 
-	}
-     
+		}
+
     public DataAccess(EntityManager db) {
-    	this.db=db;
+     this.db=db;
     }
 
 	
@@ -83,6 +81,7 @@ public class DataAccess  {
 			User seller3=new User("seller3@gmail.com", "Test Seller", "1234", "644444444");
 			
 			seller1.addDiruKontua("ES45678923245", 1000);
+			seller1.addDiruKontua("ES37848898695", 5);
 			seller2.addDiruKontua("ES09245762456", 20);
 			seller3.addDiruKontua("ES44764463247", 453);
 
@@ -180,17 +179,16 @@ public class DataAccess  {
 	 * @return collection of products that contain desc in a title
 	 */
 	public List<Sale> getSales(String desc) {
-		System.out.println(">> DataAccess: getProducts=> from= "+desc);
+	    System.out.println(">> DataAccess: getProducts=> from= "+desc);
 
-		List<Sale> res = new ArrayList<Sale>();	
-		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1",Sale.class);   
-		query.setParameter(1, "%"+desc+"%");
-		
-		List<Sale> sales = query.getResultList();
-	 	 for (Sale sale:sales){
-		   res.add(sale);
-		  }
-	 	return res;
+	    TypedQuery<Sale> query = db.createQuery(
+	        "SELECT s FROM User u JOIN u.sales s WHERE s.title LIKE ?1",
+	        Sale.class
+	    );   
+	    query.setParameter(1, "%"+desc+"%");
+	    
+	    List<Sale> sales = query.getResultList();
+	    return sales;
 	}
 	
 	/**
@@ -200,18 +198,16 @@ public class DataAccess  {
 	 * @return collection of products that contain desc in a title
 	 */
 	public List<Sale> getPublishedSales(String desc, Date pubDate) {
-		System.out.println(">> DataAccess: getProducts=> from= "+desc);
+	    System.out.println(">> DataAccess: getProducts=> from= "+desc);
+	    TypedQuery<Sale> query = db.createQuery(
+	        "SELECT s FROM User u JOIN u.sales s WHERE s.title LIKE ?1 AND s.pubDate <=?2",
+	        Sale.class
+	    );
+	    query.setParameter(1, "%"+desc+"%");
+	    query.setParameter(2, pubDate);
 
-		List<Sale> res = new ArrayList<Sale>();	
-		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <=?2",Sale.class);   
-		query.setParameter(1, "%"+desc+"%");
-		query.setParameter(2,pubDate);
-		
-		List<Sale> sales = query.getResultList();
-	 	 for (Sale sale:sales){
-		   res.add(sale);
-		  }
-	 	return res;
+	    List<Sale> sales = query.getResultList();
+	    return sales;
 	}
 
 public void open(){
@@ -281,8 +277,25 @@ public void open(){
 	
 	
 	public void close(){
-		db.close();
-		System.out.println("DataAcess closed");
+		try {
+			if (db != null && db.isOpen()) {
+				if (db.getTransaction().isActive()) {
+					try {
+						db.getTransaction().commit();
+					} catch (Exception ex) {
+						try { db.getTransaction().rollback(); } catch (Exception e) { /* ignore */ }
+					}
+				}
+				db.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (emf != null && emf.isOpen()) {
+				emf.close();
+			}
+		}
+		System.out.println("DataAccess closed");
 	}
 
 	public void addUser(String email, String password, String name, String telefonoa) {
@@ -303,18 +316,33 @@ public void open(){
 		
 	}
 
-	public void buyProduct(Sale sale, String kontuZenb, String email) {
-		 db.getTransaction().begin();
-		    User buyer = getUser(email);       
-		    User seller = sale.getSeller();         
-		    double diruKop = getDiruKop(kontuZenb);
-
-		    if (diruKop >= sale.getPrice()) {
-		        buyer.updateDiruKop(kontuZenb, diruKop - sale.getPrice());
-		        seller.getSales().remove(sale);
-		        buyer.getErositakoak().add(sale);
-		    }
-		    db.getTransaction().commit();	
+	public boolean buyProduct(Sale sale, String kontuZenb, String email) {
+	    try {
+	        db.getTransaction().begin();
+	        Sale managedSale = db.find(Sale.class, sale.getSaleNumber());
+	        User buyer = db.find(User.class, email);
+	        User seller = managedSale.getSeller();
+	        double diruKop = getDiruKop(kontuZenb);
+	        if (diruKop >= managedSale.getPrice()) {
+	            buyer.updateDiruKop(kontuZenb, diruKop - managedSale.getPrice());
+	            seller.getSales().remove(managedSale);
+	            buyer.getErositakoak().add(managedSale);
+	            db.persist(buyer);
+	            db.persist(seller);
+	            db.getTransaction().commit();
+	            return true;
+	        } else {
+	            // Not enough funds: no state change
+	            db.getTransaction().commit();
+	            return false;
+	        }
+	    } catch (Exception e) {
+	        if (db.getTransaction().isActive()) {
+	            try { db.getTransaction().rollback(); } catch (Exception ex) { /* ignore */ }
+	        }
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 	
 	public User doesAccountNumber(String zenb) {

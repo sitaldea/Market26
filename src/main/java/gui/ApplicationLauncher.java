@@ -51,6 +51,21 @@ public class ApplicationLauncher {
 			} 
 			
 			MainGUI.setBussinessLogic(appFacadeInterface);
+			try {
+				final BLFacade facadeRef = appFacadeInterface;
+				Runtime.getRuntime().addShutdownHook(new Thread() {
+					@Override
+					public void run() {
+						try {
+							if (facadeRef != null) facadeRef.close();
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+					}
+				});
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 			//ErreklamatuGUI g=new ErreklamatuGUI();
 			//g.setVisible(true);
 			

@@ -27,9 +27,9 @@ public class User implements Serializable {
 	private String telefonoa;
 	private String password;
 	@XmlIDREF
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Sale> sales=new ArrayList<Sale>();
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Sale> erositakoak=new ArrayList<Sale>();
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<DiruKontua> kontuak=new ArrayList<DiruKontua>();

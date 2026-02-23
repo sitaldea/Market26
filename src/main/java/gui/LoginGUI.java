@@ -41,12 +41,12 @@ public class LoginGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblEmail = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.Email"));
-		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblEmail.setBounds(92, 131, 130, 12);
 		contentPane.add(lblEmail);
 		
 		JLabel lblPassword = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.Password"));
-		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblPassword.setBounds(92, 164, 130, 12);
 		contentPane.add(lblPassword);
 		
@@ -60,7 +60,7 @@ public class LoginGUI extends JFrame {
 		contentPane.add(passwordFieldPass);
 		
 		JButton btnNewButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Login"));
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUI.getBusinessLogic();
@@ -76,8 +76,18 @@ public class LoginGUI extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(224, 248, 173, 55);
+		btnNewButton.setBounds(108, 248, 173, 55);
 		contentPane.add(btnNewButton);
+		
+		JButton btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.CancelButton"));
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnClose.setBounds(342, 248, 173, 55);
+		contentPane.add(btnClose);
 
 	}
 }

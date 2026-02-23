@@ -72,7 +72,7 @@ public interface BLFacade  {
 	
 	@WebMethod public User isLogin(String email);
 	
-	@WebMethod public void buyProduct(Sale sale, String kontuZenb, String email);
+	@WebMethod public boolean buyProduct(Sale sale, String kontuZenb, String email);
 	
 	@WebMethod 	public User doesAccountNumber(String zenb);
 	
@@ -81,6 +81,8 @@ public interface BLFacade  {
 	@WebMethod public void updateDiruKop(String zenb, double diruKop);
 	
 	@WebMethod public void addErositakoak(Sale sale, String email);
+
+	@WebMethod public void close();
 
 
 

@@ -118,7 +118,7 @@ public class RegisterGUI extends JFrame {
 		        passwordFieldPass2.setText("");
 		    }
 		});
-		btnErregistratu.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnErregistratu.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnErregistratu.setBounds(167, 248, 116, 33);
 		contentPane.add(btnErregistratu);
 		
@@ -143,6 +143,7 @@ public class RegisterGUI extends JFrame {
 		textIzena.setColumns(10);
 		
 		JButton btnNewButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.CancelButton"));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
