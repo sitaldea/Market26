@@ -129,47 +129,52 @@ public class DataAccess  {
 	 * @return Product
  	 * @throws SaleAlreadyExistException if the same product already exists for the seller
 	 */
-	public Sale createSale(String title, String description, int status, float price,  Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException {
-		
+	public Sale createSale(String title, String description, int status, float price,
+			Date pubDate, String sellerEmail, File file)
+					throws FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException {
 
-		System.out.println(">> DataAccess: createProduct=> title= "+title+" seller="+sellerEmail);
+		if (pubDate.before(UtilDate.trim(new Date()))) {
+			throw new MustBeLaterThanTodayException(
+					ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorSaleMustBeLaterThanToday")
+					);
+		}
+
+		if (file == null) {
+			throw new FileNotUploadedException(
+					ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorFileNotUploadedException")
+					);
+		}
+
+		db.getTransaction().begin();
 		try {
-		
-
-			if(pubDate.before(UtilDate.trim(new Date()))) {
-				throw new MustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
-			}
-			if (file==null)
-				throw new FileNotUploadedException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorFileNotUploadedException"));
-
-			db.getTransaction().begin();
-			
 			User seller = db.find(User.class, sellerEmail);
+
+			if (seller == null) {
+				db.getTransaction().rollback();
+				throw new IllegalArgumentException("No se encontró un vendedor con email: " + sellerEmail);
+			}
+
 			if (seller.doesSaleExist(title)) {
-				db.getTransaction().commit();
-				throw new SaleAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.SaleAlreadyExist"));
+				db.getTransaction().rollback();
+				throw new SaleAlreadyExistException(
+						ResourceBundle.getBundle("Etiquetas").getString("DataAccess.SaleAlreadyExist")
+						);
 			}
 
 			Sale sale = seller.addSale(title, description, status, price, pubDate, file);
-			//next instruction can be obviated
-
-			db.persist(seller); 
+			db.persist(seller);
 			db.getTransaction().commit();
-			 System.out.println("sale stored "+sale+ " "+seller);
 
-			
-
-			   System.out.println("hasta aqui");
-
+			System.out.println("Venta creada correctamente: " + sale + " por " + seller.getEmail());
 			return sale;
-		} catch (NullPointerException e) {
-			   e.printStackTrace();
-			// TODO Auto-generated catch block
-			db.getTransaction().commit();
+
+		} catch (Exception e) {
+			if (db.getTransaction().isActive()) {
+				db.getTransaction().rollback();
+			}
+			e.printStackTrace();
 			return null;
 		}
-		
-		
 	}
 	
 	/**

@@ -36,7 +36,7 @@ public class CreateSaleGUI extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 
-	private String sellerMail;
+	private String userMail;
 	private JTextField fieldTitle=new JTextField();
 	private JTextField fieldDescription=new JTextField();
 	
@@ -67,12 +67,14 @@ public class CreateSaleGUI extends JFrame {
 	public CreateSaleGUI(String mail) {
 
 		thisFrame=this;
-		this.sellerMail=mail;
+		this.userMail=mail;
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(604, 370));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.CreateProduct"));
 
 		jLabelTitle.setBounds(new Rectangle(6, 24, 92, 20));
+		setTitle(userMail);
+
 		
 		jLabelPrice.setBounds(new Rectangle(6, 141, 101, 20));
 		jTextFieldPrice.setBounds(new Rectangle(97, 141, 60, 20));
@@ -95,7 +97,7 @@ public class CreateSaleGUI extends JFrame {
 						float price = Float.parseFloat(jTextFieldPrice.getText());
 						String s=(String)jComboBoxStatus.getSelectedItem();
 						int numStatus=status.indexOf(s);
-						facade.createSale(fieldTitle.getText(), fieldDescription.getText(), numStatus, price,  UtilDate.trim(jCalendar.getDate()), sellerMail, targetFile);
+						facade.createSale(fieldTitle.getText(), fieldDescription.getText(), numStatus, price,  UtilDate.trim(jCalendar.getDate()), userMail, targetFile);
 						jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.ProductCreated"));
 					
 					} catch (Exception e1) {

@@ -52,7 +52,7 @@ public class MainGUIErregistratuta extends JFrame {
 		btnCreateSale.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
 		btnCreateSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame a = new CreateSaleGUI("a");
+				JFrame a = new CreateSaleGUI(userMail);
 				a.setVisible(true);
 			}
 		});

@@ -1,27 +1,206 @@
 package gui;
 
-import java.awt.EventQueue;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.ResourceBundle;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
+import businessLogic.BLFacade;
+import domain.DiruKontua;
+import domain.Sale;
+import domain.User;
 
 public class ErositakoProduktuakIkusiGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JPanel imagePanel;
+	private JTextField fieldTitle;
+	private JTextField fieldDescription;
+	private JTextField fieldPrice;
+	private JLabel labelDate;
+	private JLabel statusField;
+	private JLabel jLabelMsg;
+	private JButton btnPrev;
+	private JButton btnNext;
+	private JButton btnClose;
+	
+	private List<Sale> purchased;
+	private int index = 0;
+	private static final int baseSize = 160;
+	private static final String basePath = "src/main/resources/images/";
 
-	/**
-	 * Create the frame.
-	 * @param userMail 
-	 */
 	public ErositakoProduktuakIkusiGUI(String email) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 824, 420);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(null);
 		setContentPane(contentPane);
 
+		fieldTitle = new JTextField();
+		fieldTitle.setEditable(false);
+		fieldTitle.setBounds(140, 20, 400, 28);
+		contentPane.add(fieldTitle);
+
+		JLabel lblTitle = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.Title"));
+		lblTitle.setBounds(20, 20, 120, 28);
+		contentPane.add(lblTitle);
+
+		JLabel lblDescription = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.Description"));
+		lblDescription.setBounds(20, 60, 120, 16);
+		contentPane.add(lblDescription);
+
+		fieldDescription = new JTextField();
+		fieldDescription.setEditable(false);
+		fieldDescription.setBounds(140, 60, 400, 80);
+		contentPane.add(fieldDescription);
+
+		JLabel lblPrice = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Price"));
+		lblPrice.setBounds(20, 150, 120, 20);
+		contentPane.add(lblPrice);
+
+		fieldPrice = new JTextField();
+		fieldPrice.setEditable(false);
+		fieldPrice.setBounds(140, 150, 80, 20);
+		contentPane.add(fieldPrice);
+
+		labelDate = new JLabel();
+		labelDate.setBounds(20, 180, 300, 20);
+		labelDate.setFont(new Font("Lucida Grande", Font.BOLD, 12));
+		contentPane.add(labelDate);
+
+		statusField = new JLabel();
+		statusField.setBounds(140, 180, 200, 20);
+		contentPane.add(statusField);
+
+		imagePanel = new JPanel();
+		imagePanel.setBounds(560, 20, 160, 160);
+		contentPane.add(imagePanel);
+
+		jLabelMsg = new JLabel();
+		jLabelMsg.setForeground(Color.RED);
+		jLabelMsg.setBounds(140, 210, 400, 20);
+		contentPane.add(jLabelMsg);
+
+		btnPrev = new JButton("<<");
+		btnPrev.setBounds(20, 300, 120, 40);
+		contentPane.add(btnPrev);
+
+		btnNext = new JButton(">>");
+		btnNext.setBounds(160, 300, 120, 40);
+		contentPane.add(btnNext);
+
+		btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
+		btnClose.setBounds(500, 300, 120, 40);
+		contentPane.add(btnClose);
+
+		// Load purchased products for user
+		BLFacade facade = MainGUI.getBusinessLogic();
+		if (facade == null) {
+			JOptionPane.showMessageDialog(this, "Business logic not available", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		User user = facade.getUser(email);
+		if (user == null) {
+			JOptionPane.showMessageDialog(this, ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.ErrorQueary"), "Info", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+
+		purchased = user.getErositakoak();
+		if (purchased == null || purchased.isEmpty()) {
+			JOptionPane.showMessageDialog(this, ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts"), "Info", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+
+		index = 0;
+		updateDisplay();
+
+		btnPrev.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (index > 0) {
+					index--;
+					updateDisplay();
+				}
+			}
+		});
+
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (index < purchased.size() - 1) {
+					index++;
+					updateDisplay();
+				}
+			}
+		});
+
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+
+		setVisible(true);
 	}
 
+	private void updateDisplay() {
+		Sale sale = purchased.get(index);
+		fieldTitle.setText(sale.getTitle());
+		fieldDescription.setText(sale.getDescription());
+		fieldPrice.setText(Float.toString(sale.getPrice()));
+		labelDate.setText(new SimpleDateFormat("dd-MM-yyyy").format(sale.getPublicationDate()));
+		statusField.setText(Utils.getStatus(sale.getStatus()));
+		jLabelMsg.setText("(" + (index + 1) + " / " + purchased.size() + ")");
+
+		// load image
+		imagePanel.removeAll();
+		BLFacade facade = MainGUI.getBusinessLogic();
+		String file = sale.getFile();
+		if (file != null) {
+			try {
+				Image img = facade.downloadImage(file);
+				BufferedImage buf = (BufferedImage) img;
+				BufferedImage scaled = rescale(buf);
+				imagePanel.setLayout(new BorderLayout());
+				imagePanel.add(new JLabel(new ImageIcon(scaled)), BorderLayout.CENTER);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		// enable/disable navigation buttons
+		btnPrev.setEnabled(index > 0);
+		btnNext.setEnabled(index < purchased.size() - 1);
+
+		imagePanel.revalidate();
+		imagePanel.repaint();
+	}
+
+	public BufferedImage rescale(BufferedImage originalImage) {
+		BufferedImage resizedImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
+		g.dispose();
+		return resizedImage;
+	}
 }
