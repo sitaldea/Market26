@@ -28,17 +28,19 @@ public class BuyProductGUI extends JFrame {
     File targetFile;
     BufferedImage targetImg;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textKontuZenb;
 	private JTextField textField_1;
     private static final int baseSize = 160;
 	private static final String basePath="src/main/resources/images/";
+	private String userMail;
 
 	/**
 	 * Create the frame.
 	 * @param userMail 
 	 * @param sale 
 	 */
-	public BuyProductGUI(Sale sale, String userMail) {
+	public BuyProductGUI(Sale sale, String mail) {
+		this.userMail = mail;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 587, 344);
 		contentPane = new JPanel();
@@ -46,19 +48,23 @@ public class BuyProductGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(216, 49, 182, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textKontuZenb = new JTextField();
+		textKontuZenb.setBounds(244, 49, 182, 20);
+		contentPane.add(textKontuZenb);
+		textKontuZenb.setColumns(10);
+		
+		setTitle(userMail);
 		
 		JLabel lblIzKontuZenb = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.kontu"));
-		lblIzKontuZenb.setBounds(120, 52, 86, 14);
+		lblIzKontuZenb.setBounds(120, 51, 126, 14);
 		contentPane.add(lblIzKontuZenb);
 		
 		JButton btnErosi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.Erosi"));
 		btnErosi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BLFacade facade = MainGUI.getBusinessLogic();
+				String kontuZenb = textKontuZenb.getText();
+				facade.buyProduct(sale, kontuZenb, userMail);
 			}
 		});
 		btnErosi.setBounds(199, 166, 119, 40);

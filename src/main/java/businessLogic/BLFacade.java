@@ -72,9 +72,18 @@ public interface BLFacade  {
 	
 	@WebMethod public User isLogin(String email);
 	
-	@WebMethod public void buyProduct(Sale sale, String kontuZenb);
+	@WebMethod public void buyProduct(Sale sale, String kontuZenb, String email);
 	
 	@WebMethod 	public User doesAccountNumber(String zenb);
+	
+	@WebMethod public double getDiruKop(String zenb);
+	
+	@WebMethod public void updateDiruKop(String zenb, double diruKop);
+	
+	@WebMethod public void addErositakoak(Sale sale, String email);
+
+
+
 
 
 	

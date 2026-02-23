@@ -138,9 +138,9 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 
 	@Override
-	public void buyProduct(Sale sale, String kontuZenb) {
+	public void buyProduct(Sale sale, String kontuZenb, String email) {
 		dbManager.open();
-		dbManager.buyProduct(sale, kontuZenb);
+		dbManager.buyProduct(sale, kontuZenb, email);
 		dbManager.close();
 	}
 
@@ -151,8 +151,27 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return res;
 	}
-		
-	
-	
+
+	@Override
+	public double getDiruKop(String zenb) {
+		dbManager.open();
+		double res = dbManager.getDiruKop(zenb);
+		dbManager.close();
+		return res;
+	}
+
+	@Override
+	public void updateDiruKop(String zenb, double diruKop) {
+		dbManager.open();
+		dbManager.updateDiruKop(zenb, diruKop);
+		dbManager.close();	
+	}
+
+	@Override
+	public void addErositakoak(Sale sale, String email) {
+		dbManager.open();
+		dbManager.addErositakoak(sale, email);
+		dbManager.close();
+	}
 }
 

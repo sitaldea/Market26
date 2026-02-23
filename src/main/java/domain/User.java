@@ -147,5 +147,24 @@ public class User implements Serializable {
 		this.telefonoa = telefonoa;
 	}
 
+	public List<Sale> getSales() {
+		return sales;
+	}
 	
+	public List<Sale> getErositakoak() {
+		return erositakoak;
+	}
+	
+	public List<DiruKontua> getKontuak() {
+		return kontuak;
+	}
+
+	public void updateDiruKop(String zenb, double diruKop) {
+		for (DiruKontua k:kontuak) {
+			if (k.getKontuZenb().compareTo(zenb)==0) {
+				k.setDiruKop(diruKop);
+				return;
+			}
+		}
+	}
 }
