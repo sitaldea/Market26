@@ -174,4 +174,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.addErositakoak(sale, email);
 		dbManager.close();
 	}
+	
+	@Override
+	public User getUserAccounts(String userMail) {
+		dbManager.open();
+		User res = dbManager.getUserAccounts(userMail);
+		dbManager.close();
+		return res;
+	}
 }

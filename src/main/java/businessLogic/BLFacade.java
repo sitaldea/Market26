@@ -83,5 +83,7 @@ public interface BLFacade  {
 	@WebMethod public void addErositakoak(Sale sale, String email);
 
 	@WebMethod public void close();
+
+	@WebMethod public User getUserAccounts(String userMail);
 	
 }

@@ -387,4 +387,14 @@ public void open(){
 			db.persist(u);
 		}
 	}
+
+	public User getUserAccounts(String userMail) {
+		TypedQuery<User> query = db.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.kontuak WHERE u.email=?1", User.class);
+		query.setParameter(1, userMail);
+		if(!query.getResultList().isEmpty()) {
+			return query.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
 }

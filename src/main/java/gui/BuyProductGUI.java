@@ -61,7 +61,7 @@ public class BuyProductGUI extends JFrame {
         comboBoxKontuak.setBounds(273, 49, 215, 20);
         contentPane.add(comboBoxKontuak);
 
-        User user = facade.getUser(userMail); 
+        User user = facade.getUserAccounts(userMail); 
         if (user != null && user.getKontuak() != null) {
             for (DiruKontua k : user.getKontuak()) {
                 comboBoxKontuak.addItem(k.getKontuZenb());
