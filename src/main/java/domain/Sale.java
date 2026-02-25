@@ -27,6 +27,7 @@ public class Sale implements Serializable {
 	private float price;
 	private Date pubDate;
 	private String fileName;
+	private String egoera;
 	
 	private User seller;  
 	
@@ -34,7 +35,7 @@ public class Sale implements Serializable {
 		super();
 	}
 		
-	public Sale(String title, String description, int status, float price, Date pubDate, File file, User seller) {
+	public Sale(String title, String description, int status, float price, Date pubDate, File file, User seller, String egoera) {
 		super();
 
 		this.title = title;
@@ -59,6 +60,7 @@ public class Sale implements Serializable {
 		}
 
 		this.seller = seller;
+		this.egoera=egoera;
 		
 	}
 	
@@ -218,8 +220,11 @@ public class Sale implements Serializable {
 		return saleNumber+";"+title+";"+price;  
 	}
 
-
-
-
+	public String getEgoera() {
+		return egoera;
+	}
 	
+	public void setEgoera(String egoera) {
+		this.egoera = egoera;
+	}	
 }

@@ -99,16 +99,22 @@ public class QuerySalesGUI extends JFrame {
 
 					List<domain.Sale> sales=facade.getPublishedSales(jTextFieldSearch.getText(),today);
 
-					if (sales.isEmpty() ) jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts"));
-					else jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products"));
+					int added = 0; // count how many rows we actually add after filtering
+
 					for (domain.Sale sale:sales){
-						Vector<Object> row = new Vector<Object>();
-						row.add(sale.getTitle());
-						row.add(sale.getPrice());
-						row.add(new SimpleDateFormat("dd-MM-yyyy").format(sale.getPublicationDate()));
-						row.add(sale); // product object added in order to obtain it with tableModelProducts.getValueAt(i,2)
-						tableModelProducts.addRow(row);		
+						if (sale.getEgoera() != null && sale.getEgoera().equalsIgnoreCase("Ez erosita")) {
+							Vector<Object> row = new Vector<Object>();
+							row.add(sale.getTitle());
+							row.add(sale.getPrice());
+							row.add(new SimpleDateFormat("dd-MM-yyyy").format(sale.getPublicationDate()));
+							row.add(sale); // product object added in order to obtain it with tableModelProducts.getValueAt(i,2)
+							tableModelProducts.addRow(row);
+							added++;
+						}
 					}
+
+					if (added == 0) jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts"));
+					else jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products"));
 				} catch (Exception e1) {
 
 					e1.printStackTrace();

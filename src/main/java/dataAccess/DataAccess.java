@@ -90,17 +90,17 @@ public class DataAccess  {
 			Date today = UtilDate.trim(new Date());
 		
 			
-			seller1.addSale("futbol baloia", "oso polita, gutxi erabilita", 10, 2,  today, null);
-			seller1.addSale("salomon mendiko botak", "44 zenbakia, 3 ateraldi",20,  2,  today, null);
-			seller1.addSale("samsung 42\" telebista", "berria, erabili gabe", 175, 1,  today, null);
+			seller1.addSale("futbol baloia", "oso polita, gutxi erabilita", 2, 10,  today, null, "Ez erosita");
+			seller1.addSale("salomon mendiko botak", "44 zenbakia, 3 ateraldi",2,  20,  today, null, "Ez erosita");
+			seller1.addSale("samsung 42\" telebista", "berria, erabili gabe", 1, 175,  today, null, "Ez erosita");
 
 
-			seller2.addSale("imac 27", "7 urte, dena ondo dabil", 1, 200,today, null);
-			seller2.addSale("iphone 17", "oso gutxi erabilita", 2, 400, today, null);
-			seller2.addSale("orbea mendiko bizikleta", "29\" 10 urte, mantenua behar du", 3,225, today, null);
-			seller2.addSale("polar kilor erlojua", "Vantage M, ondo dago", 3, 30, today, null);
+			seller2.addSale("imac 27", "7 urte, dena ondo dabil", 1, 200,today, null, "Ez erosita");
+			seller2.addSale("iphone 17", "oso gutxi erabilita", 2, 400, today, null, "Ez erosita");
+			seller2.addSale("orbea mendiko bizikleta", "29\" 10 urte, mantenua behar du", 3,225, today, null, "Ez erosita");
+			seller2.addSale("polar kilor erlojua", "Vantage M, ondo dago", 3, 30, today, null, "Ez erosita");
 
-			seller3.addSale("sukaldeko mahaia", "1.8*0.8, 4 aulkiekin. Prezio finkoa", 3,45, today, null);
+			seller3.addSale("sukaldeko mahaia", "1.8*0.8, 4 aulkiekin. Prezio finkoa", 3,45, today, null, "Ez erosita");
 
 			
 			db.persist(seller1);
@@ -130,7 +130,7 @@ public class DataAccess  {
  	 * @throws SaleAlreadyExistException if the same product already exists for the seller
 	 */
 	public Sale createSale(String title, String description, int status, float price,
-			Date pubDate, String sellerEmail, File file)
+			Date pubDate, String sellerEmail, File file, String egoera)
 					throws FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException {
 
 		if (pubDate.before(UtilDate.trim(new Date()))) {
@@ -161,7 +161,7 @@ public class DataAccess  {
 						);
 			}
 
-			Sale sale = seller.addSale(title, description, status, price, pubDate, file);
+			Sale sale = seller.addSale(title, description, status, price, pubDate, file, egoera);
 			db.persist(seller);
 			db.getTransaction().commit();
 
@@ -330,20 +330,20 @@ public void open(){
 	        double diruKop = getDiruKop(kontuZenb);
 	        if (diruKop >= managedSale.getPrice()) {
 	            buyer.updateDiruKop(kontuZenb, diruKop - managedSale.getPrice());
-	            seller.getSales().remove(managedSale);
+	            managedSale.setEgoera("Erosita");
 	            buyer.getErositakoak().add(managedSale);
 	            db.persist(buyer);
 	            db.persist(seller);
+	            db.persist(managedSale);
 	            db.getTransaction().commit();
 	            return true;
 	        } else {
-	            // Not enough funds: no state change
 	            db.getTransaction().commit();
 	            return false;
 	        }
 	    } catch (Exception e) {
 	        if (db.getTransaction().isActive()) {
-	            try { db.getTransaction().rollback(); } catch (Exception ex) { /* ignore */ }
+	            try { db.getTransaction().rollback(); } catch (Exception ex) { }
 	        }
 	        e.printStackTrace();
 	        return false;

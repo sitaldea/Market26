@@ -91,9 +91,9 @@ public class User implements Serializable {
 	
 
 
-	public Sale addSale(String title, String description, int status, float price,  Date pubDate, File file)  {
+	public Sale addSale(String title, String description, int status, float price,  Date pubDate, File file, String egoera)  {
 		
-		Sale sale=new Sale(title, description, status, price,  pubDate, file, this);
+		Sale sale=new Sale(title, description, status, price,  pubDate, file, this, egoera);
         sales.add(sale);
         return sale;
 	}

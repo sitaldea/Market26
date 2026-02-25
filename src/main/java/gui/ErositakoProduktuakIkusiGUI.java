@@ -114,7 +114,6 @@ public class ErositakoProduktuakIkusiGUI extends JFrame {
 		btnClose.setBounds(500, 300, 120, 40);
 		contentPane.add(btnClose);
 
-		// Load purchased products for user
 		BLFacade facade = MainGUI.getBusinessLogic();
 		if (facade == null) {
 			JOptionPane.showMessageDialog(this, "Business logic not available", "Error", JOptionPane.ERROR_MESSAGE);
@@ -172,7 +171,6 @@ public class ErositakoProduktuakIkusiGUI extends JFrame {
 		statusField.setText(Utils.getStatus(sale.getStatus()));
 		jLabelMsg.setText("(" + (index + 1) + " / " + purchased.size() + ")");
 
-		// load image
 		imagePanel.removeAll();
 		BLFacade facade = MainGUI.getBusinessLogic();
 		String file = sale.getFile();
@@ -188,7 +186,6 @@ public class ErositakoProduktuakIkusiGUI extends JFrame {
 			}
 		}
 
-		// enable/disable navigation buttons
 		btnPrev.setEnabled(index > 0);
 		btnNext.setEnabled(index < purchased.size() - 1);
 

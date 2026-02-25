@@ -35,7 +35,7 @@ public interface BLFacade  {
 	 * @return Sale
 	 */
    @WebMethod
-	public Sale createSale(String title, String description, int status, float price, Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException;
+	public Sale createSale(String title, String description, int status, float price, Date pubDate, String sellerEmail, File file, String egoera) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException;
 	
 	
 	/**
@@ -83,10 +83,5 @@ public interface BLFacade  {
 	@WebMethod public void addErositakoak(Sale sale, String email);
 
 	@WebMethod public void close();
-
-
-
-
-
 	
 }
