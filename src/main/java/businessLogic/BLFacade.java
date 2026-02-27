@@ -72,7 +72,7 @@ public interface BLFacade  {
 	
 	@WebMethod public User isLogin(String email);
 	
-	@WebMethod public boolean buyProduct(Sale sale, String kontuZenb, String email);
+	@WebMethod public void buyProduct(Sale sale, String kontuZenb, String email);
 	
 	@WebMethod 	public User doesAccountNumber(String zenb);
 	

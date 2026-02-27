@@ -114,15 +114,16 @@ public class BuyProductGUI extends JFrame {
         btnErosi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 String kontuZenb = comboBoxKontuak.getSelectedItem().toString();
-                boolean ok = facade.buyProduct(sale, kontuZenb, userMail);
-                if (ok) {
-                	JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.Success"));
-                    BuyProductGUI.this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.InsufficientFunds"),
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                }
+                double diruKop = facade.getDiruKop(kontuZenb);
+                if (diruKop > sale.getPrice()) {
+					facade.buyProduct(sale, kontuZenb, userMail);
+		            JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.Success"));
+		            BuyProductGUI.this.dispose();
+				} else {
+					JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.InsufficientFunds"),
+							"Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
             }
         });
     }

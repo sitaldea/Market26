@@ -321,32 +321,25 @@ public void open(){
 		
 	}
 
-	public boolean buyProduct(Sale sale, String kontuZenb, String email) {
+	public void buyProduct(Sale sale, String kontuZenb, String email) {
 	    try {
 	        db.getTransaction().begin();
 	        Sale managedSale = db.find(Sale.class, sale.getSaleNumber());
 	        User buyer = db.find(User.class, email);
 	        User seller = managedSale.getSeller();
 	        double diruKop = getDiruKop(kontuZenb);
-	        if (diruKop >= managedSale.getPrice()) {
-	            buyer.updateDiruKop(kontuZenb, diruKop - managedSale.getPrice());
-	            managedSale.setEgoera("Erosita");
-	            buyer.getErositakoak().add(managedSale);
-	            db.persist(buyer);
-	            db.persist(seller);
-	            db.persist(managedSale);
-	            db.getTransaction().commit();
-	            return true;
-	        } else {
-	            db.getTransaction().commit();
-	            return false;
-	        }
+	        buyer.updateDiruKop(kontuZenb, diruKop - managedSale.getPrice());
+	        managedSale.setEgoera("Erosita");
+	        buyer.getErositakoak().add(managedSale);
+	        db.persist(buyer);
+	        db.persist(seller);
+	        db.persist(managedSale);
+	        db.getTransaction().commit();
 	    } catch (Exception e) {
 	        if (db.getTransaction().isActive()) {
 	            try { db.getTransaction().rollback(); } catch (Exception ex) { }
 	        }
 	        e.printStackTrace();
-	        return false;
 	    }
 	}
 	

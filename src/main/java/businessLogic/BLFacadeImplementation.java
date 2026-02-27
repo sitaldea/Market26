@@ -138,11 +138,10 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 
 	@Override
-	public boolean buyProduct(Sale sale, String kontuZenb, String email) {
+	public void buyProduct(Sale sale, String kontuZenb, String email) {
 		dbManager.open();
-		boolean res = dbManager.buyProduct(sale, kontuZenb, email);
+		dbManager.buyProduct(sale, kontuZenb, email);
 		dbManager.close();
-		return res;
 	}
 
 	@Override
