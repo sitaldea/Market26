@@ -321,26 +321,15 @@ public void open(){
 		
 	}
 
-	public void buyProduct(Sale sale, String kontuZenb, String email) {
-	    try {
-	        db.getTransaction().begin();
-	        Sale managedSale = db.find(Sale.class, sale.getSaleNumber());
-	        User buyer = db.find(User.class, email);
-	        User seller = managedSale.getSeller();
-	        double diruKop = getDiruKop(kontuZenb);
-	        buyer.updateDiruKop(kontuZenb, diruKop - managedSale.getPrice());
-	        managedSale.setEgoera("Erosita");
-	        buyer.getErositakoak().add(managedSale);
-	        db.persist(buyer);
-	        db.persist(seller);
-	        db.persist(managedSale);
-	        db.getTransaction().commit();
-	    } catch (Exception e) {
-	        if (db.getTransaction().isActive()) {
-	            try { db.getTransaction().rollback(); } catch (Exception ex) { }
-	        }
-	        e.printStackTrace();
+	public void buyProduct(Sale sale, String email) {
+	    db.getTransaction().begin();
+	    User u = getUser(email);
+	    if (u != null) {
+	        Sale managedSale = db.merge(sale);   
+	        u.getErositakoak().add(managedSale);
+	        db.merge(u); 
 	    }
+	    db.getTransaction().commit();
 	}
 	
 	public User doesAccountNumber(String zenb) {
@@ -366,19 +355,13 @@ public void open(){
 	}
 	
 	public void updateDiruKop(String zenb, double diruKop) {
+        db.getTransaction().begin();
 		User u = doesAccountNumber(zenb);
 		if(u!=null) {
 			u.updateDiruKop(zenb, diruKop);
 			db.persist(u);
 		}
-	}
-	
-	public void addErositakoak(Sale sale, String email) {
-		User u = getUser(email);
-		if(u!=null) {
-			u.getErositakoak().add(sale);
-			db.persist(u);
-		}
+        db.getTransaction().commit();
 	}
 
 	public User getUserAccounts(String userMail) {
@@ -389,5 +372,15 @@ public void open(){
 		} else {
 			return null;
 		}
+	}
+	
+	public void updateEgoera(Sale sale, String egoera) {
+		db.getTransaction().begin();
+		Sale s = db.find(Sale.class, sale.getSaleNumber());
+		if(s!=null) {
+			s.setEgoera(egoera);
+			db.persist(s);
+		}
+		db.getTransaction().commit();
 	}
 }

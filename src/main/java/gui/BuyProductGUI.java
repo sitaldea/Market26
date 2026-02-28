@@ -116,7 +116,9 @@ public class BuyProductGUI extends JFrame {
                 String kontuZenb = comboBoxKontuak.getSelectedItem().toString();
                 double diruKop = facade.getDiruKop(kontuZenb);
                 if (diruKop > sale.getPrice()) {
-					facade.buyProduct(sale, kontuZenb, userMail);
+					facade.buyProduct(sale, userMail);
+					facade.updateDiruKop(kontuZenb, diruKop - sale.getPrice());
+					facade.updateEgoera(sale, "Erosita");
 		            JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.Success"));
 		            BuyProductGUI.this.dispose();
 				} else {
