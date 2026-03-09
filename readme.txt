@@ -8,4 +8,4 @@
 
 - Erabilitatako orduak (klasean + klasetik kanpo): Klasean: 4 ordu eta erdi, klasetik kanpo: 7 ordu
 
-- Bideo linka:
+- Bideo linka: https://drive.google.com/file/d/1Oe5R8D953GVOFNHF8ojOp6wq0-pAv8-d/view?usp=sharing

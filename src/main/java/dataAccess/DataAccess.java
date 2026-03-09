@@ -322,14 +322,13 @@ public void open(){
 	}
 
 	public void buyProduct(Sale sale, String email) {
-	    db.getTransaction().begin();
 	    User u = getUser(email);
 	    if (u != null) {
-	        Sale managedSale = db.merge(sale);   
+	        Sale managedSale = db.merge(sale);
+		    db.getTransaction().begin();
 	        u.getErositakoak().add(managedSale);
-	        db.merge(u); 
+		    db.getTransaction().commit();
 	    }
-	    db.getTransaction().commit();
 	}
 	
 	public User doesAccountNumber(String zenb) {
@@ -355,13 +354,12 @@ public void open(){
 	}
 	
 	public void updateDiruKop(String zenb, double diruKop) {
-        db.getTransaction().begin();
 		User u = doesAccountNumber(zenb);
 		if(u!=null) {
+	        db.getTransaction().begin();
 			u.updateDiruKop(zenb, diruKop);
-			db.persist(u);
+	        db.getTransaction().commit();
 		}
-        db.getTransaction().commit();
 	}
 
 	public User getUserAccounts(String userMail) {
@@ -375,12 +373,11 @@ public void open(){
 	}
 	
 	public void updateEgoera(Sale sale, String egoera) {
-		db.getTransaction().begin();
 		Sale s = db.find(Sale.class, sale.getSaleNumber());
 		if(s!=null) {
+			db.getTransaction().begin();
 			s.setEgoera(egoera);
-			db.persist(s);
+			db.getTransaction().commit();
 		}
-		db.getTransaction().commit();
 	}
 }
