@@ -181,4 +181,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.updateEgoera(sale, egoera);
 		dbManager.close();
 	}
+	
+	@Override
+	public String getFirstAccountNumber(String email) {
+		dbManager.open();
+		String res = dbManager.getFirstAccountNumber(email);
+		dbManager.close();
+		return res;
+	}
 }

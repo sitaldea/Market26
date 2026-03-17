@@ -380,4 +380,15 @@ public void open(){
 			db.getTransaction().commit();
 		}
 	}
+	
+	public String getFirstAccountNumber(String email) {
+		TypedQuery<String> query = db.createQuery("SELECT d.kontuZenb FROM User u JOIN u.kontuak d WHERE u.email = ?1", String.class);
+		query.setParameter(1, email);
+		List<String> result = query.getResultList();
+		if (!result.isEmpty()) {
+			return result.get(0);
+		} else {
+			return null;
+		}
+	}
 }

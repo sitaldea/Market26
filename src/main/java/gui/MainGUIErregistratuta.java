@@ -14,6 +14,15 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import java.awt.Panel;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import net.miginfocom.swing.MigLayout;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class MainGUIErregistratuta extends JFrame {
 
@@ -28,7 +37,10 @@ public class MainGUIErregistratuta extends JFrame {
 	private JButton btnCreateSale;
 	private JLabel lblSelectOption;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JButton btnNewButton;
+	private JButton btnErositakoProduktuak;
+	private JButton btnDirua;
+	private JButton btnMugimenduak;
+	private JButton btnNeLogOut;
 
 	/**
 	 * Create the frame.
@@ -37,16 +49,32 @@ public class MainGUIErregistratuta extends JFrame {
 	public MainGUIErregistratuta(String email) {
 		this.userMail = email;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 552, 322);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(5, 0, 0, 0));
+		contentPane.setLayout(new FormLayout(new ColumnSpec[] {
+			FormSpecs.UNRELATED_GAP_COLSPEC,
+			ColumnSpec.decode("default:grow"),
+			FormSpecs.RELATED_GAP_COLSPEC,
+			ColumnSpec.decode("default:grow"),
+			FormSpecs.UNRELATED_GAP_COLSPEC},
+		new RowSpec[] {
+			FormSpecs.UNRELATED_GAP_ROWSPEC,
+			RowSpec.decode("default:grow"),
+			FormSpecs.RELATED_GAP_ROWSPEC,
+			RowSpec.decode("default:grow"),
+			FormSpecs.RELATED_GAP_ROWSPEC,
+			RowSpec.decode("default:grow"),
+			FormSpecs.RELATED_GAP_ROWSPEC,
+			RowSpec.decode("default:grow"),
+			FormSpecs.RELATED_GAP_ROWSPEC,
+			RowSpec.decode("default:grow"),}));
 
 		lblSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
 		lblSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblSelectOption);
+		contentPane.add(lblSelectOption, "2, 2, 3, 1, fill, fill");
 
 		btnCreateSale = new JButton();
 		btnCreateSale.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
@@ -56,7 +84,16 @@ public class MainGUIErregistratuta extends JFrame {
 				a.setVisible(true);
 			}
 		});
-		contentPane.add(btnCreateSale);
+		contentPane.add(btnCreateSale, "2, 4, fill, fill");
+
+		btnDirua = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.Dirua"));
+		btnDirua.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame a = new DiruaSartuAteraGUI(userMail);
+				a.setVisible(true);
+			}
+		});
+		contentPane.add(btnDirua, "4, 4, fill, fill");
 
 		btnQuearySale = new JButton();
 		btnQuearySale.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
@@ -66,9 +103,16 @@ public class MainGUIErregistratuta extends JFrame {
 				a.setVisible(true);
 			}
 		});
-		contentPane.add(btnQuearySale);
-
-		setTitle(userMail);
+		contentPane.add(btnQuearySale, "2, 6, fill, fill");
+					
+					btnMugimenduak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.Mugimenduak"));
+					btnMugimenduak.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							JFrame a = new MugimenduakIkusiGUI(userMail);
+							a.setVisible(true);
+						}
+					});
+					contentPane.add(btnMugimenduak, "4, 6, fill, fill");
 
 		rdbtnNewRadioButton = new JRadioButton("English");
 		rdbtnNewRadioButton.addActionListener(new ActionListener() {
@@ -96,21 +140,31 @@ public class MainGUIErregistratuta extends JFrame {
 			}
 		});
 		
-		btnNewButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.ErositakoProduktuakIkusi")); 
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				JFrame a = new ErositakoProduktuakIkusiGUI(userMail);
-				a.setVisible(true);
+				btnErositakoProduktuak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.ErositakoProduktuakIkusi")); 
+				btnErositakoProduktuak.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						JFrame a = new ErositakoProduktuakIkusiGUI(userMail);
+			a.setVisible(true);
+					}
+				});
+				contentPane.add(btnErositakoProduktuak, "2, 8, fill, fill");
+		
+		btnNeLogOut = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.SaioaItxi"));
+		btnNeLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();	
 			}
 		});
-		contentPane.add(btnNewButton);
+		contentPane.add(btnNeLogOut, "4, 8, fill, fill");
 		buttonGroup.add(rdbtnNewRadioButton_2);
 
 		panel = new JPanel();
 		panel.add(rdbtnNewRadioButton_1);
 		panel.add(rdbtnNewRadioButton_2);
 		panel.add(rdbtnNewRadioButton);
-		contentPane.add(panel);
+		contentPane.add(panel, "2, 10, 3, 1, fill, fill");
+
+		setTitle(userMail);
 	}
 
 	private void paintAgain() {
@@ -120,10 +174,16 @@ public class MainGUIErregistratuta extends JFrame {
 				ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
 		btnQuearySale.setText(
 				ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
-		btnNewButton.setText(
+		btnErositakoProduktuak.setText(
 				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.ErositakoProduktuakIkusi"));
+		btnDirua.setText(
+				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.Dirua"));
+		btnMugimenduak.setText(
+				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.Mugimenduak"));
+		btnNeLogOut.setText(
+				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.SaioaItxi"));
 		this.setTitle(
 				ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")
-						+ ": " + userMail);
+				+ ": " + userMail);
 	}
 }

@@ -113,11 +113,14 @@ public class BuyProductGUI extends JFrame {
 
         btnErosi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                String kontuZenb = comboBoxKontuak.getSelectedItem().toString();
-                double diruKop = facade.getDiruKop(kontuZenb);
-                if (diruKop > sale.getPrice()) {
+                String buyerKontuZenb = comboBoxKontuak.getSelectedItem().toString();
+                String sellerKontuZenb = facade.getFirstAccountNumber(sale.getSeller().getEmail());
+                double buyerDiruKop = facade.getDiruKop(buyerKontuZenb);
+                double sellerDiruKop = facade.getDiruKop(sellerKontuZenb);
+                if (buyerDiruKop > sale.getPrice()) {
 					facade.buyProduct(sale, userMail);
-					facade.updateDiruKop(kontuZenb, diruKop - sale.getPrice());
+					facade.updateDiruKop(buyerKontuZenb, buyerDiruKop - sale.getPrice());
+					facade.updateDiruKop(sellerKontuZenb, sellerDiruKop + sale.getPrice());
 					facade.updateEgoera(sale, "Erosita");
 		            JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.Success"));
 		            BuyProductGUI.this.dispose();
