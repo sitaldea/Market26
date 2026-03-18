@@ -1,18 +1,31 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import domain.Sale;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.util.Base64;
 import java.util.ResourceBundle;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class ErreklamazioakIpiniGUI extends JFrame {
@@ -29,6 +42,13 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 	private JButton btnAukeratu;
 	private JButton btnErreklamazioaIpini;
 	private JButton btnItxi;
+	File targetFile;
+	BufferedImage targetImg;
+	
+    private static final int baseSize = 128;
+	private static final String basePath="src/main/resources/images/";
+    String encodedfile = null;
+
 
 
 	/**
@@ -68,6 +88,30 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 		JButton btnAukeratu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakIpiniGUI.botoiAukeratu"));
 		btnAukeratu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF", "jpg", "gif");
+				fileChooser.setFileFilter(filter);
+		        int result = fileChooser.showOpenDialog(null);  
+
+		        fileChooser.setBounds(30, 148, 320, 80);
+
+		        if (result == JFileChooser.APPROVE_OPTION) {
+		            targetFile = fileChooser.getSelectedFile();
+		            contentPane.removeAll();
+		            contentPane.repaint();
+
+		            try {
+		                targetImg = rescale(ImageIO.read(targetFile));
+		                encodeFileToBase64Binary(targetFile);
+		            } catch (IOException ex) {
+		                //Logger.getLogger(MainAppFrame.class.getName()).log(Level.SEVERE, null, ex);
+		            }
+		            
+		            contentPane.setLayout(new BorderLayout(0, 0));
+		            contentPane.add(new JLabel(new ImageIcon(targetImg))); 
+		            setVisible(true);
+
+		            }
 			}
 		});
 		btnAukeratu.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -99,4 +143,29 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 		contentPane.add(lblDeskripzioa);
 
 	}
+	
+	public BufferedImage rescale(BufferedImage originalImage)
+    {
+        BufferedImage resizedImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
+        g.dispose();
+        return resizedImage;
+    }
+	
+	public  String encodeFileToBase64Binary(File file){
+        try {
+            @SuppressWarnings("resource")
+			FileInputStream fileInputStreamReader = new FileInputStream(file);
+            byte[] bytes = new byte[(int)file.length()];
+            fileInputStreamReader.read(bytes);
+            encodedfile=new String(Base64.getEncoder().encode(bytes));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return encodedfile;
+    }
 }
