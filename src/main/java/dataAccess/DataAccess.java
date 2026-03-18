@@ -82,8 +82,12 @@ public class DataAccess  {
 			
 			seller1.addDiruKontua("ES45678923245", 1000);
 			seller1.addDiruKontua("ES37848898695", 5);
+			seller3.addDiruKontua("ES45689653264", 580);
 			seller2.addDiruKontua("ES09245762456", 20);
 			seller3.addDiruKontua("ES44764463247", 453);
+			seller3.addDiruKontua("ES34786843767", 100);
+			seller3.addDiruKontua("ES97935722866", 40);
+
 
 			
 			//Create products

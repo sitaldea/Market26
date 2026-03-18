@@ -29,6 +29,9 @@ public class Sale implements Serializable {
 	private String fileName;
 	private String egoera;
 	
+	@OneToOne
+	private Erreklamazioak erreklamazioa;
+	
 	private User seller;  
 	
 	public Sale(){
@@ -227,4 +230,12 @@ public class Sale implements Serializable {
 	public void setEgoera(String egoera) {
 		this.egoera = egoera;
 	}	
+	
+	public Erreklamazioak getErreklamazioa() {
+		return erreklamazioa;
+	}
+	
+	public void setErreklamazioa(Erreklamazioak erreklamazioa) {
+		this.erreklamazioa = erreklamazioa;
+	}
 }

@@ -33,6 +33,10 @@ public class User implements Serializable {
 	private List<Sale> erositakoak=new ArrayList<Sale>();
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<DiruKontua> kontuak=new ArrayList<DiruKontua>();
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Erreklamazioak> errklamazioak=new ArrayList<Erreklamazioak>();
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Mugimenduak> mugimenduak=new ArrayList<Mugimenduak>();
 
 	public User() {
 		super();
@@ -166,5 +170,14 @@ public class User implements Serializable {
 				return;
 			}
 		}
+	}
+	
+	public List<Erreklamazioak> getErrklamazioak() {
+		return errklamazioak;
+	}
+	
+	public void addErreklamazioa(String izenburua, String deskripzioa, File file, Sale sale) {
+		Erreklamazioak erreklamazioa=new Erreklamazioak(izenburua, deskripzioa, file, sale);
+		errklamazioak.add(erreklamazioa);
 	}
 }
