@@ -43,6 +43,7 @@ public class ErositakoProduktuakIkusiGUI extends JFrame {
 	private JButton btnPrev;
 	private JButton btnNext;
 	private JButton btnClose;
+	private String userMail;
 	
 	private List<Sale> purchased;
 	private int index = 0;
@@ -50,13 +51,16 @@ public class ErositakoProduktuakIkusiGUI extends JFrame {
 	private static final String basePath = "src/main/resources/images/";
 
 	public ErositakoProduktuakIkusiGUI(String email) {
+		this.userMail = email;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 824, 420);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
-
+		
+		setTitle(userMail);
+		
 		fieldTitle = new JTextField();
 		fieldTitle.setEditable(false);
 		fieldTitle.setBounds(140, 20, 400, 28);
@@ -111,8 +115,19 @@ public class ErositakoProduktuakIkusiGUI extends JFrame {
 		contentPane.add(btnNext);
 
 		btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
-		btnClose.setBounds(500, 300, 120, 40);
+		btnClose.setBounds(651, 300, 120, 40);
 		contentPane.add(btnClose);
+		
+		JButton btnErreklamazioaIpini = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErositakoProduktuakIkusiGUI.ErreklamazioaIpini")); 
+		btnErreklamazioaIpini.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Sale sale = purchased.get(index);
+				ErreklamazioakIpiniGUI erreklamatuGUI = new ErreklamazioakIpiniGUI(sale, userMail);
+				erreklamatuGUI.setVisible(true);
+			}
+		});
+		btnErreklamazioaIpini.setBounds(463, 300, 178, 40);
+		contentPane.add(btnErreklamazioaIpini);
 
 		BLFacade facade = MainGUI.getBusinessLogic();
 		if (facade == null) {
