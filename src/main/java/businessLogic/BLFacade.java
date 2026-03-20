@@ -7,6 +7,7 @@ import java.util.List;
 import domain.Erabiltzailea;
 import domain.Sale;
 import domain.User;
+import domain.Erreklamazioak;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -88,4 +89,6 @@ public interface BLFacade  {
 	@WebMethod public void updateEgoera(Sale sale, String egoera);
 	
 	@WebMethod public String getFirstAccountNumber(String email);
+
+	@WebMethod public Erreklamazioak createErreklamazio(String titulua, String deskripzioa, File file, Sale sale, String userEmail);
 }

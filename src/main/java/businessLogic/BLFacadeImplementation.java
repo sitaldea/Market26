@@ -10,6 +10,7 @@ import dataAccess.DataAccess;
 import domain.Erabiltzailea;
 import domain.Sale;
 import domain.User;
+import domain.Erreklamazioak;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -187,6 +188,14 @@ public class BLFacadeImplementation  implements BLFacade {
 	public String getFirstAccountNumber(String email) {
 		dbManager.open();
 		String res = dbManager.getFirstAccountNumber(email);
+		dbManager.close();
+		return res;
+	}
+
+	@Override
+	public Erreklamazioak createErreklamazio(String titulua, String deskripzioa, File file, Sale sale, String userEmail) {
+		dbManager.open();
+		Erreklamazioak res = dbManager.createErreklamazio(titulua, deskripzioa, file, sale, userEmail);
 		dbManager.close();
 		return res;
 	}

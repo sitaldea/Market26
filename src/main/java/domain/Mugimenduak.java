@@ -2,6 +2,10 @@ package domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+
+
+@Entity
 public class Mugimenduak implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private float diruKop;
@@ -9,7 +13,6 @@ public class Mugimenduak implements Serializable{
 	private String productName;
 	private String mota;
 	
-	private User user;
 	private DiruKontua kontua;
 	
 	
@@ -58,13 +61,6 @@ public class Mugimenduak implements Serializable{
 		this.mota = mota;
 	}
 	
-	public User getUser() {
-		return user;
-	}
-	
-	public void setUser(User user) {
-		this.user = user;
-	}
 	
 	public DiruKontua getKontua() {
 		return kontua;

@@ -6,20 +6,27 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
+import javax.persistence.*;
+
 import javax.persistence.OneToOne;
 
+@Entity
 public class Erreklamazioak implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue
+	private Integer erreklamazioId;
+	
 	private String izenburua;
 	private String deskripzioa;
 	private String irudia;
 	@OneToOne
 	private Sale sale;
 	private User user;
-	private Admin admin;
 	
 	
 	public Erreklamazioak() {
@@ -46,6 +53,14 @@ public class Erreklamazioak implements Serializable{
 		}
 		}
 		this.sale = sale;
+	}
+
+	public Integer getErreklamazioId() {
+		return erreklamazioId;
+	}
+
+	public void setErreklamazioId(Integer erreklamazioId) {
+		this.erreklamazioId = erreklamazioId;
 	}
 
 	public String getIzenburua() {
@@ -78,6 +93,14 @@ public class Erreklamazioak implements Serializable{
 	
 	public void setSale(Sale sale) {
 		this.sale = sale;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

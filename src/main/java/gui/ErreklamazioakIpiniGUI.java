@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -127,6 +128,29 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String titulua = textFieldTitulua.getText();
 				String deskripzioa = textFieldDeskripzioa.getText();
+				if (titulua == null || titulua.trim().isEmpty()) {
+					JOptionPane.showMessageDialog(ErreklamazioakIpiniGUI.this, ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakIpiniGUI.Titulua") + " " + "is required", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if (deskripzioa == null || deskripzioa.trim().isEmpty()) {
+					JOptionPane.showMessageDialog(ErreklamazioakIpiniGUI.this, ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakIpiniGUI.deskripzioa") + " " + "is required", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				BLFacade facade = MainGUI.getBusinessLogic();
+				try {
+					if (targetFile == null) {
+					}
+					if (facade != null) {
+						facade.createErreklamazio(titulua, deskripzioa, targetFile, ErreklamazioakIpiniGUI.this.sale, ErreklamazioakIpiniGUI.this.userMail);
+						JOptionPane.showMessageDialog(ErreklamazioakIpiniGUI.this, "Reclamación enviada.", "Info", JOptionPane.INFORMATION_MESSAGE);
+						ErreklamazioakIpiniGUI.this.dispose();
+					} else {
+						JOptionPane.showMessageDialog(ErreklamazioakIpiniGUI.this, "Business logic not available", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(ErreklamazioakIpiniGUI.this, "Error sending reclamation: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnErreklamazioaIpini.setFont(new Font("Tahoma", Font.BOLD, 12));

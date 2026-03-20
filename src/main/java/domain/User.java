@@ -30,7 +30,7 @@ public class User extends Erabiltzailea implements Serializable {
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<DiruKontua> kontuak=new ArrayList<DiruKontua>();
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	private List<Erreklamazioak> errklamazioak=new ArrayList<Erreklamazioak>();
+	private List<Erreklamazioak> erreklamazioak=new ArrayList<Erreklamazioak>();
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Mugimenduak> mugimenduak=new ArrayList<Mugimenduak>();
 
@@ -150,7 +150,7 @@ public class User extends Erabiltzailea implements Serializable {
 		}
 	}
 	
-	public List<Erreklamazioak> getErrklamazioak() {
-		return errklamazioak;
+	public List<Erreklamazioak> getErreklamazioak() {
+		return erreklamazioak;
 	}
 }

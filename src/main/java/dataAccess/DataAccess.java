@@ -391,6 +391,23 @@ public void open(){
 		}
 	}
 	
+
+	public Erreklamazioak createErreklamazio(String titulua, String deskripzioa, File file, Sale sale, String userEmail) {
+		db.getTransaction().begin();
+		Sale s = db.find(Sale.class, sale.getSaleNumber());
+		Erreklamazioak erre = new Erreklamazioak(titulua, deskripzioa, file, s);
+		if (s != null) {
+			s.setErreklamazioa(erre);
+			User seller = s.getSeller();
+			if (seller != null) {
+				seller = db.find(User.class, seller.getEmail());
+				seller.getErreklamazioak().add(erre);
+			}
+		}
+		db.getTransaction().commit();
+		return erre;
+	}
+
 	public String getFirstAccountNumber(String email) {
 		TypedQuery<String> query = db.createQuery("SELECT d.kontuZenb FROM User u JOIN u.kontuak d WHERE u.email = ?1", String.class);
 		query.setParameter(1, email);
