@@ -153,9 +153,4 @@ public class User extends Erabiltzailea implements Serializable {
 	public List<Erreklamazioak> getErrklamazioak() {
 		return errklamazioak;
 	}
-	
-	public void addErreklamazioa(String izenburua, String deskripzioa, File file, Sale sale) {
-		Erreklamazioak erreklamazioa=new Erreklamazioak(izenburua, deskripzioa, file, sale);
-		errklamazioak.add(erreklamazioa);
-	}
 }

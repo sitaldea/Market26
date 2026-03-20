@@ -22,6 +22,7 @@ import configuration.UtilDate;
 import domain.User;
 import domain.Admin;
 import domain.Erabiltzailea;
+import domain.Erreklamazioak;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;

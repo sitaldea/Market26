@@ -8,7 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import businessLogic.BLFacade;
 import domain.Sale;
+import exceptions.FileNotUploadedException;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.imageio.ImageIO;
@@ -56,6 +59,7 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 	 */
 	public ErreklamazioakIpiniGUI(Sale sale, String email) {
 		this.sale = sale;
+        BLFacade facade = MainGUI.getBusinessLogic();
 		this.userMail = email;
 		setTitle(userMail);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,6 +125,8 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 		JButton btnErreklamazioaIpini = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakIpiniGUI.erreklamazioaIpini"));
 		btnErreklamazioaIpini.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String titulua = textFieldTitulua.getText();
+				String deskripzioa = textFieldDeskripzioa.getText();
 			}
 		});
 		btnErreklamazioaIpini.setFont(new Font("Tahoma", Font.BOLD, 12));

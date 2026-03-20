@@ -87,6 +87,5 @@ public interface BLFacade  {
 	
 	@WebMethod public void updateEgoera(Sale sale, String egoera);
 	
-	@WebMethod 	public String getFirstAccountNumber(String email);
-
+	@WebMethod public String getFirstAccountNumber(String email);
 }
