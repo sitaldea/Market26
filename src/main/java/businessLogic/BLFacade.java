@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import domain.Erabiltzailea;
 import domain.Sale;
 import domain.User;
 import exceptions.FileNotUploadedException;
@@ -62,15 +63,15 @@ public interface BLFacade  {
 	 */	
 	@WebMethod public void initializeBD();
 	
-	@WebMethod public User isLogin(String email, String password);
+	@WebMethod public Erabiltzailea isLogin(String email, String password);
 	
 	@WebMethod public void addUser(String email, String password, String name, String telefonoa);
 		
 	@WebMethod public Image downloadImage(String imageName);
 
-	@WebMethod public User getUser(String email);
+	@WebMethod public Erabiltzailea getUser(String email);
 	
-	@WebMethod public User isLogin(String email);
+	@WebMethod public Erabiltzailea isLogin(String email);
 	
 	@WebMethod public void buyProduct(Sale sale, String email);
 	

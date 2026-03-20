@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
-import domain.User;
+import domain.*;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -94,7 +94,7 @@ public class RegisterGUI extends JFrame {
 		            return;
 		        }
 
-		        User u = facade.getUser(email);
+		        Erabiltzailea u = (User) facade.getUser(email);
 		        if(u != null) {
 		            mensaje.setForeground(Color.RED);
 		            mensaje.setText(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.ErrorEmail"));

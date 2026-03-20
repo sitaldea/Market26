@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
-import domain.User;
+import domain.*;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -59,25 +59,31 @@ public class LoginGUI extends JFrame {
 		passwordFieldPass.setBounds(244, 162, 217, 18);
 		contentPane.add(passwordFieldPass);
 		
-		JButton btnNewButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Login"));
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnLogIn = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Login"));
+		btnLogIn.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUI.getBusinessLogic();
 				String email = textFieldEmail.getText();
 				String pass = new String(passwordFieldPass.getPassword());
-				User s = facade.isLogin(email, pass);
+				Erabiltzailea s = facade.isLogin(email, pass);
 				if(s!=null) {
-					dispose();
-					MainGUIErregistratuta a = new MainGUIErregistratuta(s.getEmail());
-					a.setVisible(true);
+					if(s instanceof domain.Admin) {
+						dispose();
+						MainGUIAdmin a = new MainGUIAdmin(s.getEmail());
+						a.setVisible(true);
+					} else {
+						dispose();
+						MainGUIErregistratuta a = new MainGUIErregistratuta(s.getEmail());
+						a.setVisible(true);
+					}
 				} else {
 					JOptionPane.showMessageDialog(LoginGUI.this, ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.ErrorQueary"), ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.Error"), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		btnNewButton.setBounds(108, 248, 173, 55);
-		contentPane.add(btnNewButton);
+		btnLogIn.setBounds(108, 248, 173, 55);
+		contentPane.add(btnLogIn);
 		
 		JButton btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.CancelButton"));
 		btnClose.addActionListener(new ActionListener() {

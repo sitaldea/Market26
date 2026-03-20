@@ -20,6 +20,8 @@ import javax.persistence.TypedQuery;
 import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.User;
+import domain.Admin;
+import domain.Erabiltzailea;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
@@ -76,17 +78,19 @@ public class DataAccess  {
 		try { 
 	       
 		    //Create sellers 
-			User seller1=new User("seller1@gmail.com", "Aitor Fernandez", "1234", "666666666");
-			User seller2=new User("seller22@gmail.com", "Ane Gaztañaga", "1234", "655555555");
-			User seller3=new User("seller3@gmail.com", "Test Seller", "1234", "644444444");
+			Erabiltzailea seller1=new User("seller1@gmail.com", "Aitor Fernandez", "1234", "666666666");
+			Erabiltzailea seller2=new User("seller22@gmail.com", "Ane Gaztañaga", "1234", "655555555");
+			Erabiltzailea seller3=new User("seller3@gmail.com", "Test Seller", "1234", "644444444");
 			
-			seller1.addDiruKontua("ES45678923245", 1000);
-			seller1.addDiruKontua("ES37848898695", 5);
-			seller3.addDiruKontua("ES45689653264", 580);
-			seller2.addDiruKontua("ES09245762456", 20);
-			seller3.addDiruKontua("ES44764463247", 453);
-			seller3.addDiruKontua("ES34786843767", 100);
-			seller3.addDiruKontua("ES97935722866", 40);
+			Erabiltzailea admin=new Admin("admin@gmail.com", "1234");
+			
+			((User) seller1).addDiruKontua("ES45678923245", 1000);
+			((User) seller1).addDiruKontua("ES37848898695", 5);
+			((User) seller3).addDiruKontua("ES45689653264", 580);
+			((User) seller2).addDiruKontua("ES09245762456", 20);
+			((User) seller3).addDiruKontua("ES44764463247", 453);
+			((User) seller3).addDiruKontua("ES34786843767", 100);
+			((User) seller3).addDiruKontua("ES97935722866", 40);
 
 
 			
@@ -94,22 +98,23 @@ public class DataAccess  {
 			Date today = UtilDate.trim(new Date());
 		
 			
-			seller1.addSale("futbol baloia", "oso polita, gutxi erabilita", 2, 10,  today, null, "Ez erosita");
-			seller1.addSale("salomon mendiko botak", "44 zenbakia, 3 ateraldi",2,  20,  today, null, "Ez erosita");
-			seller1.addSale("samsung 42\" telebista", "berria, erabili gabe", 1, 175,  today, null, "Ez erosita");
+			((User) seller1).addSale("futbol baloia", "oso polita, gutxi erabilita", 2, 10,  today, null, "Ez erosita");
+			((User) seller1).addSale("salomon mendiko botak", "44 zenbakia, 3 ateraldi",2,  20,  today, null, "Ez erosita");
+			((User) seller1).addSale("samsung 42\" telebista", "berria, erabili gabe", 1, 175,  today, null, "Ez erosita");
 
 
-			seller2.addSale("imac 27", "7 urte, dena ondo dabil", 1, 200,today, null, "Ez erosita");
-			seller2.addSale("iphone 17", "oso gutxi erabilita", 2, 400, today, null, "Ez erosita");
-			seller2.addSale("orbea mendiko bizikleta", "29\" 10 urte, mantenua behar du", 3,225, today, null, "Ez erosita");
-			seller2.addSale("polar kilor erlojua", "Vantage M, ondo dago", 3, 30, today, null, "Ez erosita");
+			((User) seller2).addSale("imac 27", "7 urte, dena ondo dabil", 1, 200,today, null, "Ez erosita");
+			((User) seller2).addSale("iphone 17", "oso gutxi erabilita", 2, 400, today, null, "Ez erosita");
+			((User) seller2).addSale("orbea mendiko bizikleta", "29\" 10 urte, mantenua behar du", 3,225, today, null, "Ez erosita");
+			((User) seller2).addSale("polar kilor erlojua", "Vantage M, ondo dago", 3, 30, today, null, "Ez erosita");
 
-			seller3.addSale("sukaldeko mahaia", "1.8*0.8, 4 aulkiekin. Prezio finkoa", 3,45, today, null, "Ez erosita");
+			((User) seller3).addSale("sukaldeko mahaia", "1.8*0.8, 4 aulkiekin. Prezio finkoa", 3,45, today, null, "Ez erosita");
 
 			
 			db.persist(seller1);
 			db.persist(seller2);
 			db.persist(seller3);
+			db.persist(admin);
 
 	
 			db.getTransaction().commit();
@@ -260,8 +265,8 @@ public void open(){
         return resizedImage;
     }
 	
-	public User isLogin(String email, String password) {
-		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.email=?1 AND u.password=?2", User.class);   
+	public Erabiltzailea isLogin(String email, String password) {
+		TypedQuery<User> query = db.createQuery("SELECT u FROM Erabiltzailea u WHERE u.email=?1 AND u.password=?2", User.class);   
 		query.setParameter(1, email);
 		query.setParameter(2, password);
 		if(!query.getResultList().isEmpty()) {
@@ -272,8 +277,8 @@ public void open(){
 		
 	}
 	
-	public User isLogin(String email) {
-		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.email=?1", User.class);   
+	public Erabiltzailea isLogin(String email) {
+		TypedQuery<User> query = db.createQuery("SELECT u FROM Erabiltzailea u WHERE u.email=?1", User.class);   
 		query.setParameter(1, email);
 		if(!query.getResultList().isEmpty()) {
 			return query.getResultList().get(0);
@@ -314,8 +319,8 @@ public void open(){
 		db.getTransaction().commit();		
 	}
 	
-	public User getUser(String email) {
-		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.email=?1", User.class);   
+	public Erabiltzailea getUser(String email) {
+		TypedQuery<User> query = db.createQuery("SELECT u FROM Erabiltzailea u WHERE u.email=?1", User.class);   
 		query.setParameter(1, email);
 		if(!query.getResultList().isEmpty()) {
 			return query.getResultList().get(0);
@@ -326,11 +331,11 @@ public void open(){
 	}
 
 	public void buyProduct(Sale sale, String email) {
-	    User u = getUser(email);
+		Erabiltzailea u = getUser(email);
 	    if (u != null) {
 	        Sale managedSale = db.merge(sale);
 		    db.getTransaction().begin();
-	        u.getErositakoak().add(managedSale);
+	        ((User) u).getErositakoak().add(managedSale);
 		    db.getTransaction().commit();
 	    }
 	}

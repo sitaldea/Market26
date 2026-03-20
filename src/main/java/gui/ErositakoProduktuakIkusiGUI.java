@@ -25,9 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import businessLogic.BLFacade;
-import domain.DiruKontua;
-import domain.Sale;
-import domain.User;
+import domain.*;
 
 public class ErositakoProduktuakIkusiGUI extends JFrame {
 
@@ -135,13 +133,13 @@ public class ErositakoProduktuakIkusiGUI extends JFrame {
 			return;
 		}
 
-		User user = facade.getUser(email);
+		Erabiltzailea user = (User) facade.getUser(email);
 		if (user == null) {
 			JOptionPane.showMessageDialog(this, ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.ErrorQueary"), "Info", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 
-		purchased = user.getErositakoak();
+		purchased = ((User) user).getErositakoak();
 		if (purchased == null || purchased.isEmpty()) {
 			JOptionPane.showMessageDialog(this, ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts"), "Info", JOptionPane.INFORMATION_MESSAGE);
 			return;

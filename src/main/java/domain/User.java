@@ -14,18 +14,14 @@ import javax.xml.bind.annotation.XmlIDREF;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class User implements Serializable {
+public class User extends Erabiltzailea implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@XmlID
-	@Id 
-	private String email;
 	private String name;
 	private String telefonoa;
-	private String password;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Sale> sales=new ArrayList<Sale>();
@@ -43,21 +39,12 @@ public class User implements Serializable {
 	}
 
 	public User(String email, String name, String password, String telefonoa) {
-		this.email = email;
+		super(email, password);
 		this.name = name;
-		this.password = password;
 		this.telefonoa = telefonoa;
 	}
 	
 	
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -66,19 +53,10 @@ public class User implements Serializable {
 		this.name = name;
 	}
 	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-
 	
 	
 	public String toString(){
-		return email+";"+name+sales;
+		return getEmail()+";"+name+sales;
 	}
 	
 	/**
@@ -134,12 +112,12 @@ public class User implements Serializable {
 	    if (obj == null || getClass() != obj.getClass())
 	        return false;
 	    User other = (User) obj;
-	    return email != null && email.equals(other.email);
+	    return getEmail() != null && getEmail().equals(other.getEmail());
 	}
 
 	@Override
 	public int hashCode() {
-	    return email != null ? email.hashCode() : 0;
+	    return getEmail() != null ? getEmail().hashCode() : 0;
 	}
 
 

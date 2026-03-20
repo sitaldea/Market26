@@ -7,6 +7,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import dataAccess.DataAccess;
+import domain.Erabiltzailea;
 import domain.Sale;
 import domain.User;
 import exceptions.FileNotUploadedException;
@@ -108,9 +109,9 @@ public class BLFacadeImplementation  implements BLFacade {
         return null;
     }
     
-    @WebMethod public User isLogin(String email, String password) {
+    @WebMethod public Erabiltzailea isLogin(String email, String password) {
 		dbManager.open();
-		User res = dbManager.isLogin(email, password);
+		Erabiltzailea res = dbManager.isLogin(email, password);
 		dbManager.close();
 		return res;
 	}
@@ -123,16 +124,16 @@ public class BLFacadeImplementation  implements BLFacade {
 	} 
 	
 	@Override
-	public User getUser(String email) {
+	public Erabiltzailea getUser(String email) {
 		dbManager.open();
-		User res = dbManager.getUser(email);
+		Erabiltzailea res = dbManager.getUser(email);
 		dbManager.close();
 		return res;
 	}
 	
-	public User isLogin(String email) {
+	public Erabiltzailea isLogin(String email) {
 		dbManager.open();
-		User res = dbManager.isLogin(email);
+		Erabiltzailea res = dbManager.isLogin(email);
 		dbManager.close();
 		return res;
 	}
