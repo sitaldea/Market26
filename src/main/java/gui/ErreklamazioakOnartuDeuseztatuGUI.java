@@ -1,10 +1,28 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+
+import businessLogic.BLFacade;
+import domain.Erreklamazioak;
+import domain.Erabiltzailea;
+import domain.Sale;
+import domain.User;
+
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 
@@ -12,19 +30,123 @@ public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 	private JPanel contentPane;
 	private String userMail;
 
+	private List<Erreklamazioak> reclamList;
+	private int currentIndex = 0;
+
+	private JLabel lblTitle;
+	private JLabel lblDescription;
+	private JLabel lblImage;
+	private JButton btnPrev;
+	private JButton btnNext;
+	private JButton btnOnartu;
+	private JButton btnDeuseztatu;
 
 	/**
 	 * Create the frame.
 	 */
 	public ErreklamazioakOnartuDeuseztatuGUI(String email) {
 		this.userMail = email;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		setTitle(userMail);
 
+		lblTitle = new JLabel("");
+		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTitle.setBounds(20, 20, 540, 25);
+		contentPane.add(lblTitle);
+
+		lblDescription = new JLabel(" ");
+		lblDescription.setBounds(20, 60, 540, 80);
+		contentPane.add(lblDescription);
+
+		lblImage = new JLabel();
+		lblImage.setBounds(20, 150, 160, 160);
+		contentPane.add(lblImage);
+
+		btnPrev = new JButton("<");
+		btnPrev.setBounds(200, 220, 60, 30);
+		contentPane.add(btnPrev);
+
+		btnNext = new JButton(">");
+		btnNext.setBounds(270, 220, 60, 30);
+		contentPane.add(btnNext);
+
+		btnOnartu = new JButton("Onartu");
+		btnOnartu.setBounds(360, 220, 100, 30);
+		contentPane.add(btnOnartu);
+
+		btnDeuseztatu = new JButton("Deuseztatu");
+		btnDeuseztatu.setBounds(470, 220, 110, 30);
+		contentPane.add(btnDeuseztatu);
+
+		BLFacade facade = MainGUI.getBusinessLogic();
+		if (facade != null) {
+			Erabiltzailea e = facade.getUser(userMail);
+			if (e instanceof User) {
+				User u = (User) e;
+				reclamList = u.getErreklamazioak();
+			}
+		}
+
+		if (reclamList == null || reclamList.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Ez dago erreklamaziorik.", "Info", JOptionPane.INFORMATION_MESSAGE);
+			dispose();
+			return;
+		}
+
+		updateView();
+
+		btnPrev.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (currentIndex > 0) {
+					currentIndex--;
+					updateView();
+				}
+			}
+		});
+
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (currentIndex < reclamList.size() - 1) {
+					currentIndex++;
+					updateView();
+				}
+			}
+		});
+
+		btnOnartu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+		btnDeuseztatu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+	}
+
+	private void updateView() {
+		if (reclamList == null || reclamList.isEmpty()) return;
+		Erreklamazioak r = reclamList.get(currentIndex);
+		lblTitle.setText((currentIndex+1) + "/" + reclamList.size() + " - " + r.getIzenburua());
+		lblDescription.setText("<html>" + r.getDeskripzioa() + "</html>");
+		lblImage.setIcon(null);
+		if (r.getIrudia() != null && !r.getIrudia().isEmpty()) {
+			BLFacade f = MainGUI.getBusinessLogic();
+			if (f != null) {
+				Image img = f.downloadImage(r.getIrudia());
+				if (img != null) {
+					lblImage.setIcon(new ImageIcon(img.getScaledInstance(160, 160, Image.SCALE_SMOOTH)));
+				}
+			}
+		}
+		btnPrev.setEnabled(currentIndex > 0);
+		btnNext.setEnabled(currentIndex < reclamList.size() - 1);
 	}
 
 }
