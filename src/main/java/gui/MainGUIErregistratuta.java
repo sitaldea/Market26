@@ -10,6 +10,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
@@ -23,6 +24,9 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+
+import businessLogic.BLFacade;
+import domain.User;
 
 public class MainGUIErregistratuta extends JFrame {
 
@@ -60,19 +64,19 @@ public class MainGUIErregistratuta extends JFrame {
 				ColumnSpec.decode("238px"),
 				ColumnSpec.decode("31px"),
 				ColumnSpec.decode("237px"),},
-			new RowSpec[] {
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("29px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("38px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("37px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("38px"),
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
-				RowSpec.decode("48px"),
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
-				RowSpec.decode("32px"),}));
+				new RowSpec[] {
+						FormSpecs.PARAGRAPH_GAP_ROWSPEC,
+						RowSpec.decode("29px"),
+						FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("38px"),
+						FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("37px"),
+						FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("38px"),
+						FormSpecs.UNRELATED_GAP_ROWSPEC,
+						RowSpec.decode("48px"),
+						FormSpecs.UNRELATED_GAP_ROWSPEC,
+						RowSpec.decode("32px"),}));
 
 		lblSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
 		lblSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
@@ -106,15 +110,15 @@ public class MainGUIErregistratuta extends JFrame {
 			}
 		});
 		contentPane.add(btnQuearySale, "2, 6, fill, fill");
-					
-					btnMugimenduak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.Mugimenduak"));
-					btnMugimenduak.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent arg0) {
-							JFrame a = new MugimenduakIkusiGUI(userMail);
-							a.setVisible(true);
-						}
-					});
-					contentPane.add(btnMugimenduak, "4, 6, fill, fill");
+
+		btnMugimenduak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.Mugimenduak"));
+		btnMugimenduak.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame a = new MugimenduakIkusiGUI(userMail);
+				a.setVisible(true);
+			}
+		});
+		contentPane.add(btnMugimenduak, "4, 6, fill, fill");
 
 		rdbtnNewRadioButton = new JRadioButton("English");
 		rdbtnNewRadioButton.addActionListener(new ActionListener() {
@@ -141,25 +145,37 @@ public class MainGUIErregistratuta extends JFrame {
 				paintAgain();
 			}
 		});
-		
-				btnErositakoProduktuak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.ErositakoProduktuakIkusi"));
-				btnErositakoProduktuak.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						JFrame a = new ErositakoProduktuakIkusiGUI(userMail);
-			a.setVisible(true);
-					}
-				});
-				contentPane.add(btnErositakoProduktuak, "2, 8, fill, fill");
-		
+
+		btnErositakoProduktuak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.ErositakoProduktuakIkusi"));
+		btnErositakoProduktuak.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				BLFacade facade = MainGUI.getBusinessLogic();
+				User u = (User) facade.getUser(userMail);
+				if(u.getErositakoak() == null || u.getErositakoak().isEmpty()) {
+					JOptionPane.showMessageDialog(MainGUIErregistratuta.this, "Ez dago erositako produkturik.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JFrame a = new ErositakoProduktuakIkusiGUI(userMail);
+					a.setVisible(true);	
+				}
+			}
+		});
+		contentPane.add(btnErositakoProduktuak, "2, 8, fill, fill");
+
 		btnErreklamazioakIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.ErreklamazioakIkusi"));
 		btnErreklamazioakIkusi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame a = new ErreklamazioakOnartuDeuseztatuGUI(userMail);
-				a.setVisible(true);
+				BLFacade facade = MainGUI.getBusinessLogic();
+				User u = (User) facade.getUser(userMail);
+				if(u.getErreklamazioak() == null || u.getErreklamazioak().isEmpty()) {
+					JOptionPane.showMessageDialog(MainGUIErregistratuta.this, "Ez dago erreklamaziorik.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JFrame a = new ErreklamazioakOnartuDeuseztatuGUI(userMail);
+					a.setVisible(true);
+				}
 			}
 		});
 		contentPane.add(btnErreklamazioakIkusi, "4, 8, fill, fill");
-		
+
 		btnNeLogOut = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.SaioaItxi"));
 		btnNeLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

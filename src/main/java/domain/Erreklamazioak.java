@@ -24,6 +24,7 @@ public class Erreklamazioak implements Serializable{
 	private String izenburua;
 	private String deskripzioa;
 	private String irudia;
+	private String egoera;
 	@OneToOne
 	private Sale sale;
 	private User user;
@@ -33,10 +34,11 @@ public class Erreklamazioak implements Serializable{
 		super();
 	}
 	
-	public Erreklamazioak(String izenburua, String deskripzioa, File file, Sale sale) {
+	public Erreklamazioak(String izenburua, String deskripzioa, File file, Sale sale, String egoera) {
 		super();
 		this.setIzenburua(izenburua);
 		this.deskripzioa = deskripzioa;
+		this.egoera = egoera;
 		if (file!=null) {
 		    this.irudia=file.getName();
 			try {
@@ -101,6 +103,14 @@ public class Erreklamazioak implements Serializable{
 	
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public String getEgoera() {
+		return egoera;
+	}
+	
+	public void setEgoera(String egoera) {
+		this.egoera = egoera;
 	}
 	
 }

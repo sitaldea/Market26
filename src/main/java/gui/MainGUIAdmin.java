@@ -52,7 +52,7 @@ public class MainGUIAdmin extends JFrame {
 		btnErreklamazioaIkusi = new JButton();
 		btnErreklamazioaIkusi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ErreklamazioakAdminGui erreklamazioakAdminGui = new ErreklamazioakAdminGui(usermail);
+				ErreklamazioakEbatziGUI erreklamazioakAdminGui = new ErreklamazioakEbatziGUI(usermail);
 				erreklamazioakAdminGui.setVisible(true);
 			}
 		});

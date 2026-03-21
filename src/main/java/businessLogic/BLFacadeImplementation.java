@@ -199,4 +199,18 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return res;
 	}
+	
+	@Override
+	public void updateEgoeraErreklamazioa(Erreklamazioak erre, String egoera) {
+		dbManager.open();
+		dbManager.updateEgoeraErreklamazioa(erre, egoera);
+		dbManager.close();
+	}
+	@Override
+	public List<Erreklamazioak> getErreklamazioakByEgoera(String egoera) {
+		dbManager.open();
+		java.util.List<Erreklamazioak> res = dbManager.getErreklamazioakByEgoera(egoera);
+		dbManager.close();
+		return res;
+	}
 }

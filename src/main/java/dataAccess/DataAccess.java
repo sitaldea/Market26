@@ -395,7 +395,7 @@ public void open(){
 	public Erreklamazioak createErreklamazio(String titulua, String deskripzioa, File file, Sale sale, String userEmail) {
 		db.getTransaction().begin();
 		Sale s = db.find(Sale.class, sale.getSaleNumber());
-		Erreklamazioak erre = new Erreklamazioak(titulua, deskripzioa, file, s);
+		Erreklamazioak erre = new Erreklamazioak(titulua, deskripzioa, file, s, "Pendiente");
 		if (s != null) {
 			s.setErreklamazioa(erre);
 			User seller = s.getSeller();
@@ -417,5 +417,21 @@ public void open(){
 		} else {
 			return null;
 		}
+	}
+	
+	public void updateEgoeraErreklamazioa(Erreklamazioak erre, String egoera) {
+		Erreklamazioak e = db.find(Erreklamazioak.class, erre.getErreklamazioId());
+		if(e!=null) {
+			db.getTransaction().begin();
+			e.setEgoera(egoera);
+			db.getTransaction().commit();
+		}
+	}
+
+	public List<Erreklamazioak> getErreklamazioakByEgoera(String egoera) {
+		TypedQuery<Erreklamazioak> query = db.createQuery("SELECT e FROM Erreklamazioak e WHERE e.egoera = ?1", Erreklamazioak.class);
+		query.setParameter(1, egoera);
+		List<Erreklamazioak> result = query.getResultList();
+		return result;
 	}
 }

@@ -23,6 +23,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
+import javax.swing.SwingConstants;
 
 public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 
@@ -40,6 +41,7 @@ public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 	private JButton btnNext;
 	private JButton btnOnartu;
 	private JButton btnDeuseztatu;
+	private JLabel lblMessage;
 
 	/**
 	 * Create the frame.
@@ -82,6 +84,12 @@ public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 		btnDeuseztatu = new JButton("Deuseztatu");
 		btnDeuseztatu.setBounds(470, 220, 110, 30);
 		contentPane.add(btnDeuseztatu);
+		
+		lblMessage = new JLabel("New label");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblMessage.setBounds(231, 164, 165, 30);
+		contentPane.add(lblMessage);
 
 		BLFacade facade = MainGUI.getBusinessLogic();
 		if (facade != null) {
@@ -90,12 +98,6 @@ public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 				User u = (User) e;
 				reclamList = u.getErreklamazioak();
 			}
-		}
-
-		if (reclamList == null || reclamList.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Ez dago erreklamaziorik.", "Info", JOptionPane.INFORMATION_MESSAGE);
-			dispose();
-			return;
 		}
 
 		updateView();
@@ -120,14 +122,24 @@ public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 
 		btnOnartu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Erreklamazioak erre = reclamList.get(currentIndex);
+				facade.updateEgoeraErreklamazioa(erre, "Onartua");
+				erre.setEgoera("Onartua");
+				updateView();
+				JOptionPane.showMessageDialog(ErreklamazioakOnartuDeuseztatuGUI.this, "Egoera eguneratua: Onartua", "Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
 		btnDeuseztatu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Erreklamazioak erre = reclamList.get(currentIndex);
+				BLFacade facade = MainGUI.getBusinessLogic();
+				facade.updateEgoeraErreklamazioa(erre, "Deuseztatu");
+				erre.setEgoera("Deuseztatu");
+				updateView();
+				JOptionPane.showMessageDialog(ErreklamazioakOnartuDeuseztatuGUI.this, "Egoera eguneratua: Deuseztatu", "Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-
 	}
 
 	private void updateView() {
@@ -145,8 +157,9 @@ public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 				}
 			}
 		}
+		String egoera = r.getEgoera();
+		lblMessage.setText(egoera != null ? egoera : "");
 		btnPrev.setEnabled(currentIndex > 0);
 		btnNext.setEnabled(currentIndex < reclamList.size() - 1);
 	}
-
 }

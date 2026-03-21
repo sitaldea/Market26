@@ -46,6 +46,7 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 	private JButton btnAukeratu;
 	private JButton btnErreklamazioaIpini;
 	private JButton btnItxi;
+	private JPanel panel;
 	File targetFile;
 	BufferedImage targetImg;
 	
@@ -102,8 +103,8 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 
 		        if (result == JFileChooser.APPROVE_OPTION) {
 		            targetFile = fileChooser.getSelectedFile();
-		            contentPane.removeAll();
-		            contentPane.repaint();
+		            panel.removeAll();
+		            panel.repaint();
 
 		            try {
 		                targetImg = rescale(ImageIO.read(targetFile));
@@ -112,8 +113,8 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 		                //Logger.getLogger(MainAppFrame.class.getName()).log(Level.SEVERE, null, ex);
 		            }
 		            
-		            contentPane.setLayout(new BorderLayout(0, 0));
-		            contentPane.add(new JLabel(new ImageIcon(targetImg))); 
+		            panel.setLayout(new BorderLayout(0, 0));
+		            panel.add(new JLabel(new ImageIcon(targetImg))); 
 		            setVisible(true);
 
 		            }
@@ -171,6 +172,10 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 		lblDeskripzioa.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblDeskripzioa.setBounds(74, 95, 261, 14);
 		contentPane.add(lblDeskripzioa);
+		
+		panel = new JPanel();
+		panel.setBounds(572, 235, 111, 90);
+		contentPane.add(panel);
 
 	}
 	
