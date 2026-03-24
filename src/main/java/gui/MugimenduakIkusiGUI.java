@@ -93,25 +93,26 @@ public class MugimenduakIkusiGUI extends JFrame {
 	}
 
 	private void loadMovementsForSelected(BLFacade facade, User user) {
-		if (user == null) return;
-		String selected = (String) comboBoxKontuak.getSelectedItem();
-		if (selected == null) return;
-
-		DiruKontua selectedK = null;
-		for (DiruKontua k : user.getKontuak()) {
-			if (k.getKontuZenb().equals(selected)) {
-				selectedK = k;
-				break;
+		if (user != null) {
+			String selected = (String) comboBoxKontuak.getSelectedItem();
+			if (selected != null) {
+				tableModel.setRowCount(0);
+				for (DiruKontua k : user.getKontuak()) {
+					if (k.getKontuZenb().equals(selected)) {
+						List<Mugimenduak> mugimenduak = k.getMugimenduak();
+						if (mugimenduak != null) {
+							for (Mugimenduak m : mugimenduak) {
+								tableModel.addRow(new Object[]{
+										m.getData(),
+										m.getDiruKop(),
+										m.getProductName(),
+										m.getMota()
+								});
+							}
+						}
+					}
+				}
 			}
-		}		tableModel.setRowCount(0);
-		if (selectedK == null) return;
-
-		List<Mugimenduak> mugimenduak = selectedK.getMugimenduak();
-		if (mugimenduak == null || mugimenduak.isEmpty()) return;
-
-		for (Mugimenduak m : mugimenduak) {
-			tableModel.addRow(new Object[] { m.getData(), m.getDiruKop(), m.getProductName(), m.getMota() });
 		}
 	}
-
 }
