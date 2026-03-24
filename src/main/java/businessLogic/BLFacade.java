@@ -96,4 +96,6 @@ public interface BLFacade  {
 
 	@WebMethod public List<Erreklamazioak> getErreklamazioakByEgoera(String egoera);
 
+	@WebMethod void addMugimenduak(float diruKop, Date data, String productName, String mota, String kontuZenb);
+
 }

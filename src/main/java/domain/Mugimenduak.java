@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 
@@ -9,7 +10,7 @@ import javax.persistence.Entity;
 public class Mugimenduak implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private float diruKop;
-	private String data;
+	private Date data;
 	private String productName;
 	private String mota;
 	
@@ -21,7 +22,7 @@ public class Mugimenduak implements Serializable{
 	}
 	
 	
-	public Mugimenduak(float diruKop, String data, String productName, String mota) {
+	public Mugimenduak(float diruKop, Date data, String productName, String mota) {
 		super();
 		this.diruKop = diruKop;
 		this.data = data;
@@ -37,11 +38,11 @@ public class Mugimenduak implements Serializable{
 		this.diruKop = diruKop;
 	}
 	
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 	
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 	

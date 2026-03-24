@@ -213,4 +213,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return res;
 	}
+	
+	@Override
+	public void addMugimenduak(float diruKop, Date data, String productName, String mota, String kontuZenb) {
+		dbManager.open();
+		dbManager.addMugimenduak(diruKop, data, productName, mota, kontuZenb);
+		dbManager.close();
+	}
+
 }

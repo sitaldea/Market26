@@ -121,6 +121,8 @@ public class BuyProductGUI extends JFrame {
 					facade.buyProduct(sale, userMail);
 					facade.updateDiruKop(buyerKontuZenb, buyerDiruKop - sale.getPrice());
 					facade.updateDiruKop(sellerKontuZenb, sellerDiruKop + sale.getPrice());
+					facade.addMugimenduak((float) -sale.getPrice(), new java.util.Date(), sale.getTitle(), "Erosketa", buyerKontuZenb);
+					facade.addMugimenduak((float) sale.getPrice(), new java.util.Date(), sale.getTitle(), "Salmenta", sellerKontuZenb);
 					facade.updateEgoera(sale, "Erosita");
 		            JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.Success"));
 		            BuyProductGUI.this.dispose();

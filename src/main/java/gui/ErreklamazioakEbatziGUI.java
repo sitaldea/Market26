@@ -81,7 +81,7 @@ public class ErreklamazioakEbatziGUI extends JFrame {
 		BLFacade facade = MainGUI.getBusinessLogic();
 		reclamList = new ArrayList<>();
 		if (facade != null) {
-			java.util.List<Erreklamazioak> all = facade.getErreklamazioakByEgoera("Deuseztatu");
+			List<Erreklamazioak> all = facade.getErreklamazioakByEgoera("Deuseztatu");
 			if (all != null) reclamList.addAll(all);
 		}
 

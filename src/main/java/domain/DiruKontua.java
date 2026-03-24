@@ -2,6 +2,7 @@ package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -70,6 +71,12 @@ public class DiruKontua implements Serializable{
 	
 	public void setMugimenduak(List<Mugimenduak> mugimenduak) {
 		this.mugimenduak = mugimenduak;
+	}
+	
+	public void addMugimenduak(float diruKop, Date data, String productName, String mota) {
+		Mugimenduak m = new Mugimenduak(diruKop, data, productName, mota);
+		m.setKontua(this);
+		this.mugimenduak.add(m);
 	}
 }
 

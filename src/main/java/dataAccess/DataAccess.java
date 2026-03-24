@@ -21,6 +21,7 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.User;
 import domain.Admin;
+import domain.DiruKontua;
 import domain.Erabiltzailea;
 import domain.Erreklamazioak;
 import domain.Sale;
@@ -433,5 +434,25 @@ public void open(){
 		query.setParameter(1, egoera);
 		List<Erreklamazioak> result = query.getResultList();
 		return result;
+	}
+	
+	public DiruKontua getDiruKontua(String zenb) {
+		TypedQuery<DiruKontua> query = db.createQuery("SELECT d FROM DiruKontua d WHERE d.kontuZenb = ?1", DiruKontua.class);
+		query.setParameter(1, zenb);
+		List<DiruKontua> result = query.getResultList();
+		if (!result.isEmpty()) {
+			return result.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	public void addMugimenduak(float diruKop, Date data, String productName, String mota, String kontuZenb) {
+		db.getTransaction().begin();
+		DiruKontua d = db.find(DiruKontua.class, kontuZenb);
+		if (d != null) {
+			d.addMugimenduak(diruKop, data, productName, mota);
+			db.getTransaction().commit();
+		}
 	}
 }
