@@ -81,11 +81,26 @@ public class DiruaSartuAteraGUI extends JFrame {
 		JButton btnSartu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.Sartu"));
 		btnSartu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				  String kontuZenb = comboBoxKontuak.getSelectedItem().toString();
-				  float diruKopSartu = Float.parseFloat(textFieldDiruKop.getText());
-	              double diruKop = facade.getDiruKop(kontuZenb);
-	              facade.updateDiruKop(kontuZenb, diruKop + diruKopSartu);
-	              JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.SartuMessage"));
+				try {
+					if (comboBoxKontuak.getSelectedItem() == null) {
+						JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.SelectAccountMessage"));
+						return;
+					}
+					String kontuZenb = comboBoxKontuak.getSelectedItem().toString();
+					double diruKopSartu = Double.parseDouble(textFieldDiruKop.getText());
+					if (diruKopSartu <= 0) {
+						JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.PositiveAmountMessage"));
+						return;
+					}
+					double diruKop = facade.getDiruKop(kontuZenb);
+					facade.updateDiruKop(kontuZenb, diruKop + diruKopSartu);
+					JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.SartuMessage"));
+					double newBalSartu = facade.getDiruKop(kontuZenb);
+					textField.setText(String.format("%.2f", newBalSartu));
+					textFieldDiruKop.setText("0");
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.InvalidNumberMessage"), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnSartu.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -95,16 +110,30 @@ public class DiruaSartuAteraGUI extends JFrame {
 		JButton btnAtera = new JButton(ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.Atera")); 
 		btnAtera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String kontuZenb = comboBoxKontuak.getSelectedItem().toString();
-				  float diruKopAtera = Float.parseFloat(textFieldDiruKop.getText());
-	              double diruKop = facade.getDiruKop(kontuZenb);
-	              if (diruKop < diruKopAtera) {
-	            	  JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.EzDagoDiruKopMessage"), "Error",
-								JOptionPane.ERROR_MESSAGE);
-	              } else {
-	            	  facade.updateDiruKop(kontuZenb, diruKop - diruKopAtera);
-		              JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.AteraMessage")); 
-	              }
+				try {
+					if (comboBoxKontuak.getSelectedItem() == null) {
+						JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.SelectAccountMessage"));
+						return;
+					}
+					String kontuZenb = comboBoxKontuak.getSelectedItem().toString();
+					double diruKopAtera = Double.parseDouble(textFieldDiruKop.getText());
+					if (diruKopAtera <= 0) {
+						JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.PositiveAmountMessage"));
+						return;
+					}
+					double diruKop = facade.getDiruKop(kontuZenb);
+					if (diruKop < diruKopAtera) {
+						JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.EzDagoDiruKopMessage"), "Error", JOptionPane.ERROR_MESSAGE);
+					} else {
+						facade.updateDiruKop(kontuZenb, diruKop - diruKopAtera);
+						JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.AteraMessage"));
+						double newBalAtera = facade.getDiruKop(kontuZenb);
+						textField.setText(String.format("%.2f", newBalAtera));
+						textFieldDiruKop.setText("0");
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.InvalidNumberMessage"), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnAtera.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -118,7 +147,6 @@ public class DiruaSartuAteraGUI extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		textField = new JTextField();
-		// don't set the text yet; we'll set it after loading accounts
 		textField.setEditable(false);
 		textField.setBounds(186, 20, 60, 20);
 		contentPane.add(textField);
@@ -135,19 +163,19 @@ public class DiruaSartuAteraGUI extends JFrame {
 	        }
 
 	        if (comboBoxKontuak.getItemCount() > 0) {
-	            comboBoxKontuak.setSelectedIndex(0);
-	            comboBoxKontuak.requestFocusInWindow();
-	            if (comboBoxKontuak.getSelectedItem() != null) {
-	                textField.setText(Double.toString(facade.getDiruKop(comboBoxKontuak.getSelectedItem().toString())));
-	            }
+	        	comboBoxKontuak.setSelectedIndex(0);
+	        	comboBoxKontuak.requestFocusInWindow();
+	        	if (comboBoxKontuak.getSelectedItem() != null) {
+	        		textField.setText(String.format("%.2f", facade.getDiruKop(comboBoxKontuak.getSelectedItem().toString())));
+	        	}
 	        } else {
-	            textField.setText("0.0");
+	        	textField.setText(String.format("%.2f", 0.0));
 	        }
 
 	        comboBoxKontuak.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	                if (comboBoxKontuak.getSelectedItem() != null) {
-	                    textField.setText(Double.toString(facade.getDiruKop(comboBoxKontuak.getSelectedItem().toString())));
+	                    textField.setText(String.format("%.2f", facade.getDiruKop(comboBoxKontuak.getSelectedItem().toString())));
 	                }
 	            }
 	        });
