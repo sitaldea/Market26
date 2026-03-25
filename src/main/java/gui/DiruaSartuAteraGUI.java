@@ -30,6 +30,7 @@ public class DiruaSartuAteraGUI extends JFrame {
 	private JComboBox<String> comboBoxKontuak;
 	private JLabel lblIzKontuZenb;
 	private JTextField textFieldDiruKop;
+	private JTextField textField;
 
 
 
@@ -40,7 +41,7 @@ public class DiruaSartuAteraGUI extends JFrame {
 		this.userMail = email;
         BLFacade facade = MainGUI.getBusinessLogic();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 460, 299);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -51,7 +52,7 @@ public class DiruaSartuAteraGUI extends JFrame {
 		lblIzKontuZenb.setBounds(10, 59, 126, 14);
 		contentPane.add(lblIzKontuZenb);
 		
-		JComboBox<String> comboBoxKontuak = new JComboBox<String>();
+		comboBoxKontuak = new JComboBox<String>();
 		comboBoxKontuak.setBounds(186, 57, 215, 20);
 		contentPane.add(comboBoxKontuak);
 		
@@ -111,9 +112,21 @@ public class DiruaSartuAteraGUI extends JFrame {
 		contentPane.add(btnAtera);
 		
 		
+		JLabel lblNewLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.DiruKop")); 
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel.setBounds(10, 22, 126, 12);
+		contentPane.add(lblNewLabel);
+		
+		textField = new JTextField();
+		// don't set the text yet; we'll set it after loading accounts
+		textField.setEditable(false);
+		textField.setBounds(186, 20, 60, 20);
+		contentPane.add(textField);
+		
+		
 		setTitle(userMail);
 		
-
+	
 		 User user = facade.getUserAccounts(userMail); 
 	        if (user != null && user.getKontuak() != null) {
 	            for (DiruKontua k : user.getKontuak()) {
@@ -121,6 +134,24 @@ public class DiruaSartuAteraGUI extends JFrame {
 	            }
 	        }
 
+	        if (comboBoxKontuak.getItemCount() > 0) {
+	            comboBoxKontuak.setSelectedIndex(0);
+	            comboBoxKontuak.requestFocusInWindow();
+	            if (comboBoxKontuak.getSelectedItem() != null) {
+	                textField.setText(Double.toString(facade.getDiruKop(comboBoxKontuak.getSelectedItem().toString())));
+	            }
+	        } else {
+	            textField.setText("0.0");
+	        }
 
+	        comboBoxKontuak.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                if (comboBoxKontuak.getSelectedItem() != null) {
+	                    textField.setText(Double.toString(facade.getDiruKop(comboBoxKontuak.getSelectedItem().toString())));
+	                }
+	            }
+	        });
+
+	
 	}
 }

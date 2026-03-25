@@ -135,9 +135,8 @@ public class QuerySalesGUI extends JFrame {
 		        @Override
 		        public void mousePressed(MouseEvent mouseEvent) {
 		            
-		            if(mouseEvent.getClickCount() == 2)
-		            {
-				        JTable table =(JTable) mouseEvent.getSource();
+		            if(mouseEvent.getClickCount() == 2) {
+		            	JTable table =(JTable) mouseEvent.getSource();
 		            	Point point = mouseEvent.getPoint();
 				        int row = table.rowAtPoint(point);
 		            	Sale s=(Sale) tableModelProducts.getValueAt(row, 3);

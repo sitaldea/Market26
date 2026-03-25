@@ -29,118 +29,125 @@ import java.awt.Font;
 
 public class BuyProductGUI extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private JTextField textFieldPrice;
-    private static final int baseSize = 160;
-    private String userMail;
-    private JComboBox<String> comboBoxKontuak;
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField textFieldPrice;
+	private static final int baseSize = 160;
+	private String userMail;
+	private JComboBox<String> comboBoxKontuak;
 
-    public BuyProductGUI(Sale sale, String mail) {
+	public BuyProductGUI(Sale sale, String mail) {
 
-        this.userMail = mail;
+		this.userMail = mail;
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 587, 344);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 587, 344);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
-        setTitle(userMail);
+		setTitle(userMail);
 
-        BLFacade facade = MainGUI.getBusinessLogic();
+		BLFacade facade = MainGUI.getBusinessLogic();
 
-        JLabel lblIzKontuZenb = new JLabel(
-                ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.kontu"));
-        lblIzKontuZenb.setFont(new Font("Tahoma", Font.BOLD, 12));
-        lblIzKontuZenb.setBounds(120, 51, 126, 14);
-        contentPane.add(lblIzKontuZenb);
+		JLabel lblIzKontuZenb = new JLabel(
+				ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.kontu"));
+		lblIzKontuZenb.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblIzKontuZenb.setBounds(120, 51, 126, 14);
+		contentPane.add(lblIzKontuZenb);
 
-        comboBoxKontuak = new JComboBox<>();
-        comboBoxKontuak.setBounds(273, 49, 215, 20);
-        contentPane.add(comboBoxKontuak);
+		comboBoxKontuak = new JComboBox<>();
+		comboBoxKontuak.setBounds(273, 49, 215, 20);
+		contentPane.add(comboBoxKontuak);
 
-        User user = facade.getUserAccounts(userMail); 
-        if (user != null && user.getKontuak() != null) {
-            for (DiruKontua k : user.getKontuak()) {
-                comboBoxKontuak.addItem(k.getKontuZenb());
-            }
-        }
+		User user = facade.getUserAccounts(userMail); 
+		if (user != null && user.getKontuak() != null) {
+			for (DiruKontua k : user.getKontuak()) {
+				comboBoxKontuak.addItem(k.getKontuZenb());
+			}
+		}
 
-        JLabel jLabelPrice = new JLabel(
-                ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Price"));
-        jLabelPrice.setFont(new Font("Tahoma", Font.BOLD, 12));
-        jLabelPrice.setBounds(120, 100, 101, 20);
-        contentPane.add(jLabelPrice);
+		JLabel jLabelPrice = new JLabel(
+				ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Price"));
+		jLabelPrice.setFont(new Font("Tahoma", Font.BOLD, 12));
+		jLabelPrice.setBounds(120, 100, 101, 20);
+		contentPane.add(jLabelPrice);
 
-        textFieldPrice = new JTextField();
-        textFieldPrice.setText(Float.toString(sale.getPrice()));
-        textFieldPrice.setEditable(false);
-        textFieldPrice.setBounds(251, 100, 60, 20);
-        contentPane.add(textFieldPrice);
+		textFieldPrice = new JTextField();
+		textFieldPrice.setText(Float.toString(sale.getPrice()));
+		textFieldPrice.setEditable(false);
+		textFieldPrice.setBounds(251, 100, 60, 20);
+		contentPane.add(textFieldPrice);
 
-        JPanel panelImage = new JPanel();
-        panelImage.setBounds(388, 111, 141, 121);
-        contentPane.add(panelImage);
+		JPanel panelImage = new JPanel();
+		panelImage.setBounds(388, 111, 141, 121);
+		contentPane.add(panelImage);
 
-        String file = sale.getFile();
-        if (file != null) {
-            Image img = facade.downloadImage(file);
-            if (img != null) {
-                BufferedImage targetImg = rescale((BufferedImage) img);
-                panelImage.setLayout(new BorderLayout());
-                panelImage.add(new JLabel(new ImageIcon(targetImg)));
-            }
-        }
+		String file = sale.getFile();
+		if (file != null) {
+			Image img = facade.downloadImage(file);
+			if (img != null) {
+				BufferedImage targetImg = rescale((BufferedImage) img);
+				panelImage.setLayout(new BorderLayout());
+				panelImage.add(new JLabel(new ImageIcon(targetImg)));
+			}
+		}
 
-        JButton btnErosi = new JButton(
-                ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.Erosi"));
-        btnErosi.setFont(new Font("Tahoma", Font.BOLD, 12));
+		JButton btnErosi = new JButton(
+				ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.Erosi"));
+		btnErosi.setFont(new Font("Tahoma", Font.BOLD, 12));
 
-        btnErosi.setBounds(199, 166, 119, 40);
-        contentPane.add(btnErosi);
-        
-        JButton btnClose =  new JButton(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.CancelButton"));;
-        btnClose.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		BuyProductGUI.this.dispose();
-        	}
-        });
-        btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnClose.setBounds(199, 244, 119, 40);
-        contentPane.add(btnClose);
+		btnErosi.setBounds(199, 166, 119, 40);
+		contentPane.add(btnErosi);
 
-        btnErosi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                String buyerKontuZenb = comboBoxKontuak.getSelectedItem().toString();
-                String sellerKontuZenb = facade.getFirstAccountNumber(sale.getSeller().getEmail());
-                double buyerDiruKop = facade.getDiruKop(buyerKontuZenb);
-                double sellerDiruKop = facade.getDiruKop(sellerKontuZenb);
-                if (buyerDiruKop > sale.getPrice()) {
+		JButton btnClose =  new JButton(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.CancelButton"));;
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BuyProductGUI.this.dispose();
+			}
+		});
+		btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnClose.setBounds(199, 244, 119, 40);
+		contentPane.add(btnClose);
+
+		btnErosi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String buyerKontuZenb = comboBoxKontuak.getSelectedItem().toString();
+				String sellerKontuZenb = facade.getFirstAccountNumber(sale.getSeller().getEmail());
+				double buyerDiruKop = facade.getDiruKop(buyerKontuZenb);
+				double sellerDiruKop = facade.getDiruKop(sellerKontuZenb);
+				if(sale.getEgoera().equals("Erosita")) {
+					JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.AlreadySold"),
+							"Error",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if (buyerDiruKop > sale.getPrice()) {
 					facade.buyProduct(sale, userMail);
 					facade.updateDiruKop(buyerKontuZenb, buyerDiruKop - sale.getPrice());
 					facade.updateDiruKop(sellerKontuZenb, sellerDiruKop + sale.getPrice());
 					facade.addMugimenduak((float) -sale.getPrice(), new java.util.Date(), sale.getTitle(), "Erosketa", buyerKontuZenb);
 					facade.addMugimenduak((float) sale.getPrice(), new java.util.Date(), sale.getTitle(), "Salmenta", sellerKontuZenb);
 					facade.updateEgoera(sale, "Erosita");
-		            JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.Success"));
-		            BuyProductGUI.this.dispose();
+					sale.setEgoera("Erosita");
+					JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.Success"));
+					BuyProductGUI.this.dispose();
 				} else {
 					JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.InsufficientFunds"),
 							"Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
-            }
-        });
-    }
+			}
+		});
+	}
 
-    public BufferedImage rescale(BufferedImage originalImage) {
-        BufferedImage resizedImage =
-                new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
-        g.dispose();
-        return resizedImage;
-    }
+	public BufferedImage rescale(BufferedImage originalImage) {
+		BufferedImage resizedImage =
+				new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
+		g.dispose();
+		return resizedImage;
+	}
 }
