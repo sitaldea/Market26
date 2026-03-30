@@ -81,10 +81,6 @@ public class DiruaSartuAteraGUI extends JFrame {
 		JButton btnSartu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.Sartu"));
 		btnSartu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (comboBoxKontuak.getSelectedItem() == null) {
-					JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.SelectAccountMessage"));
-					return;
-				}
 				String kontuZenb = comboBoxKontuak.getSelectedItem().toString();
 				double diruKopSartu = Double.parseDouble(textFieldDiruKop.getText());
 				double diruKop = facade.getDiruKop(kontuZenb);
@@ -103,10 +99,6 @@ public class DiruaSartuAteraGUI extends JFrame {
 		JButton btnAtera = new JButton(ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.Atera")); 
 		btnAtera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (comboBoxKontuak.getSelectedItem() == null) {
-					JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("Etiquetas").getString("DiruaSartuAteraGUI.SelectAccountMessage"));
-					return;
-				}
 				String kontuZenb = comboBoxKontuak.getSelectedItem().toString();
 				double diruKopAtera = Double.parseDouble(textFieldDiruKop.getText());
 				double diruKop = facade.getDiruKop(kontuZenb);
