@@ -316,7 +316,7 @@ public void open(){
 
 	public void addUser(String email, String password, String name, String telefonoa) {
      	db.getTransaction().begin();
-		User user = new User(email, name, password, telefonoa);
+		Erabiltzailea user = new User(email, name, password, telefonoa);
 		db.persist(user);
 		db.getTransaction().commit();		
 	}
