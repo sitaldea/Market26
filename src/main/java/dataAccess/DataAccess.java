@@ -365,10 +365,10 @@ public void open(){
 	}
 	
 	public void updateDiruKop(String zenb, double diruKop) {
-		User u = doesAccountNumber(zenb);
-		if(u!=null) {
+		DiruKontua d = db.find(DiruKontua.class, zenb);
+		if(d!=null) {
 	        db.getTransaction().begin();
-			u.updateDiruKop(zenb, diruKop);
+			d.setDiruKop(diruKop);
 	        db.getTransaction().commit();
 		}
 	}

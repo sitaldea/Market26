@@ -140,15 +140,6 @@ public class User extends Erabiltzailea implements Serializable {
 	public List<DiruKontua> getKontuak() {
 		return kontuak;
 	}
-
-	public void updateDiruKop(String zenb, double diruKop) {
-		for (DiruKontua k:kontuak) {
-			if (k.getKontuZenb().compareTo(zenb)==0) {
-				k.setDiruKop(diruKop);
-				return;
-			}
-		}
-	}
 	
 	public List<Erreklamazioak> getErreklamazioak() {
 		return erreklamazioak;
