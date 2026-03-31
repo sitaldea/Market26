@@ -28,7 +28,7 @@ public class DiruKontua implements Serializable{
 	private double diruKop;
 	private User seller;  
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	private List<Mugimenduak> mugimenduak=new ArrayList<Mugimenduak>();
+	private List<Mugimendua> mugimenduak=new ArrayList<Mugimendua>();
 	
 	public DiruKontua() {
 		super();
@@ -65,16 +65,16 @@ public class DiruKontua implements Serializable{
 		this.seller = seller;
 	}
 	
-	public List<Mugimenduak> getMugimenduak() {
+	public List<Mugimendua> getMugimenduak() {
 		return mugimenduak;
 	}
 	
-	public void setMugimenduak(List<Mugimenduak> mugimenduak) {
+	public void setMugimenduak(List<Mugimendua> mugimenduak) {
 		this.mugimenduak = mugimenduak;
 	}
 	
 	public void addMugimenduak(float diruKop, Date data, String productName, String mota) {
-		Mugimenduak m = new Mugimenduak(diruKop, data, productName, mota);
+		Mugimendua m = new Mugimendua(diruKop, data, productName, mota);
 		m.setKontua(this);
 		this.mugimenduak.add(m);
 	}

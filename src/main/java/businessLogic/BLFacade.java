@@ -7,7 +7,7 @@ import java.util.List;
 import domain.Erabiltzailea;
 import domain.Sale;
 import domain.User;
-import domain.Erreklamazioak;
+import domain.Erreklamazioa;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -92,9 +92,9 @@ public interface BLFacade  {
 
 	@WebMethod public void createErreklamazio(String titulua, String deskripzioa, File file, Sale sale);
 
-	@WebMethod void updateEgoeraErreklamazioa(Erreklamazioak erre, String egoera);
+	@WebMethod void updateEgoeraErreklamazioa(Erreklamazioa erre, String egoera);
 
-	@WebMethod public List<Erreklamazioak> getErreklamazioakByEgoera(String egoera);
+	@WebMethod public List<Erreklamazioa> getErreklamazioakByEgoera(String egoera);
 
 	@WebMethod void addMugimenduak(float diruKop, Date data, String productName, String mota, String kontuZenb);
 

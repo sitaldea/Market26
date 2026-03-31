@@ -11,7 +11,7 @@ import javax.persistence.*;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Erreklamazioak implements Serializable{
+public class Erreklamazioa implements Serializable{
 	/**
 	 * 
 	 */
@@ -30,11 +30,11 @@ public class Erreklamazioak implements Serializable{
 	private User user;
 	
 	
-	public Erreklamazioak() {
+	public Erreklamazioa() {
 		super();
 	}
 	
-	public Erreklamazioak(String izenburua, String deskripzioa, File file, Sale sale, String egoera) {
+	public Erreklamazioa(String izenburua, String deskripzioa, File file, Sale sale, String egoera) {
 		super();
 		this.setIzenburua(izenburua);
 		this.deskripzioa = deskripzioa;

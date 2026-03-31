@@ -10,7 +10,7 @@ import dataAccess.DataAccess;
 import domain.Erabiltzailea;
 import domain.Sale;
 import domain.User;
-import domain.Erreklamazioak;
+import domain.Erreklamazioa;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -200,15 +200,15 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 	
 	@Override
-	public void updateEgoeraErreklamazioa(Erreklamazioak erre, String egoera) {
+	public void updateEgoeraErreklamazioa(Erreklamazioa erre, String egoera) {
 		dbManager.open();
 		dbManager.updateEgoeraErreklamazioa(erre, egoera);
 		dbManager.close();
 	}
 	@Override
-	public List<Erreklamazioak> getErreklamazioakByEgoera(String egoera) {
+	public List<Erreklamazioa> getErreklamazioakByEgoera(String egoera) {
 		dbManager.open();
-		java.util.List<Erreklamazioak> res = dbManager.getErreklamazioakByEgoera(egoera);
+		java.util.List<Erreklamazioa> res = dbManager.getErreklamazioakByEgoera(egoera);
 		dbManager.close();
 		return res;
 	}

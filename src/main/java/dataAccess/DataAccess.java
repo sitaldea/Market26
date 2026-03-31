@@ -23,7 +23,7 @@ import domain.User;
 import domain.Admin;
 import domain.DiruKontua;
 import domain.Erabiltzailea;
-import domain.Erreklamazioak;
+import domain.Erreklamazioa;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
@@ -397,7 +397,7 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		Sale s = db.find(Sale.class, sale.getSaleNumber());
 		if (s != null) {
-			Erreklamazioak erre = new Erreklamazioak(titulua, deskripzioa, file, s, "Pendiente");
+			Erreklamazioa erre = new Erreklamazioa(titulua, deskripzioa, file, s, "Pendiente");
 			s.setErreklamazioa(erre);
 			User seller = s.getSeller();
 			seller.getErreklamazioak().add(erre);
@@ -416,8 +416,8 @@ public class DataAccess  {
 		}
 	}
 
-	public void updateEgoeraErreklamazioa(Erreklamazioak erre, String egoera) {
-		Erreklamazioak e = db.find(Erreklamazioak.class, erre.getErreklamazioId());
+	public void updateEgoeraErreklamazioa(Erreklamazioa erre, String egoera) {
+		Erreklamazioa e = db.find(Erreklamazioa.class, erre.getErreklamazioId());
 		if(e!=null) {
 			db.getTransaction().begin();
 			e.setEgoera(egoera);
@@ -425,10 +425,10 @@ public class DataAccess  {
 		}
 	}
 
-	public List<Erreklamazioak> getErreklamazioakByEgoera(String egoera) {
-		TypedQuery<Erreklamazioak> query = db.createQuery("SELECT e FROM Erreklamazioak e WHERE e.egoera = ?1", Erreklamazioak.class);
+	public List<Erreklamazioa> getErreklamazioakByEgoera(String egoera) {
+		TypedQuery<Erreklamazioa> query = db.createQuery("SELECT e FROM Erreklamazioa e WHERE e.egoera = ?1", Erreklamazioa.class);
 		query.setParameter(1, egoera);
-		List<Erreklamazioak> result = query.getResultList();
+		List<Erreklamazioa> result = query.getResultList();
 		return result;
 	}
 

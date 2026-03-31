@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import businessLogic.BLFacade;
-import domain.Erreklamazioak;
+import domain.Erreklamazioa;
 import domain.Erabiltzailea;
 import domain.User;
 
@@ -29,7 +29,7 @@ public class ErreklamazioakEbatziGUI extends JFrame {
 	private JPanel contentPane;
 	private String userMail;
 
-	private List<Erreklamazioak> reclamList;
+	private List<Erreklamazioa> reclamList;
 	private int currentIndex = 0;
 
 	private JLabel lblTitle;
@@ -81,7 +81,7 @@ public class ErreklamazioakEbatziGUI extends JFrame {
 		BLFacade facade = MainGUI.getBusinessLogic();
 		reclamList = new ArrayList<>();
 		if (facade != null) {
-			List<Erreklamazioak> all = facade.getErreklamazioakByEgoera("Deuseztatu");
+			List<Erreklamazioa> all = facade.getErreklamazioakByEgoera("Deuseztatu");
 			if (all != null) reclamList.addAll(all);
 		}
 
@@ -113,7 +113,7 @@ public class ErreklamazioakEbatziGUI extends JFrame {
 
 		btnEbatzi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Erreklamazioak erre = reclamList.get(currentIndex);
+				Erreklamazioa erre = reclamList.get(currentIndex);
 				BLFacade f = MainGUI.getBusinessLogic();
 				f.updateEgoeraErreklamazioa(erre, "Ebatzita");
 				updateView();
@@ -125,7 +125,7 @@ public class ErreklamazioakEbatziGUI extends JFrame {
 
 	private void updateView() {
 		if (reclamList == null || reclamList.isEmpty()) return;
-		Erreklamazioak r = reclamList.get(currentIndex);
+		Erreklamazioa r = reclamList.get(currentIndex);
 		lblTitle.setText((currentIndex+1) + "/" + reclamList.size() + " - " + r.getIzenburua());
 		lblDescription.setText("<html>" + r.getDeskripzioa() + "</html>");
 		lblImage.setIcon(null);

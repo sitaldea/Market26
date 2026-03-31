@@ -30,7 +30,7 @@ public class Sale implements Serializable {
 	private String egoera;
 	
 	@OneToOne
-	private Erreklamazioak erreklamazioa;
+	private Erreklamazioa erreklamazioa;
 	
 	private User seller;  
 	
@@ -231,11 +231,11 @@ public class Sale implements Serializable {
 		this.egoera = egoera;
 	}	
 	
-	public Erreklamazioak getErreklamazioa() {
+	public Erreklamazioa getErreklamazioa() {
 		return erreklamazioa;
 	}
 	
-	public void setErreklamazioa(Erreklamazioak erreklamazioa) {
+	public void setErreklamazioa(Erreklamazioa erreklamazioa) {
 		this.erreklamazioa = erreklamazioa;
 	}
 }

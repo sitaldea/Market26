@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 
 
 @Entity
-public class Mugimenduak implements Serializable{
+public class Mugimendua implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private float diruKop;
 	private Date data;
@@ -17,12 +17,12 @@ public class Mugimenduak implements Serializable{
 	private DiruKontua kontua;
 	
 	
-	public Mugimenduak() {
+	public Mugimendua() {
 		super();
 	}
 	
 	
-	public Mugimenduak(float diruKop, Date data, String productName, String mota) {
+	public Mugimendua(float diruKop, Date data, String productName, String mota) {
 		super();
 		this.diruKop = diruKop;
 		this.data = data;

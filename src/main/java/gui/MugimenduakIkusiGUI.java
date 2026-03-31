@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import businessLogic.BLFacade;
 import domain.DiruKontua;
-import domain.Mugimenduak;
+import domain.Mugimendua;
 import domain.User;
 
 public class MugimenduakIkusiGUI extends JFrame {
@@ -99,9 +99,9 @@ public class MugimenduakIkusiGUI extends JFrame {
 				tableModel.setRowCount(0);
 				for (DiruKontua k : user.getKontuak()) {
 					if (k.getKontuZenb().equals(selected)) {
-						List<Mugimenduak> mugimenduak = k.getMugimenduak();
+						List<Mugimendua> mugimenduak = k.getMugimenduak();
 						if (mugimenduak != null) {
-							for (Mugimenduak m : mugimenduak) {
+							for (Mugimendua m : mugimenduak) {
 								tableModel.addRow(new Object[]{
 										m.getData(),
 										m.getDiruKop(),
