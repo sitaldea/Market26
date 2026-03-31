@@ -90,7 +90,7 @@ public interface BLFacade  {
 
 	@WebMethod public String getFirstAccountNumber(String email);
 
-	@WebMethod public Erreklamazioak createErreklamazio(String titulua, String deskripzioa, File file, Sale sale, String userEmail);
+	@WebMethod public void createErreklamazio(String titulua, String deskripzioa, File file, Sale sale);
 
 	@WebMethod void updateEgoeraErreklamazioa(Erreklamazioak erre, String egoera);
 

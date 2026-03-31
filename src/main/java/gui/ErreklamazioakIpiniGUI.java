@@ -49,10 +49,10 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 	private JPanel panel;
 	File targetFile;
 	BufferedImage targetImg;
-	
-    private static final int baseSize = 128;
+
+	private static final int baseSize = 128;
 	private static final String basePath="src/main/resources/images/";
-    String encodedfile = null;
+	String encodedfile = null;
 
 
 
@@ -61,7 +61,7 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 	 */
 	public ErreklamazioakIpiniGUI(Sale sale, String email) {
 		this.sale = sale;
-        BLFacade facade = MainGUI.getBusinessLogic();
+		BLFacade facade = MainGUI.getBusinessLogic();
 		this.userMail = email;
 		setTitle(userMail);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,60 +70,60 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblTitulua = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakIpiniGUI.Titulua"));
 		lblTitulua.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblTitulua.setBounds(74, 52, 135, 14);
 		contentPane.add(lblTitulua);
-		
+
 		textFieldTitulua = new JTextField();
 		textFieldTitulua.setBounds(345, 51, 278, 19);
 		contentPane.add(textFieldTitulua);
 		textFieldTitulua.setColumns(10);
-		
+
 		textFieldDeskripzioa = new JTextField();
 		textFieldDeskripzioa.setBounds(345, 95, 278, 112);
 		contentPane.add(textFieldDeskripzioa);
 		textFieldDeskripzioa.setColumns(10);
-		
+
 		JLabel lblAukeratu = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakIpiniGUI.Aukeratu"));
 		lblAukeratu.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblAukeratu.setBounds(74, 235, 261, 14);
 		contentPane.add(lblAukeratu);
-		
+
 		JButton btnAukeratu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakIpiniGUI.botoiAukeratu"));
 		btnAukeratu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF", "jpg", "gif");
 				fileChooser.setFileFilter(filter);
-		        int result = fileChooser.showOpenDialog(null);  
+				int result = fileChooser.showOpenDialog(null);  
 
-		        fileChooser.setBounds(30, 148, 320, 80);
+				fileChooser.setBounds(30, 148, 320, 80);
 
-		        if (result == JFileChooser.APPROVE_OPTION) {
-		            targetFile = fileChooser.getSelectedFile();
-		            panel.removeAll();
-		            panel.repaint();
+				if (result == JFileChooser.APPROVE_OPTION) {
+					targetFile = fileChooser.getSelectedFile();
+					panel.removeAll();
+					panel.repaint();
 
-		            try {
-		                targetImg = rescale(ImageIO.read(targetFile));
-		                encodeFileToBase64Binary(targetFile);
-		            } catch (IOException ex) {
-		                //Logger.getLogger(MainAppFrame.class.getName()).log(Level.SEVERE, null, ex);
-		            }
-		            
-		            panel.setLayout(new BorderLayout(0, 0));
-		            panel.add(new JLabel(new ImageIcon(targetImg))); 
-		            setVisible(true);
+					try {
+						targetImg = rescale(ImageIO.read(targetFile));
+						encodeFileToBase64Binary(targetFile);
+					} catch (IOException ex) {
+						//Logger.getLogger(MainAppFrame.class.getName()).log(Level.SEVERE, null, ex);
+					}
 
-		            }
+					panel.setLayout(new BorderLayout(0, 0));
+					panel.add(new JLabel(new ImageIcon(targetImg))); 
+					setVisible(true);
+
+				}
 			}
 		});
 		btnAukeratu.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnAukeratu.setBounds(345, 227, 174, 31);
 		contentPane.add(btnAukeratu);
-		
+
 		JButton btnErreklamazioaIpini = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakIpiniGUI.erreklamazioaIpini"));
 		btnErreklamazioaIpini.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -139,14 +139,10 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 				}
 				BLFacade facade = MainGUI.getBusinessLogic();
 				try {
-					if (targetFile == null) {
-					}
-					if (facade != null) {
-						facade.createErreklamazio(titulua, deskripzioa, targetFile, ErreklamazioakIpiniGUI.this.sale, ErreklamazioakIpiniGUI.this.userMail);
+					if (targetFile != null) {
+						facade.createErreklamazio(titulua, deskripzioa, targetFile, ErreklamazioakIpiniGUI.this.sale);
 						JOptionPane.showMessageDialog(ErreklamazioakIpiniGUI.this, "Reclamación enviada.", "Info", JOptionPane.INFORMATION_MESSAGE);
-						ErreklamazioakIpiniGUI.this.dispose();
-					} else {
-						JOptionPane.showMessageDialog(ErreklamazioakIpiniGUI.this, "Business logic not available", "Error", JOptionPane.ERROR_MESSAGE);
+						ErreklamazioakIpiniGUI.this.dispose();	
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -157,7 +153,7 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 		btnErreklamazioaIpini.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnErreklamazioaIpini.setBounds(229, 320, 148, 31);
 		contentPane.add(btnErreklamazioaIpini);
-		
+
 		JButton btnItxi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakIpiniGUI.itxi"));
 		btnItxi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -167,40 +163,40 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 		btnItxi.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnItxi.setBounds(405, 320, 148, 31);
 		contentPane.add(btnItxi);
-		
+
 		JLabel lblDeskripzioa = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakIpiniGUI.deskripzioa"));
 		lblDeskripzioa.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblDeskripzioa.setBounds(74, 95, 261, 14);
 		contentPane.add(lblDeskripzioa);
-		
+
 		panel = new JPanel();
 		panel.setBounds(572, 235, 111, 90);
 		contentPane.add(panel);
 
 	}
-	
-	public BufferedImage rescale(BufferedImage originalImage)
-    {
-        BufferedImage resizedImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
-        g.dispose();
-        return resizedImage;
-    }
-	
-	public  String encodeFileToBase64Binary(File file){
-        try {
-            @SuppressWarnings("resource")
-			FileInputStream fileInputStreamReader = new FileInputStream(file);
-            byte[] bytes = new byte[(int)file.length()];
-            fileInputStreamReader.read(bytes);
-            encodedfile=new String(Base64.getEncoder().encode(bytes));
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return encodedfile;
-    }
+	public BufferedImage rescale(BufferedImage originalImage)
+	{
+		BufferedImage resizedImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
+		g.dispose();
+		return resizedImage;
+	}
+
+	public  String encodeFileToBase64Binary(File file){
+		try {
+			@SuppressWarnings("resource")
+			FileInputStream fileInputStreamReader = new FileInputStream(file);
+			byte[] bytes = new byte[(int)file.length()];
+			fileInputStreamReader.read(bytes);
+			encodedfile=new String(Base64.getEncoder().encode(bytes));
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return encodedfile;
+	}
 }

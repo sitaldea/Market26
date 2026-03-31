@@ -193,11 +193,10 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 
 	@Override
-	public Erreklamazioak createErreklamazio(String titulua, String deskripzioa, File file, Sale sale, String userEmail) {
+	public void createErreklamazio(String titulua, String deskripzioa, File file, Sale sale) {
 		dbManager.open();
-		Erreklamazioak res = dbManager.createErreklamazio(titulua, deskripzioa, file, sale, userEmail);
+		dbManager.createErreklamazio(titulua, deskripzioa, file, sale);
 		dbManager.close();
-		return res;
 	}
 	
 	@Override

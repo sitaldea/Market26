@@ -35,7 +35,7 @@ import exceptions.SaleAlreadyExistException;
 public class DataAccess  {
 	private  EntityManager  db;
 	private  EntityManagerFactory emf;
-    private static final int baseSize = 160;
+	private static final int baseSize = 160;
 
 	private static final String basePath="src/main/resources/images/";
 
@@ -43,7 +43,7 @@ public class DataAccess  {
 
 	ConfigXML c=ConfigXML.getInstance();
 
-     public DataAccess()  {
+	public DataAccess()  {
 		String fileName = c.getDbFilename();
 		File dbFile = new File(fileName);
 		boolean exists = dbFile.exists();
@@ -61,31 +61,31 @@ public class DataAccess  {
 
 		close();
 
-		}
+	}
 
-    public DataAccess(EntityManager db) {
-     this.db=db;
-    }
+	public DataAccess(EntityManager db) {
+		this.db=db;
+	}
 
-	
-	
+
+
 	/**
 	 * This method  initializes the database with some products and sellers.
 	 * This method is invoked by the business logic (constructor of BLFacadeImplementation) when the option "initialize" is declared in the tag dataBaseOpenMode of resources/config.xml file
 	 */	
 	public void initializeDB(){
-		
+
 		db.getTransaction().begin();
 
 		try { 
-	       
-		    //Create sellers 
+
+			//Create sellers 
 			Erabiltzailea seller1=new User("seller1@gmail.com", "Aitor Fernandez", "1234", "666666666");
 			Erabiltzailea seller2=new User("seller22@gmail.com", "Ane Gaztañaga", "1234", "655555555");
 			Erabiltzailea seller3=new User("seller3@gmail.com", "Test Seller", "1234", "644444444");
-			
+
 			Erabiltzailea admin=new Admin("admin@gmail.com", "1234");
-			
+
 			((User) seller1).addDiruKontua("ES45678923245", 1000);
 			((User) seller1).addDiruKontua("ES37848898695", 5);
 			((User) seller3).addDiruKontua("ES45689653264", 580);
@@ -95,11 +95,11 @@ public class DataAccess  {
 			((User) seller3).addDiruKontua("ES97935722866", 40);
 
 
-			
+
 			//Create products
 			Date today = UtilDate.trim(new Date());
-		
-			
+
+
 			((User) seller1).addSale("futbol baloia", "oso polita, gutxi erabilita", 2, 10,  today, null, "Ez erosita");
 			((User) seller1).addSale("salomon mendiko botak", "44 zenbakia, 3 ateraldi",2,  20,  today, null, "Ez erosita");
 			((User) seller1).addSale("samsung 42\" telebista", "berria, erabili gabe", 1, 175,  today, null, "Ez erosita");
@@ -112,13 +112,13 @@ public class DataAccess  {
 
 			((User) seller3).addSale("sukaldeko mahaia", "1.8*0.8, 4 aulkiekin. Prezio finkoa", 3,45, today, null, "Ez erosita");
 
-			
+
 			db.persist(seller1);
 			db.persist(seller2);
 			db.persist(seller3);
 			db.persist(admin);
 
-	
+
 			db.getTransaction().commit();
 			System.out.println("Db initialized");
 		}
@@ -126,8 +126,8 @@ public class DataAccess  {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
 	 * This method creates/adds a product to a seller
 	 * 
@@ -138,7 +138,7 @@ public class DataAccess  {
 	 * @param category of a product
 	 * @param publicationDate
 	 * @return Product
- 	 * @throws SaleAlreadyExistException if the same product already exists for the seller
+	 * @throws SaleAlreadyExistException if the same product already exists for the seller
 	 */
 	public Sale createSale(String title, String description, int status, float price,
 			Date pubDate, String sellerEmail, File file, String egoera)
@@ -187,7 +187,7 @@ public class DataAccess  {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * This method retrieves all the products that contain a desc text in a title
 	 * 
@@ -195,18 +195,18 @@ public class DataAccess  {
 	 * @return collection of products that contain desc in a title
 	 */
 	public List<Sale> getSales(String desc) {
-	    System.out.println(">> DataAccess: getProducts=> from= "+desc);
+		System.out.println(">> DataAccess: getProducts=> from= "+desc);
 
-	    TypedQuery<Sale> query = db.createQuery(
-	        "SELECT s FROM User u JOIN u.sales s WHERE s.title LIKE ?1",
-	        Sale.class
-	    );   
-	    query.setParameter(1, "%"+desc+"%");
-	    
-	    List<Sale> sales = query.getResultList();
-	    return sales;
+		TypedQuery<Sale> query = db.createQuery(
+				"SELECT s FROM User u JOIN u.sales s WHERE s.title LIKE ?1",
+				Sale.class
+				);   
+		query.setParameter(1, "%"+desc+"%");
+
+		List<Sale> sales = query.getResultList();
+		return sales;
 	}
-	
+
 	/**
 	 * This method retrieves the products that contain a desc text in a title and the publicationDate today or before
 	 * 
@@ -214,59 +214,59 @@ public class DataAccess  {
 	 * @return collection of products that contain desc in a title
 	 */
 	public List<Sale> getPublishedSales(String desc, Date pubDate) {
-	    System.out.println(">> DataAccess: getProducts=> from= "+desc);
-	    TypedQuery<Sale> query = db.createQuery(
-	        "SELECT s FROM User u JOIN u.sales s WHERE s.title LIKE ?1 AND s.pubDate <=?2",
-	        Sale.class
-	    );
-	    query.setParameter(1, "%"+desc+"%");
-	    query.setParameter(2, pubDate);
+		System.out.println(">> DataAccess: getProducts=> from= "+desc);
+		TypedQuery<Sale> query = db.createQuery(
+				"SELECT s FROM User u JOIN u.sales s WHERE s.title LIKE ?1 AND s.pubDate <=?2",
+				Sale.class
+				);
+		query.setParameter(1, "%"+desc+"%");
+		query.setParameter(2, pubDate);
 
-	    List<Sale> sales = query.getResultList();
-	    return sales;
+		List<Sale> sales = query.getResultList();
+		return sales;
 	}
 
-public void open(){
-		
+	public void open(){
+
 		String fileName=c.getDbFilename();
 		if (c.isDatabaseLocal()) {
 			emf = Persistence.createEntityManagerFactory("objectdb:"+fileName);
 			db = emf.createEntityManager();
 		} else {
 			Map<String, String> properties = new HashMap<String, String>();
-			  properties.put("javax.persistence.jdbc.user", c.getUser());
-			  properties.put("javax.persistence.jdbc.password", c.getPassword());
+			properties.put("javax.persistence.jdbc.user", c.getUser());
+			properties.put("javax.persistence.jdbc.password", c.getPassword());
 
-			  emf = Persistence.createEntityManagerFactory("objectdb://"+c.getDatabaseNode()+":"+c.getDatabasePort()+"/"+fileName, properties);
-			  db = emf.createEntityManager();
-    	   }
+			emf = Persistence.createEntityManagerFactory("objectdb://"+c.getDatabaseNode()+":"+c.getDatabasePort()+"/"+fileName, properties);
+			db = emf.createEntityManager();
+		}
 		System.out.println("DataAccess opened => isDatabaseLocal: "+c.isDatabaseLocal());
 
-		
+
 	}
 
 	public BufferedImage getFile(String fileName) {
 		File file=new File(basePath+fileName);
 		BufferedImage targetImg=null;
 		try {
-             targetImg = rescale(ImageIO.read(file));
-        } catch (IOException ex) {
-            //Logger.getLogger(MainAppFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+			targetImg = rescale(ImageIO.read(file));
+		} catch (IOException ex) {
+			//Logger.getLogger(MainAppFrame.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		return targetImg;
 
 	}
-	
+
 	public BufferedImage rescale(BufferedImage originalImage)
-    {
+	{
 		System.out.println("rescale "+originalImage);
-        BufferedImage resizedImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
-        g.dispose();
-        return resizedImage;
-    }
-	
+		BufferedImage resizedImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
+		g.dispose();
+		return resizedImage;
+	}
+
 	public Erabiltzailea isLogin(String email, String password) {
 		TypedQuery<User> query = db.createQuery("SELECT u FROM Erabiltzailea u WHERE u.email=?1 AND u.password=?2", User.class);   
 		query.setParameter(1, email);
@@ -276,9 +276,9 @@ public void open(){
 		} else {
 			return null;
 		}
-		
+
 	}
-	
+
 	public Erabiltzailea isLogin(String email) {
 		TypedQuery<User> query = db.createQuery("SELECT u FROM Erabiltzailea u WHERE u.email=?1", User.class);   
 		query.setParameter(1, email);
@@ -287,11 +287,11 @@ public void open(){
 		} else {
 			return null;
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 	public void close(){
 		try {
 			if (db != null && db.isOpen()) {
@@ -315,12 +315,12 @@ public void open(){
 	}
 
 	public void addUser(String email, String password, String name, String telefonoa) {
-     	db.getTransaction().begin();
+		db.getTransaction().begin();
 		Erabiltzailea user = new User(email, name, password, telefonoa);
 		db.persist(user);
 		db.getTransaction().commit();		
 	}
-	
+
 	public Erabiltzailea getUser(String email) {
 		TypedQuery<User> query = db.createQuery("SELECT u FROM Erabiltzailea u WHERE u.email=?1", User.class);   
 		query.setParameter(1, email);
@@ -329,47 +329,47 @@ public void open(){
 		} else {
 			return null;
 		}
-		
+
 	}
 
 	public void buyProduct(Sale sale, String email) {
 		Erabiltzailea u = getUser(email);
-	    if (u != null) {
-	        Sale managedSale = db.merge(sale);
-		    db.getTransaction().begin();
-	        ((User) u).getErositakoak().add(managedSale);
-		    db.getTransaction().commit();
-	    }
+		if (u != null) {
+			Sale managedSale = db.merge(sale);
+			db.getTransaction().begin();
+			((User) u).getErositakoak().add(managedSale);
+			db.getTransaction().commit();
+		}
 	}
-	
+
 	public User doesAccountNumber(String zenb) {
-	    TypedQuery<User> query = db.createQuery("SELECT u FROM User u JOIN u.kontuak d WHERE d.kontuZenb = ?1", User.class);
-	    query.setParameter(1, zenb);
-	    List<User> result = query.getResultList();
-	    if (!result.isEmpty()) {
-	        return result.get(0);
-	    } else {
-	        return null;
-	    }
+		TypedQuery<User> query = db.createQuery("SELECT u FROM User u JOIN u.kontuak d WHERE d.kontuZenb = ?1", User.class);
+		query.setParameter(1, zenb);
+		List<User> result = query.getResultList();
+		if (!result.isEmpty()) {
+			return result.get(0);
+		} else {
+			return null;
+		}
 	}
-	
+
 	public double getDiruKop(String zenb) {
-	    TypedQuery<Double> query = db.createQuery("SELECT d.diruKop FROM User u JOIN u.kontuak d WHERE d.kontuZenb = ?1", Double.class);
-	    query.setParameter(1, zenb);
-	    List<Double> result = query.getResultList();
-	    if (!result.isEmpty()) {
-	        return result.get(0);
-	    } else {
-	        return 0;
-	    }
+		TypedQuery<Double> query = db.createQuery("SELECT d.diruKop FROM User u JOIN u.kontuak d WHERE d.kontuZenb = ?1", Double.class);
+		query.setParameter(1, zenb);
+		List<Double> result = query.getResultList();
+		if (!result.isEmpty()) {
+			return result.get(0);
+		} else {
+			return 0;
+		}
 	}
-	
+
 	public void updateDiruKop(String zenb, double diruKop) {
 		DiruKontua d = db.find(DiruKontua.class, zenb);
 		if(d!=null) {
-	        db.getTransaction().begin();
+			db.getTransaction().begin();
 			d.setDiruKop(diruKop);
-	        db.getTransaction().commit();
+			db.getTransaction().commit();
 		}
 	}
 
@@ -382,7 +382,7 @@ public void open(){
 			return null;
 		}
 	}
-	
+
 	public void updateEgoera(Sale sale, String egoera) {
 		Sale s = db.find(Sale.class, sale.getSaleNumber());
 		if(s!=null) {
@@ -391,22 +391,18 @@ public void open(){
 			db.getTransaction().commit();
 		}
 	}
-	
 
-	public Erreklamazioak createErreklamazio(String titulua, String deskripzioa, File file, Sale sale, String userEmail) {
+
+	public void createErreklamazio(String titulua, String deskripzioa, File file, Sale sale) {
 		db.getTransaction().begin();
 		Sale s = db.find(Sale.class, sale.getSaleNumber());
-		Erreklamazioak erre = new Erreklamazioak(titulua, deskripzioa, file, s, "Pendiente");
 		if (s != null) {
+			Erreklamazioak erre = new Erreklamazioak(titulua, deskripzioa, file, s, "Pendiente");
 			s.setErreklamazioa(erre);
 			User seller = s.getSeller();
-			if (seller != null) {
-				seller = db.find(User.class, seller.getEmail());
-				seller.getErreklamazioak().add(erre);
-			}
+			seller.getErreklamazioak().add(erre);
 		}
 		db.getTransaction().commit();
-		return erre;
 	}
 
 	public String getFirstAccountNumber(String email) {
@@ -419,7 +415,7 @@ public void open(){
 			return null;
 		}
 	}
-	
+
 	public void updateEgoeraErreklamazioa(Erreklamazioak erre, String egoera) {
 		Erreklamazioak e = db.find(Erreklamazioak.class, erre.getErreklamazioId());
 		if(e!=null) {
@@ -435,7 +431,7 @@ public void open(){
 		List<Erreklamazioak> result = query.getResultList();
 		return result;
 	}
-	
+
 	public DiruKontua getDiruKontua(String zenb) {
 		TypedQuery<DiruKontua> query = db.createQuery("SELECT d FROM DiruKontua d WHERE d.kontuZenb = ?1", DiruKontua.class);
 		query.setParameter(1, zenb);
@@ -446,7 +442,7 @@ public void open(){
 			return null;
 		}
 	}
-	
+
 	public void addMugimenduak(float diruKop, Date data, String productName, String mota, String kontuZenb) {
 		db.getTransaction().begin();
 		DiruKontua d = db.find(DiruKontua.class, kontuZenb);
