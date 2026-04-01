@@ -31,6 +31,8 @@ public class Sale implements Serializable {
 	
 	@OneToOne
 	private Erreklamazioa erreklamazioa;
+	@OneToOne
+	private Mugimendua mugimendua;
 	
 	private User seller;  
 	
@@ -237,5 +239,13 @@ public class Sale implements Serializable {
 	
 	public void setErreklamazioa(Erreklamazioa erreklamazioa) {
 		this.erreklamazioa = erreklamazioa;
+	}
+	
+	public Mugimendua getMugimendua() {
+		return mugimendua;
+	}
+	
+	public void setMugimendua(Mugimendua mugimendua) {
+		this.mugimendua = mugimendua;
 	}
 }

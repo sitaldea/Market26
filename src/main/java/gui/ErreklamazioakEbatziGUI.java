@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,7 +38,8 @@ public class ErreklamazioakEbatziGUI extends JFrame {
 	private JLabel lblImage;
 	private JButton btnPrev;
 	private JButton btnNext;
-	private JButton btnEbatzi;
+	private JButton btnOnartu;
+	private JButton btnDeuseztatu;
 
 
 	/**
@@ -67,16 +69,41 @@ public class ErreklamazioakEbatziGUI extends JFrame {
 		contentPane.add(lblImage);
 
 		btnPrev = new JButton("<");
-		btnPrev.setBounds(200, 220, 60, 30);
+		btnPrev.setBounds(30, 320, 60, 30);
 		contentPane.add(btnPrev);
 
 		btnNext = new JButton(">");
-		btnNext.setBounds(270, 220, 60, 30);
+		btnNext.setBounds(100, 320, 60, 30);
 		contentPane.add(btnNext);
 
-		btnEbatzi = new JButton("Ebatzi");
-		btnEbatzi.setBounds(360, 220, 100, 30);
-		contentPane.add(btnEbatzi);
+		btnOnartu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakEbatziGUI.Onartu"));
+		btnOnartu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				BLFacade facade = MainGUI.getBusinessLogic();
+				Erreklamazioa erre = reclamList.get(currentIndex);
+				facade.updateEgoeraErreklamazioa(erre, "Administradoreak onartu du");
+				updateView();
+				JOptionPane.showMessageDialog(ErreklamazioakEbatziGUI.this, "Egoera eguneratua: Onartua", "Info", JOptionPane.INFORMATION_MESSAGE);
+
+			}
+		});
+		btnOnartu.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnOnartu.setBounds(300, 209, 124, 41);
+		contentPane.add(btnOnartu);
+		
+		JButton btnNewButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakEbatziGUI.Deuseztatu"));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BLFacade facade = MainGUI.getBusinessLogic();
+				Erreklamazioa erre = reclamList.get(currentIndex);
+				facade.updateEgoeraErreklamazioa(erre, "Administradoreak deuseztatu du");
+				updateView();
+				JOptionPane.showMessageDialog(ErreklamazioakEbatziGUI.this, "Egoera eguneratua: Onartua", "Info", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnNewButton.setBounds(434, 209, 116, 41);
+		contentPane.add(btnNewButton);
 
 		BLFacade facade = MainGUI.getBusinessLogic();
 		reclamList = new ArrayList<>();
@@ -110,17 +137,6 @@ public class ErreklamazioakEbatziGUI extends JFrame {
 				}
 			}
 		});
-
-		btnEbatzi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Erreklamazioa erre = reclamList.get(currentIndex);
-				BLFacade f = MainGUI.getBusinessLogic();
-				f.updateEgoeraErreklamazioa(erre, "Ebatzita");
-				updateView();
-				JOptionPane.showMessageDialog(ErreklamazioakEbatziGUI.this, "Erreklamazioa ebatzita.", "Info", JOptionPane.INFORMATION_MESSAGE);
-			}
-		});
-
 	}
 
 	private void updateView() {
@@ -141,5 +157,4 @@ public class ErreklamazioakEbatziGUI extends JFrame {
 		btnPrev.setEnabled(currentIndex > 0);
 		btnNext.setEnabled(currentIndex < reclamList.size() - 1);
 	}
-
 }

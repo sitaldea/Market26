@@ -49,7 +49,7 @@ public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 	public ErreklamazioakOnartuDeuseztatuGUI(String email) {
 		this.userMail = email;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
+		setBounds(100, 100, 620, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -77,18 +77,18 @@ public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 		btnNext.setBounds(270, 220, 60, 30);
 		contentPane.add(btnNext);
 
-		btnOnartu = new JButton("Onartu");
+		btnOnartu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakEbatziGUI.Onartu"));
 		btnOnartu.setBounds(360, 220, 100, 30);
 		contentPane.add(btnOnartu);
 
-		btnDeuseztatu = new JButton("Deuseztatu");
+		btnDeuseztatu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakEbatziGUI.Deuseztatu"));
 		btnDeuseztatu.setBounds(470, 220, 110, 30);
 		contentPane.add(btnDeuseztatu);
 		
 		lblMessage = new JLabel("New label");
 		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessage.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblMessage.setBounds(231, 164, 165, 30);
+		lblMessage.setBounds(231, 164, 349, 30);
 		contentPane.add(lblMessage);
 
 		BLFacade facade = MainGUI.getBusinessLogic();
@@ -123,21 +123,28 @@ public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 		btnOnartu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Erreklamazioa erre = reclamList.get(currentIndex);
-				facade.updateEgoeraErreklamazioa(erre, "Onartua");
-				erre.setEgoera("Onartua");
-				updateView();
-				JOptionPane.showMessageDialog(ErreklamazioakOnartuDeuseztatuGUI.this, "Egoera eguneratua: Onartua", "Info", JOptionPane.INFORMATION_MESSAGE);
+				if(!erre.getEgoera().equals("Administradoreak onartu du")) {
+					facade.updateEgoeraErreklamazioa(erre, "Onartua");
+					erre.setEgoera("Onartua");
+					updateView();
+					JOptionPane.showMessageDialog(ErreklamazioakOnartuDeuseztatuGUI.this, "Egoera eguneratua: Onartua", "Info", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(ErreklamazioakOnartuDeuseztatuGUI.this, "Administradoreak onartua du, ezin duzu berriro egin", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 
 		btnDeuseztatu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Erreklamazioa erre = reclamList.get(currentIndex);
-				BLFacade facade = MainGUI.getBusinessLogic();
-				facade.updateEgoeraErreklamazioa(erre, "Deuseztatu");
-				erre.setEgoera("Deuseztatu");
-				updateView();
-				JOptionPane.showMessageDialog(ErreklamazioakOnartuDeuseztatuGUI.this, "Egoera eguneratua: Deuseztatu", "Info", JOptionPane.INFORMATION_MESSAGE);
+				if(!erre.getEgoera().equals("Administradoreak deuseztatu du")) {
+					facade.updateEgoeraErreklamazioa(erre, "Deuseztatu");
+					erre.setEgoera("Deuseztatu");
+					updateView();
+					JOptionPane.showMessageDialog(ErreklamazioakOnartuDeuseztatuGUI.this, "Egoera eguneratua: Deuseztatu", "Info", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(ErreklamazioakOnartuDeuseztatuGUI.this, "Administradoreak deuseztatua du, ezin duzu berriro egin", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 	}
