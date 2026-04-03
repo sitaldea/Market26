@@ -315,10 +315,15 @@ public class DataAccess  {
 	}
 
 	public void addUser(String email, String password, String name, String telefonoa) {
-		db.getTransaction().begin();
-		Erabiltzailea user = new User(email, name, password, telefonoa);
-		db.persist(user);
-		db.getTransaction().commit();		
+		Erabiltzailea u = db.find(Erabiltzailea.class, email);
+		if (u != null) {
+			throw new IllegalArgumentException("User with email " + email + " already exists.");
+		} else {
+			db.getTransaction().begin();
+			Erabiltzailea user = new User(email, name, password, telefonoa);
+			db.persist(user);
+			db.getTransaction().commit();	
+		}
 	}
 
 	public Erabiltzailea getUser(String email) {
@@ -333,11 +338,11 @@ public class DataAccess  {
 	}
 
 	public void buyProduct(Sale sale, String email) {
-		Erabiltzailea u = getUser(email);
+		Erabiltzailea u = db.find(Erabiltzailea.class, email);
 		if (u != null) {
 			Sale managedSale = db.merge(sale);
 			db.getTransaction().begin();
-			((User) u).getErositakoak().add(managedSale);
+			((User) u).addErositakoa(managedSale);
 			db.getTransaction().commit();
 		}
 	}
