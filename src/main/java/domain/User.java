@@ -33,6 +33,12 @@ public class User extends Erabiltzailea implements Serializable {
 	private List<Erreklamazioa> erreklamazioak=new ArrayList<Erreklamazioa>();
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Mugimendua> mugimenduak=new ArrayList<Mugimendua>();
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Oferta> ofertak=new ArrayList<Oferta>();
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Eskaera> eskaerak=new ArrayList<Eskaera>();
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Saskia> saskiak=new ArrayList<Saskia>();
 
 	public User() {
 		super();

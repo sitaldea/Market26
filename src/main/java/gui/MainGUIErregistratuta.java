@@ -46,6 +46,8 @@ public class MainGUIErregistratuta extends JFrame {
 	private JButton btnMugimenduak;
 	private JButton btnNeLogOut;
 	private JButton btnErreklamazioakIkusi;
+	private JButton btnEskaerakEgin;
+	private JButton btnBalorazioakIkusi;
 
 	/**
 	 * Create the frame.
@@ -54,35 +56,20 @@ public class MainGUIErregistratuta extends JFrame {
 	public MainGUIErregistratuta(String email) {
 		this.userMail = email;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 552, 328);
+		setBounds(100, 100, 552, 416);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("238px"),
-				ColumnSpec.decode("31px"),
-				ColumnSpec.decode("237px"),},
-				new RowSpec[] {
-						FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-						RowSpec.decode("29px"),
-						FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("38px"),
-						FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("37px"),
-						FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("38px"),
-						FormSpecs.UNRELATED_GAP_ROWSPEC,
-						RowSpec.decode("48px"),
-						FormSpecs.UNRELATED_GAP_ROWSPEC,
-						RowSpec.decode("32px"),}));
+		contentPane.setLayout(null);
 
 		lblSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
+		lblSelectOption.setBounds(15, 17, 506, 29);
 		lblSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblSelectOption, "2, 2, 3, 1, fill, fill");
+		contentPane.add(lblSelectOption);
 
 		btnCreateSale = new JButton();
+		btnCreateSale.setBounds(15, 52, 238, 38);
 		btnCreateSale.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
 		btnCreateSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -90,18 +77,20 @@ public class MainGUIErregistratuta extends JFrame {
 				a.setVisible(true);
 			}
 		});
-		contentPane.add(btnCreateSale, "2, 4, fill, fill");
+		contentPane.add(btnCreateSale);
 
 		btnDirua = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.Dirua"));
+		btnDirua.setBounds(284, 52, 237, 38);
 		btnDirua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame a = new DiruaSartuAteraGUI(userMail);
 				a.setVisible(true);
 			}
 		});
-		contentPane.add(btnDirua, "4, 4, fill, fill");
+		contentPane.add(btnDirua);
 
 		btnQuearySale = new JButton();
+		btnQuearySale.setBounds(15, 96, 238, 37);
 		btnQuearySale.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		btnQuearySale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -109,44 +98,20 @@ public class MainGUIErregistratuta extends JFrame {
 				a.setVisible(true);
 			}
 		});
-		contentPane.add(btnQuearySale, "2, 6, fill, fill");
+		contentPane.add(btnQuearySale);
 
 		btnMugimenduak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.Mugimenduak"));
+		btnMugimenduak.setBounds(284, 96, 237, 37);
 		btnMugimenduak.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame a = new MugimenduakIkusiGUI(userMail);
 				a.setVisible(true);
 			}
 		});
-		contentPane.add(btnMugimenduak, "4, 6, fill, fill");
-
-		rdbtnNewRadioButton = new JRadioButton("English");
-		rdbtnNewRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Locale.setDefault(new Locale("en"));
-				paintAgain();
-			}
-		});
-		buttonGroup.add(rdbtnNewRadioButton);
-
-		rdbtnNewRadioButton_1 = new JRadioButton("Euskara");
-		rdbtnNewRadioButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Locale.setDefault(new Locale("eus"));
-				paintAgain();
-			}
-		});
-		buttonGroup.add(rdbtnNewRadioButton_1);
-
-		rdbtnNewRadioButton_2 = new JRadioButton("Castellano");
-		rdbtnNewRadioButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Locale.setDefault(new Locale("es"));
-				paintAgain();
-			}
-		});
+		contentPane.add(btnMugimenduak);
 
 		btnErositakoProduktuak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.ErositakoProduktuakIkusi"));
+		btnErositakoProduktuak.setBounds(15, 139, 238, 38);
 		btnErositakoProduktuak.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BLFacade facade = MainGUI.getBusinessLogic();
@@ -159,9 +124,10 @@ public class MainGUIErregistratuta extends JFrame {
 				}
 			}
 		});
-		contentPane.add(btnErositakoProduktuak, "2, 8, fill, fill");
+		contentPane.add(btnErositakoProduktuak);
 
 		btnErreklamazioakIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.ErreklamazioakIkusi"));
+		btnErreklamazioakIkusi.setBounds(284, 139, 237, 38);
 		btnErreklamazioakIkusi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BLFacade facade = MainGUI.getBusinessLogic();
@@ -174,22 +140,80 @@ public class MainGUIErregistratuta extends JFrame {
 				}
 			}
 		});
-		contentPane.add(btnErreklamazioakIkusi, "4, 8, fill, fill");
-
-		btnNeLogOut = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.SaioaItxi"));
-		btnNeLogOut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();	
-			}
-		});
-		contentPane.add(btnNeLogOut, "2, 12, 3, 1, center, fill");
-		buttonGroup.add(rdbtnNewRadioButton_2);
-
-		panel = new JPanel();
-		panel.add(rdbtnNewRadioButton_1);
-		panel.add(rdbtnNewRadioButton_2);
-		panel.add(rdbtnNewRadioButton);
-		contentPane.add(panel, "2, 10, 3, 1, fill, fill");
+		contentPane.add(btnErreklamazioakIkusi);
+				
+						rdbtnNewRadioButton = new JRadioButton("English");
+						rdbtnNewRadioButton.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								Locale.setDefault(new Locale("en"));
+								paintAgain();
+							}
+						});
+						buttonGroup.add(rdbtnNewRadioButton);
+						
+								rdbtnNewRadioButton_1 = new JRadioButton("Euskara");
+								rdbtnNewRadioButton_1.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent arg0) {
+										Locale.setDefault(new Locale("eus"));
+										paintAgain();
+									}
+								});
+								buttonGroup.add(rdbtnNewRadioButton_1);
+								
+										rdbtnNewRadioButton_2 = new JRadioButton("Castellano");
+										rdbtnNewRadioButton_2.addActionListener(new ActionListener() {
+											public void actionPerformed(ActionEvent e) {
+												Locale.setDefault(new Locale("es"));
+												paintAgain();
+											}
+										});
+										
+										btnEskaerakEgin = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.btnNewButton.text")); 
+										btnEskaerakEgin.setBounds(15, 187, 238, 38);
+										btnEskaerakEgin.addActionListener(new ActionListener() {
+											public void actionPerformed(ActionEvent arg0) {
+												JFrame a = new EskaeraEginGUI(userMail);
+												a.setVisible(true);
+											}
+										});
+										contentPane.add(btnEskaerakEgin);
+										
+										btnBalorazioakIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.btnNewButton_1.text"));
+										btnBalorazioakIkusi.setBounds(284, 187, 237, 38);
+										btnBalorazioakIkusi.addActionListener(new ActionListener() {
+											public void actionPerformed(ActionEvent e) {
+												JFrame a = new BalorazioakIkusiGUI(userMail);
+												a.setVisible(true);
+											}
+										});
+										contentPane.add(btnBalorazioakIkusi);
+										buttonGroup.add(rdbtnNewRadioButton_2);
+										
+												panel = new JPanel();
+												panel.setBounds(15, 286, 506, 32);
+												panel.add(rdbtnNewRadioButton_1);
+												panel.add(rdbtnNewRadioButton_2);
+												panel.add(rdbtnNewRadioButton);
+												contentPane.add(panel);
+				
+						btnNeLogOut = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.SaioaItxi"));
+						btnNeLogOut.setBounds(225, 328, 85, 30);
+						btnNeLogOut.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								dispose();	
+							}
+						});
+						contentPane.add(btnNeLogOut);
+						
+						JButton btnEskaerakIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
+						btnEskaerakIkusi.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								JFrame a = new EskaerakIkusiGUI(userMail);
+								a.setVisible(true);
+							}
+						});
+						btnEskaerakIkusi.setBounds(156, 235, 238, 38);
+						contentPane.add(btnEskaerakIkusi);
 
 		setTitle(userMail);
 	}

@@ -10,16 +10,19 @@ public class EskaerakIkusiGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private String userMail;
 
 	/**
 	 * Create the frame.
 	 */
-	public EskaerakIkusiGUI() {
+	public EskaerakIkusiGUI(String email) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		this.userMail = email;
+		this.setTitle(userMail);
 
 	}
 

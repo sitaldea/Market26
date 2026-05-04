@@ -2,7 +2,9 @@ package domain;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.persistence.*;
@@ -28,6 +30,7 @@ public class Sale implements Serializable {
 	private Date pubDate;
 	private String fileName;
 	private String egoera;
+	private Saskia saskia;
 	
 	@OneToOne
 	private Erreklamazioa erreklamazioa;
@@ -247,5 +250,13 @@ public class Sale implements Serializable {
 	
 	public void setMugimendua(Mugimendua mugimendua) {
 		this.mugimendua = mugimendua;
+	}
+	
+	public Saskia getSaskia() {
+		return saskia;
+	}
+	
+	public void setSaskia(Saskia saskia) {
+		this.saskia = saskia;
 	}
 }
