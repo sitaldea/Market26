@@ -1,29 +1,181 @@
 package gui;
 
-import java.awt.EventQueue;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Component;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import businessLogic.BLFacade;
+import domain.*;
 
 public class BalorazioakIkusiGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private String userMail;
+	private JTable balorazioTable;
+	private DefaultTableModel tableModel;
 
 	/**
 	 * Create the frame.
 	 */
 	public BalorazioakIkusiGUI(String email) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		this.userMail = email;
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(null);
 		setContentPane(contentPane);
-		this.userMail = email;
 		this.setTitle(userMail);
 
+		JLabel titleLabel = new JLabel("Balorazioak");
+		titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		titleLabel.setBounds(300, 20, 200, 30);
+		contentPane.add(titleLabel);
+
+		String[] columnNames = { "Puntuación", "Comentario" };
+		tableModel = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+
+		balorazioTable = new JTable(tableModel);
+		balorazioTable.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 16));
+		balorazioTable.setRowHeight(60);
+		balorazioTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+		balorazioTable.getColumnModel().getColumn(1).setPreferredWidth(600);
+		
+		balorazioTable.getColumnModel().getColumn(0).setCellRenderer(new StarsRenderer());
+
+		JScrollPane scrollPane = new JScrollPane(balorazioTable);
+		scrollPane.setBounds(20, 70, 750, 350);
+		contentPane.add(scrollPane);
+
+		JButton btnClose = new JButton("Itxi");
+		btnClose.setFont(new Font("Arial", Font.PLAIN, 12));
+		btnClose.setBounds(650, 430, 120, 30);
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		contentPane.add(btnClose);
+
+		loadBalorazioak();
 	}
 
+	private void loadBalorazioak() {
+		try {
+			BLFacade facade = MainGUI.getBusinessLogic();
+			if (facade == null) {
+				JOptionPane.showMessageDialog(this, "Business logic not available", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			User user = (User) facade.getUser(userMail);
+			if (user == null) {
+				JOptionPane.showMessageDialog(this,
+						ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.ErrorQueary"), "Info",
+						JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+
+			List<BalorazioProfila> balorazioak = user.getBalorazioak();
+
+			if (balorazioak == null || balorazioak.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Ez dituzu balorazioik", "Info",
+						JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+
+			tableModel.setRowCount(0);
+
+			for (BalorazioProfila balorazio : balorazioak) {
+				String puntuazioa = balorazio.getPuntuazioa() + "";
+				String comentario = balorazio.getBalorazioa() != null ? balorazio.getBalorazioa() : "(Sin comentario)";
+				tableModel.addRow(new Object[] { puntuazioa, comentario });
+			}
+
+			setVisible(true);
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Error al cargar las valoraciones: " + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+
+
+
+	class StarsRenderer extends JLabel implements TableCellRenderer {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+				boolean hasFocus, int row, int column) {
+			
+			int puntuazioa = 0;
+			try {
+				puntuazioa = Integer.parseInt(value.toString());
+			} catch (Exception e) {
+				puntuazioa = 0;
+			}
+
+			StringBuilder stars = new StringBuilder();
+			for (int i = 0; i < 5; i++) {
+				if (i < puntuazioa) {
+					stars.append("<span style='color: rgb(255, 215, 0);'>★</span>");
+				} else {
+					stars.append("<span style='color: black;'>☆</span>");
+				}
+			}
+			
+			String htmlText = "<html>" + stars.toString() + " <span style='color: black;'>(" + puntuazioa + "/5)</span></html>";
+			setText(htmlText);
+			setFont(new Font("Segoe UI Symbol", Font.PLAIN, 20));
+			setHorizontalAlignment(JLabel.CENTER);
+			setVerticalAlignment(JLabel.CENTER);
+			
+			if (isSelected) {
+				setBackground(table.getSelectionBackground());
+				setOpaque(true);
+			} else {
+				setBackground(Color.WHITE);
+				setOpaque(true);
+			}
+
+			return this;
+		}
+	}
+
+	public List<BalorazioProfila> getBalorazioak() {
+		try {
+			BLFacade facade = MainGUI.getBusinessLogic();
+			User user = (User) facade.getUser(userMail);
+			return user.getBalorazioak();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

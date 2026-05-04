@@ -48,6 +48,7 @@ public class MainGUIErregistratuta extends JFrame {
 	private JButton btnErreklamazioakIkusi;
 	private JButton btnEskaerakEgin;
 	private JButton btnBalorazioakIkusi;
+	private JButton btnEskaerakIkusi;
 
 	/**
 	 * Create the frame.
@@ -168,7 +169,7 @@ public class MainGUIErregistratuta extends JFrame {
 											}
 										});
 										
-										btnEskaerakEgin = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.btnNewButton.text")); 
+										btnEskaerakEgin = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.EskaerakEgin")); 
 										btnEskaerakEgin.setBounds(15, 187, 238, 38);
 										btnEskaerakEgin.addActionListener(new ActionListener() {
 											public void actionPerformed(ActionEvent arg0) {
@@ -176,9 +177,22 @@ public class MainGUIErregistratuta extends JFrame {
 												a.setVisible(true);
 											}
 										});
+										
+										
+										btnEskaerakIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.EskaerakIkusi"));
+										btnEskaerakIkusi.addActionListener(new ActionListener() {
+											public void actionPerformed(ActionEvent e) {
+												JFrame a = new EskaerakIkusiGUI(userMail);
+												a.setVisible(true);
+											}
+										});
+										btnEskaerakIkusi.setBounds(156, 235, 238, 38);
+										contentPane.add(btnEskaerakIkusi);
+										
+										
 										contentPane.add(btnEskaerakEgin);
 										
-										btnBalorazioakIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.btnNewButton_1.text"));
+										btnBalorazioakIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.BalorazioakIkusi"));
 										btnBalorazioakIkusi.setBounds(284, 187, 237, 38);
 										btnBalorazioakIkusi.addActionListener(new ActionListener() {
 											public void actionPerformed(ActionEvent e) {
@@ -204,16 +218,7 @@ public class MainGUIErregistratuta extends JFrame {
 							}
 						});
 						contentPane.add(btnNeLogOut);
-						
-						JButton btnEskaerakIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
-						btnEskaerakIkusi.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								JFrame a = new EskaerakIkusiGUI(userMail);
-								a.setVisible(true);
-							}
-						});
-						btnEskaerakIkusi.setBounds(156, 235, 238, 38);
-						contentPane.add(btnEskaerakIkusi);
+
 
 		setTitle(userMail);
 	}
@@ -235,6 +240,12 @@ public class MainGUIErregistratuta extends JFrame {
 				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.SaioaItxi"));
 		btnErreklamazioakIkusi.setText(
 				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.ErreklamazioakIkusi"));
+		btnEskaerakEgin.setText(
+				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.EskaerakEgin"));
+		btnBalorazioakIkusi.setText(
+				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.BalorazioakIkusi"));
+		btnEskaerakIkusi.setText(
+				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.EskaerakIkusi"));
 		this.setTitle(
 				ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")
 				+ ": " + userMail);

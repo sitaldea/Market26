@@ -219,5 +219,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.addMugimenduak(diruKop, data, productName, mota, kontuZenb);
 		dbManager.close();
 	}
+	
+	@Override
+	public void createBalorazioa(String balorazioa, int puntuazioa, User user) {
+		dbManager.open();
+		dbManager.createBalorazioa(balorazioa, puntuazioa, user);
+		dbManager.close();
+	}
 
 }

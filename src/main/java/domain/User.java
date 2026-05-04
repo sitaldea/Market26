@@ -153,8 +153,28 @@ public class User extends Erabiltzailea implements Serializable {
 		return erreklamazioak;
 	}
 	
-	public void addBalorazioa(String balorazioa, int puntuazioa) {
-		BalorazioProfila balorazio=new BalorazioProfila(balorazioa, puntuazioa, this);
+	public List<Mugimendua> getMugimenduak() {
+		return mugimenduak;
+	}
+	
+	public List<Oferta> getOfertak() {
+		return ofertak;
+	}
+	
+	public List<Eskaera> getEskaerak() {
+		return eskaerak;
+	}
+	
+	public List<Saskia> getSaskiak() {
+		return saskiak;
+	}
+	
+	public List<BalorazioProfila> getBalorazioak() {
+		return balorazioak;
+	}
+	
+	public void addBalorazioa(String balorazioa, int puntuazioa, User user) {
+		BalorazioProfila balorazio=new BalorazioProfila(balorazioa, puntuazioa, user);
 		balorazioak.add(balorazio);
 	}
 }

@@ -456,4 +456,13 @@ public class DataAccess  {
 			db.getTransaction().commit();
 		}
 	}
+	
+	public void createBalorazioa(String balorazioa, int puntuazioa, User user) {
+		db.getTransaction().begin();
+		User u = db.find(User.class, user.getEmail());
+		if (u != null) {
+			u.addBalorazioa(balorazioa, puntuazioa, user);
+		}
+		db.getTransaction().commit();
+	}
 }

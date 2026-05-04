@@ -42,6 +42,7 @@ public class ErositakoProduktuakIkusiGUI extends JFrame {
 	private JButton btnNext;
 	private JButton btnClose;
 	private String userMail;
+	private Sale sale;
 	
 	private List<Sale> purchased;
 	private int index = 0;
@@ -113,7 +114,7 @@ public class ErositakoProduktuakIkusiGUI extends JFrame {
 		contentPane.add(btnNext);
 
 		btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
-		btnClose.setBounds(651, 300, 120, 40);
+		btnClose.setBounds(560, 328, 120, 40);
 		contentPane.add(btnClose);
 		
 		JButton btnErreklamazioaIpini = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErositakoProduktuakIkusiGUI.ErreklamazioaIpini")); 
@@ -124,8 +125,19 @@ public class ErositakoProduktuakIkusiGUI extends JFrame {
 				erreklamatuGUI.setVisible(true);
 			}
 		});
-		btnErreklamazioaIpini.setBounds(463, 300, 178, 40);
+		btnErreklamazioaIpini.setBounds(440, 279, 167, 40);
 		contentPane.add(btnErreklamazioaIpini);
+		
+		JButton btnBalorazioaJarri = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErositakoProduktuakIkusiGUI.BalorazioaJarri")); 
+		btnBalorazioaJarri.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Sale sale = purchased.get(index);
+				BalorazioaJarriGUI balorazioGUI = new BalorazioaJarriGUI(sale);
+				balorazioGUI.setVisible(true);
+			}
+		});
+		btnBalorazioaJarri.setBounds(629, 279, 167, 40);
+		contentPane.add(btnBalorazioaJarri);
 
 		BLFacade facade = MainGUI.getBusinessLogic();
 		if (facade == null) {

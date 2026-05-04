@@ -91,6 +91,15 @@ public class ErreklamazioakOnartuDeuseztatuGUI extends JFrame {
 		lblMessage.setBounds(231, 164, 349, 30);
 		contentPane.add(lblMessage);
 
+		JButton btnCerrar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
+		btnCerrar.setBounds(470, 320, 110, 30);
+		btnCerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		contentPane.add(btnCerrar);
+
 		BLFacade facade = MainGUI.getBusinessLogic();
 		if (facade != null) {
 			Erabiltzailea e = facade.getUser(userMail);
