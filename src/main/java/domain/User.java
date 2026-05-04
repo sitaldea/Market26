@@ -39,6 +39,8 @@ public class User extends Erabiltzailea implements Serializable {
 	private List<Eskaera> eskaerak=new ArrayList<Eskaera>();
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Saskia> saskiak=new ArrayList<Saskia>();
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<BalorazioProfila> balorazioak=new ArrayList<BalorazioProfila>();
 
 	public User() {
 		super();
@@ -149,5 +151,10 @@ public class User extends Erabiltzailea implements Serializable {
 	
 	public List<Erreklamazioa> getErreklamazioak() {
 		return erreklamazioak;
+	}
+	
+	public void addBalorazioa(String balorazioa, int puntuazioa) {
+		BalorazioProfila balorazio=new BalorazioProfila(balorazioa, puntuazioa, this);
+		balorazioak.add(balorazio);
 	}
 }
