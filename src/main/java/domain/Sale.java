@@ -37,6 +37,9 @@ public class Sale implements Serializable {
 	@OneToOne
 	private Mugimendua mugimendua;
 	
+	@OneToOne
+	private BalorazioProfila balorazioProfila;
+	
 	private User seller;  
 	
 	public Sale(){
@@ -258,5 +261,13 @@ public class Sale implements Serializable {
 	
 	public void setSaskia(Saskia saskia) {
 		this.saskia = saskia;
+	}
+	
+	public BalorazioProfila getBalorazioProfila() {
+		return balorazioProfila;
+	}
+	
+	public void setBalorazioProfila(BalorazioProfila balorazioProfila) {
+		this.balorazioProfila = balorazioProfila;
 	}
 }

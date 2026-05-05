@@ -98,6 +98,8 @@ public interface BLFacade  {
 
 	@WebMethod void addMugimenduak(float diruKop, Date data, String productName, String mota, String kontuZenb);
 
-	@WebMethod void createBalorazioa(String balorazioa, int puntuazioa, User user);
+	@WebMethod void createBalorazioa(String balorazioa, int puntuazioa, User user, Sale sale);
+
+	@WebMethod void createEskaera(String productName, String userMail);
 
 }

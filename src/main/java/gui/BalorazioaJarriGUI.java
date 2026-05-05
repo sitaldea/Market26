@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import businessLogic.BLFacade;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -115,7 +116,11 @@ public class BalorazioaJarriGUI extends JFrame {
 					BLFacade facade = MainGUI.getBusinessLogic();
 					String comment = commentTextArea.getText().trim();
 					int puntuazioa = selectedRating;
-					facade.createBalorazioa(comment, puntuazioa, sale.getSeller());
+					if(sale.getBalorazioProfila() != null) {
+						facade.createBalorazioa(comment, puntuazioa, sale.getSeller(), sale);
+					} else {
+						JOptionPane.showMessageDialog(BalorazioaJarriGUI.this, "Badu balorazioa", "Error", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		});

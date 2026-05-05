@@ -221,9 +221,16 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 	
 	@Override
-	public void createBalorazioa(String balorazioa, int puntuazioa, User user) {
+	public void createBalorazioa(String balorazioa, int puntuazioa, User user, Sale sale) {
 		dbManager.open();
-		dbManager.createBalorazioa(balorazioa, puntuazioa, user);
+		dbManager.createBalorazioa(balorazioa, puntuazioa, user, sale);
+		dbManager.close();
+	}
+	
+	@Override
+	public void createEskaera(String productName, String userMail) {
+		dbManager.open();
+		dbManager.createEskaera(productName, userMail);
 		dbManager.close();
 	}
 

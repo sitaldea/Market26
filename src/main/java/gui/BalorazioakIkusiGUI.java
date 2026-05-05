@@ -120,7 +120,7 @@ public class BalorazioakIkusiGUI extends JFrame {
 			setVisible(true);
 
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Error al cargar las valoraciones: " + e.getMessage(), "Error",
+			JOptionPane.showMessageDialog(this, "Errorea balorazioak kargatzen: " + e.getMessage(), "Error",
 					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}

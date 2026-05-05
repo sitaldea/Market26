@@ -457,11 +457,20 @@ public class DataAccess  {
 		}
 	}
 	
-	public void createBalorazioa(String balorazioa, int puntuazioa, User user) {
+	public void createBalorazioa(String balorazioa, int puntuazioa, User user, Sale sale) {
 		db.getTransaction().begin();
 		User u = db.find(User.class, user.getEmail());
 		if (u != null) {
-			u.addBalorazioa(balorazioa, puntuazioa, user);
+			u.addBalorazioa(balorazioa, puntuazioa, user, sale);
+		}
+		db.getTransaction().commit();
+	}
+	
+	public void createEskaera(String eskaera, String email) {
+		db.getTransaction().begin();
+		User u = db.find(User.class, email);
+		if (u != null) {
+			u.addEskaera(eskaera);
 		}
 		db.getTransaction().commit();
 	}
