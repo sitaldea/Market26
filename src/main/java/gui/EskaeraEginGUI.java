@@ -39,7 +39,7 @@ public class EskaeraEginGUI extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel centerPanel = new JPanel();
-		centerPanel.setBounds(5, 5, 487, 212);
+		centerPanel.setBounds(5, 5, 487, 144);
 		label = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EskaerakEginGUI.label"));
 		label.setFont(new Font("Tahoma", Font.BOLD, 11));
 		label.setBounds(50, 81, 135, 13);
@@ -51,13 +51,13 @@ public class EskaeraEginGUI extends JFrame {
 		contentPane.add(centerPanel);
 
 		JPanel southPanel = new JPanel();
-		southPanel.setBounds(5, 227, 487, 31);
+		southPanel.setBounds(5, 178, 487, 57);
 		sendButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("EskaerakEginGUI.send"));
 		sendButton.setFont(new Font("Tahoma", Font.BOLD, 11));
-		sendButton.setBounds(138, 5, 122, 21);
+		sendButton.setBounds(110, 5, 127, 38);
 		closeButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.CancelButton"));
 		closeButton.setFont(new Font("Tahoma", Font.BOLD, 11));
-		closeButton.setBounds(270, 5, 71, 21);
+		closeButton.setBounds(247, 5, 127, 38);
 
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

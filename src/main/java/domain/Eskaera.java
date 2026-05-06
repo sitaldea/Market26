@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,6 +18,9 @@ import javax.xml.bind.annotation.XmlIDREF;
 @Entity
 public class Eskaera implements Serializable{
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue
+	private Integer id;
 	private String productName;
 	private User user;
 	@XmlIDREF
@@ -55,4 +60,13 @@ public class Eskaera implements Serializable{
 	public void setOfertak(List<Oferta> ofertak) {
 		this.ofertak = ofertak;
 	}
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+	
 }
