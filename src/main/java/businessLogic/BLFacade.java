@@ -9,6 +9,7 @@ import domain.Sale;
 import domain.User;
 import domain.Erreklamazioa;
 import domain.Eskaera;
+import domain.Oferta;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -107,5 +108,6 @@ public interface BLFacade  {
 	
 	@WebMethod public void createOferta(String title, String description, double price, User user, Eskaera eskaera);
 
+	@WebMethod public void removeOfertaAndEskaera(Oferta oferta);
 
 }

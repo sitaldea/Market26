@@ -12,6 +12,7 @@ import domain.Sale;
 import domain.User;
 import domain.Erreklamazioa;
 import domain.Eskaera;
+import domain.Oferta;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -246,6 +247,13 @@ public class BLFacadeImplementation  implements BLFacade {
 	public void createOferta(String title, String description, double price, User user, Eskaera eskaera) {
 		dbManager.open();
 		dbManager.createOferta(title, description, price, user, eskaera);
+		dbManager.close();
+	}
+
+	@Override
+	public void removeOfertaAndEskaera(Oferta oferta) {
+		dbManager.open();
+		dbManager.removeOfertaAndEskaera(oferta);
 		dbManager.close();
 	}
 

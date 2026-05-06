@@ -18,6 +18,7 @@ import javax.swing.table.TableColumn;
 import businessLogic.BLFacade;
 import domain.Eskaera;
 import domain.Oferta;
+import domain.Sale;
 import domain.User;
 
 import java.awt.event.ActionEvent;
@@ -163,7 +164,13 @@ public class OfertakIkusiGUI extends JFrame {
 				
 				if (confirm == JOptionPane.YES_OPTION) {
 					BLFacade facade = MainGUI.getBusinessLogic();
-					facade.buyProduct(null, userMail); 
+					Sale sale = new Sale(oferta.getTitle(), oferta.getDescription(), 1, (float)oferta.getPrice(), new java.util.Date(), null, oferta.getUser(), "Erosita");
+					facade.buyProduct(sale, userMail); 
+					facade.removeOfertaAndEskaera(oferta);
+					
+					tableModel.setRowCount(0);
+					allOfertas.clear();
+					loadOfertas();
 					
 					JOptionPane.showMessageDialog(this,
 						ResourceBundle.getBundle("Etiquetas").getString("OfertakIkusiGUI.buySuccess"),
@@ -203,7 +210,13 @@ public class OfertakIkusiGUI extends JFrame {
 			this.parent = parent;
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					final int row = table.getSelectedRow();
 					fireEditingStopped();
+					javax.swing.SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							parent.buyOferta(row);
+						}
+					});
 				}
 			});
 		}
@@ -217,7 +230,6 @@ public class OfertakIkusiGUI extends JFrame {
 
 		@Override
 		public Object getCellEditorValue() {
-			parent.buyOferta(table.getSelectedRow());
 			return button.getText();
 		}
 	}

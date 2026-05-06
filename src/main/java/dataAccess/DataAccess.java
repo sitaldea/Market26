@@ -27,6 +27,7 @@ import domain.Erabiltzailea;
 import domain.Erreklamazioa;
 import domain.Sale;
 import domain.Eskaera;
+import domain.Oferta;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -492,4 +493,24 @@ public class DataAccess  {
 	    }
 	    db.getTransaction().commit();
 	}
+
+    public void removeOfertaAndEskaera(Oferta oferta) {
+        db.getTransaction().begin();
+        Eskaera e = null;
+        if (oferta != null && oferta.getEskaera() != null && oferta.getEskaera().getId() != null) {
+            e = db.find(Eskaera.class, oferta.getEskaera().getId());
+        }
+        if (e != null) {
+            User owner = e.getUser();
+            if (owner != null) {
+                owner.getEskaerak().remove(e);
+            }
+            Eskaera managed = db.find(Eskaera.class, e.getId());
+            if (managed != null) {
+                db.remove(managed);
+            }
+        }
+        db.getTransaction().commit();
+    }
+
 }
