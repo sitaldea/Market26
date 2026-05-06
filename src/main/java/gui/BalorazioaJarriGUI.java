@@ -116,8 +116,9 @@ public class BalorazioaJarriGUI extends JFrame {
 					BLFacade facade = MainGUI.getBusinessLogic();
 					String comment = commentTextArea.getText().trim();
 					int puntuazioa = selectedRating;
-					if(sale.getBalorazioProfila() != null) {
+					if(sale.getBalorazioProfila() == null) {
 						facade.createBalorazioa(comment, puntuazioa, sale.getSeller(), sale);
+						JOptionPane.showMessageDialog(BalorazioaJarriGUI.this, "Balorazioa bidali da", "Info", JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						JOptionPane.showMessageDialog(BalorazioaJarriGUI.this, "Badu balorazioa", "Error", JOptionPane.ERROR_MESSAGE);
 					}

@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 
 import businessLogic.BLFacade;
 
@@ -16,6 +17,8 @@ import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 
 import domain.Eskaera;
+import domain.User;
+
 import javax.swing.JTextField;
 
 public class OfertaSortuGUI extends JFrame {
@@ -87,11 +90,32 @@ public class OfertaSortuGUI extends JFrame {
 		btnSortu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("OfertaSortuGUI.btnSortu"));
 		btnSortu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String title = textTitle.getText();
-				String description = textDesk.getText();
-				double price = Double.parseDouble(textPrice.getText());
-				BLFacade facade = MainGUI.getBusinessLogic();
-				facade.createOferta(title, description, price, userMail, eskaera);
+				try {
+					String title = textTitle.getText();
+					String description = textDesk.getText();
+					double price = Double.parseDouble(textPrice.getText());
+					BLFacade facade = MainGUI.getBusinessLogic();
+					User user = (User) facade.getUser(userMail);
+					facade.createOferta(title, description, price, user, eskaera);
+					
+					JOptionPane.showMessageDialog(OfertaSortuGUI.this, 
+						ResourceBundle.getBundle("Etiquetas").getString("OfertaSortuGUI.successMessage"), 
+						ResourceBundle.getBundle("Etiquetas").getString("OfertaSortuGUI.successTitle"), 
+						JOptionPane.INFORMATION_MESSAGE);
+					
+					dispose();
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(OfertaSortuGUI.this, 
+						ResourceBundle.getBundle("Etiquetas").getString("OfertaSortuGUI.errorPrice"), 
+						ResourceBundle.getBundle("Etiquetas").getString("OfertaSortuGUI.errorTitle"), 
+						JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(OfertaSortuGUI.this, 
+						ResourceBundle.getBundle("Etiquetas").getString("OfertaSortuGUI.errorCreating"), 
+						ResourceBundle.getBundle("Etiquetas").getString("OfertaSortuGUI.errorTitle"), 
+						JOptionPane.ERROR_MESSAGE);
+					ex.printStackTrace();
+				}
 			}
 		});
 		btnSortu.setFont(new Font("Tahoma", Font.BOLD, 12));

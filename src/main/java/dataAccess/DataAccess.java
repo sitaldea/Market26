@@ -482,12 +482,11 @@ public class DataAccess  {
 		return result;
 	}
 	
-	public void createOferta(String title, String description, double price, String user, Eskaera eskaera) {
+	public void createOferta(String title, String description, double price, User user, Eskaera eskaera) {
 	    db.getTransaction().begin();
-	    User u = db.find(User.class, user);
-	    if (u != null) {
-	        Eskaera managedEskaera = db.find(Eskaera.class, eskaera.getId());
-	        u.addOferta(title, description, price, managedEskaera);
+        Eskaera e = db.find(Eskaera.class, eskaera.getId());
+	    if (e != null) {
+	        e.addOferta(title, description, price, user);
 	    }
 	    db.getTransaction().commit();
 	}

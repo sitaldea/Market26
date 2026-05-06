@@ -243,7 +243,7 @@ public class BLFacadeImplementation  implements BLFacade {
 		return res;
 	}
 	
-	public void createOferta(String title, String description, double price, String user, Eskaera eskaera) {
+	public void createOferta(String title, String description, double price, User user, Eskaera eskaera) {
 		dbManager.open();
 		dbManager.createOferta(title, description, price, user, eskaera);
 		dbManager.close();

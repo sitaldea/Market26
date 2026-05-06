@@ -140,7 +140,7 @@ public class ErreklamazioakIpiniGUI extends JFrame {
 				BLFacade facade = MainGUI.getBusinessLogic();
 				try {
 					if (targetFile != null) {
-						if(sale.getErreklamazioa() != null) {
+						if(sale.getErreklamazioa() == null) {
 							facade.createErreklamazio(titulua, deskripzioa, targetFile, ErreklamazioakIpiniGUI.this.sale);
 							JOptionPane.showMessageDialog(ErreklamazioakIpiniGUI.this, "Reclamación enviada.", "Info", JOptionPane.INFORMATION_MESSAGE);
 							ErreklamazioakIpiniGUI.this.dispose();	

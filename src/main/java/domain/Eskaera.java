@@ -69,4 +69,8 @@ public class Eskaera implements Serializable{
 		return id;
 	}
 	
+	public void addOferta(String title, String description, double price, User user) {
+		Oferta oferta=new Oferta(title, description, price, user, this);
+		ofertak.add(oferta);
+	}
 }

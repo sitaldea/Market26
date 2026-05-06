@@ -105,7 +105,7 @@ public interface BLFacade  {
 
 	@WebMethod public List<Eskaera> getAllEskaerak();
 	
-	@WebMethod public void createOferta(String title, String description, double price, String user, Eskaera eskaera);
+	@WebMethod public void createOferta(String title, String description, double price, User user, Eskaera eskaera);
 
 
 }
