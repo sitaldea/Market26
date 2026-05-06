@@ -512,5 +512,24 @@ public class DataAccess  {
         }
         db.getTransaction().commit();
     }
+    
+    public void addProduktuaSaskira(Sale sale, int i, String userMail) {
+		db.getTransaction().begin();
+		try {
+			User u = db.find(User.class, userMail);
+			Sale s = db.find(Sale.class, sale.getSaleNumber());
+			if (u != null && s != null) {
+				u.addProduktuaSaskira(s, i );
+				db.getTransaction().commit();
+			} else {
+				db.getTransaction().rollback();
+			}
+		} catch (RuntimeException ex) {
+			if (db.getTransaction().isActive()) {
+				try { db.getTransaction().rollback(); } catch (Exception e) { /* ignore */ }
+			}
+			throw ex;
+		}
+	}
 
 }

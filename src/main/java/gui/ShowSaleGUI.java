@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 
 import businessLogic.BLFacade;
 import domain.Sale;
+import domain.User;
 
 
 public class ShowSaleGUI extends JFrame {
@@ -24,6 +25,7 @@ public class ShowSaleGUI extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private String userMail;
+	private int i = 0;
 
 	private JTextField fieldTitle=new JTextField();
 	private JTextField fieldDescription=new JTextField();
@@ -37,6 +39,7 @@ public class ShowSaleGUI extends JFrame {
 	private JTextField fieldPrice = new JTextField();
 	private File selectedFile;
     private String irudia;
+    private JButton btnSaskia1;
 
 	private JScrollPane scrollPaneEvents = new JScrollPane();
 	DefaultComboBoxModel<String> statusOptions = new DefaultComboBoxModel<String>();
@@ -45,13 +48,14 @@ public class ShowSaleGUI extends JFrame {
 	private JLabel jLabelError = new JLabel();
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
+	private JButton  btnSaskia;
 	
 	public ShowSaleGUI(Sale sale, String mail) { 
 		this.userMail = mail;
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(604, 370));
+		this.setSize(new Dimension(604, 402));
 		//this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("CreateProductGUI.CreateProduct"));
 
 		fieldTitle.setText(sale.getTitle());
@@ -144,13 +148,50 @@ public class ShowSaleGUI extends JFrame {
 					buyProductGUI.setVisible(true);
 					thisFrame.setVisible(false);
 				}
-
 			}
 		});
 		btnErosi.setBounds(140, 268, 114, 30);
 		getContentPane().add(btnErosi);
+		
+
+		btnSaskia1 = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.Saskia")); 
+		btnSaskia1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(facade.isLogin(userMail) == null) {
+					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.CantBuyOwnProduct"));
+				}else {
+					try {
+						facade.addProduktuaSaskira(sale, i, userMail);
+						jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AddedToSaskia"));
+					} catch (IllegalArgumentException ex) {
+						jLabelError.setText(ex.getMessage());
+					} catch (Exception ex) {
+						jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AddToSaskiaError"));
+						ex.printStackTrace();
+					}
+				}
+			}
+		}
+		);
+		
+		btnSaskia1.setBounds(71, 309, 117, 30);
+		getContentPane().add(btnSaskia1);
+		
+		btnSaskia = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.SaskiaIkusi"));
+		btnSaskia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SaskiaGUI saskiaGUI = new SaskiaGUI(userMail);
+				saskiaGUI.setVisible(true);
+				thisFrame.setVisible(false);
+			}
+		});
+		btnSaskia.setBounds(489, 11, 89, 23);
+		
+		getContentPane().add(btnSaskia);
 		setVisible(true);
-	}	 
+	}	
+	
+	
 	public BufferedImage rescale(BufferedImage originalImage)
     {
         BufferedImage resizedImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
@@ -160,4 +201,3 @@ public class ShowSaleGUI extends JFrame {
         return resizedImage;
     }
 }
-

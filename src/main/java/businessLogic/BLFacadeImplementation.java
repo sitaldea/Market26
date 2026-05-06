@@ -257,5 +257,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 	}
 
+	@Override
+	public void addProduktuaSaskira(Sale sale, int i, String userMail) {
+		dbManager.open();
+		dbManager.addProduktuaSaskira(sale, i, userMail);
+		dbManager.close();		
+	}
+
 
 }

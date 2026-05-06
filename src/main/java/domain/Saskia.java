@@ -45,6 +45,14 @@ public class Saskia implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public List<Sale> getPruduktuak() {
+		return pruduktuak;
+	}
+	
+	public void setPruduktuak(List<Sale> pruduktuak) {
+		this.pruduktuak = pruduktuak;
+	}
 }
 
 

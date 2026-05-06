@@ -183,4 +183,36 @@ public class User extends Erabiltzailea implements Serializable {
 		Eskaera eska=new Eskaera(eskaera, this);
 		eskaerak.add(eska);		
 	}	
+	
+	public void addProduktuaSaskira(Sale sale, int i) {
+        if (saskiak == null) {
+            saskiak = new ArrayList<>();
+        }
+        while (saskiak.size() <= i) {
+            Saskia berria = new Saskia();
+            berria.setPruduktuak(new ArrayList<>());
+            berria.setUser(this);
+            berria.setPrezioTotala(0.0);
+            saskiak.add(berria);
+        }
+        Saskia target = saskiak.get(i);
+        if (target.getPruduktuak() == null) {
+            target.setPruduktuak(new ArrayList<>());
+        }
+        if (!target.getPruduktuak().isEmpty()) {
+            Sale first = target.getPruduktuak().get(0);
+            if (first != null && first.getSeller() != null && sale != null && sale.getSeller() != null) {
+                String existingSeller = first.getSeller().getEmail();
+                String newSeller = sale.getSeller().getEmail();
+                if (existingSeller != null && newSeller != null && !existingSeller.equals(newSeller)) {
+                    throw new IllegalArgumentException("Solo se pueden añadir productos de un mismo vendedor");
+                }
+            }
+        }
+        if (!target.getPruduktuak().contains(sale)) {
+            target.getPruduktuak().add(sale);
+            double current = target.getPrezioTotala();
+            target.setPrezioTotala(current + sale.getPrice());
+        }
+    }
 }
