@@ -25,6 +25,7 @@ import domain.DiruKontua;
 import domain.Erabiltzailea;
 import domain.Erreklamazioa;
 import domain.Sale;
+import domain.Eskaera;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -466,11 +467,27 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 	
-	public void createEskaera(String eskaera, String email) {
+	public void createEskaera(String eskaera, String user) {
 		db.getTransaction().begin();
-		User u = db.find(User.class, email);
+		User u = db.find(User.class, user);
 		if (u != null) {
 			u.addEskaera(eskaera);
+		}
+		db.getTransaction().commit();
+	}
+	
+	public List<Eskaera> getAllEskaerak() {
+		TypedQuery<Eskaera> query = db.createQuery("SELECT e FROM Eskaera e", Eskaera.class);
+		List<Eskaera> result = query.getResultList();
+		return result;
+	}
+	
+	public void createOferta(String title, String description, double price, String user, Eskaera eskaera) {
+		db.getTransaction().begin();
+		User u = db.find(User.class, user);
+		if (u != null) {
+			Eskaera managedEskaera = db.merge(eskaera);
+			u.addOferta(title, description, price, managedEskaera);
 		}
 		db.getTransaction().commit();
 	}

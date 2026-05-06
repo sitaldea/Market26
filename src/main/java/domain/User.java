@@ -182,4 +182,11 @@ public class User extends Erabiltzailea implements Serializable {
 		Eskaera eska=new Eskaera(eskaera, this);
 		eskaerak.add(eska);		
 	}
+
+	public void addOferta(String title, String description, double price, Eskaera eskaera) {
+		Oferta oferta=new Oferta(title, description, price, this, eskaera);
+		ofertak.add(oferta);
+	}
+	
+	
 }

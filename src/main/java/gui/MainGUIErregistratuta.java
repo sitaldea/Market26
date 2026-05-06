@@ -49,6 +49,7 @@ public class MainGUIErregistratuta extends JFrame {
 	private JButton btnEskaerakEgin;
 	private JButton btnBalorazioakIkusi;
 	private JButton btnEskaerakIkusi;
+	private JButton btnOfertakIkusi;
 
 	/**
 	 * Create the frame.
@@ -186,7 +187,7 @@ public class MainGUIErregistratuta extends JFrame {
 												a.setVisible(true);
 											}
 										});
-										btnEskaerakIkusi.setBounds(156, 235, 238, 38);
+										btnEskaerakIkusi.setBounds(15, 236, 238, 38);
 										contentPane.add(btnEskaerakIkusi);
 										
 										
@@ -211,13 +212,23 @@ public class MainGUIErregistratuta extends JFrame {
 												contentPane.add(panel);
 				
 						btnNeLogOut = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.SaioaItxi"));
-						btnNeLogOut.setBounds(225, 328, 85, 30);
+						btnNeLogOut.setBounds(201, 328, 137, 30);
 						btnNeLogOut.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								dispose();	
 							}
 						});
 						contentPane.add(btnNeLogOut);
+						
+						btnOfertakIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.OfertakIkusi")); 
+						btnOfertakIkusi.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent arg0) {
+								JFrame a = new OfertakIkusiGUI(userMail);
+								a.setVisible(true);
+							}
+						});
+						btnOfertakIkusi.setBounds(284, 236, 237, 38);
+						contentPane.add(btnOfertakIkusi);
 
 
 		setTitle(userMail);
@@ -246,6 +257,8 @@ public class MainGUIErregistratuta extends JFrame {
 				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.BalorazioakIkusi"));
 		btnEskaerakIkusi.setText(
 				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.EskaerakIkusi"));
+		btnOfertakIkusi.setText(
+				ResourceBundle.getBundle("Etiquetas").getString("MainGUIErregistratuta.OfertakIkusi"));
 		this.setTitle(
 				ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")
 				+ ": " + userMail);

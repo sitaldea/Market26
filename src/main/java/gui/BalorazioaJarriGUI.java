@@ -125,6 +125,16 @@ public class BalorazioaJarriGUI extends JFrame {
 			}
 		});
 		contentPane.add(saveButton);
+
+		JButton btnClose = new JButton("Itxi");
+		btnClose.setFont(new Font("Arial", Font.PLAIN, 12));
+		btnClose.setBounds(320, 340, 100, 35);
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		contentPane.add(btnClose);
 	}
 
 	private void highlightStars(int index) {
