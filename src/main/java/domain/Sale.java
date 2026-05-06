@@ -270,4 +270,6 @@ public class Sale implements Serializable {
 	public void setBalorazioProfila(BalorazioProfila balorazioProfila) {
 		this.balorazioProfila = balorazioProfila;
 	}
+	
+	
 }

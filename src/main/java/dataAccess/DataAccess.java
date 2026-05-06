@@ -21,6 +21,7 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.User;
 import domain.Admin;
+import domain.BalorazioProfila;
 import domain.DiruKontua;
 import domain.Erabiltzailea;
 import domain.Erreklamazioa;
@@ -462,7 +463,8 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		User u = db.find(User.class, user.getEmail());
 		if (u != null) {
-			u.addBalorazioa(balorazioa, puntuazioa, user, sale);
+			BalorazioProfila b = u.addBalorazioa(balorazioa, puntuazioa, user, sale);
+			sale.setBalorazioProfila(b);
 		}
 		db.getTransaction().commit();
 	}

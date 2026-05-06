@@ -1338,3 +1338,236 @@ Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is ope
 [2026-05-06 12:47:27 #23 store] 
 Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 2980@DESKTOP-C3ESJLV
 
+------------------------------------------------------------------------------------------------------------------------
+
+[2026-05-06 12:49:07 #1 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:07 #2 type.registry] 
+New type domain.Erabiltzailea
+
+[2026-05-06 12:49:07 #3 type.registry] 
+New type domain.User
+
+[2026-05-06 12:49:07 #4 type] 
+Type domain.Erabiltzailea is not enhanced.
+
+[2026-05-06 12:49:07 #5 type] 
+Type domain.User is not enhanced.
+
+[2026-05-06 12:49:07 #6 type.registry] 
+New type domain.BalorazioProfila
+
+[2026-05-06 12:49:07 #7 type.registry] 
+New type domain.Saskia
+
+[2026-05-06 12:49:07 #8 type.registry] 
+New type domain.Eskaera
+
+[2026-05-06 12:49:07 #9 type.registry] 
+New type domain.Oferta
+
+[2026-05-06 12:49:07 #10 type.registry] 
+New type domain.Mugimendua
+
+[2026-05-06 12:49:07 #11 type.registry] 
+New type domain.Erreklamazioa
+
+[2026-05-06 12:49:07 #12 type.registry] 
+New type domain.DiruKontua
+
+[2026-05-06 12:49:07 #13 type.registry] 
+New type domain.Sale
+
+[2026-05-06 12:49:07 #14 type] 
+Type domain.BalorazioProfila is not enhanced.
+
+[2026-05-06 12:49:07 #15 type] 
+Type domain.Saskia is not enhanced.
+
+[2026-05-06 12:49:07 #16 type] 
+Type domain.Eskaera is not enhanced.
+
+[2026-05-06 12:49:07 #17 type] 
+Type domain.Oferta is not enhanced.
+
+[2026-05-06 12:49:07 #18 type] 
+Type domain.Mugimendua is not enhanced.
+
+[2026-05-06 12:49:07 #19 type] 
+Type domain.Erreklamazioa is not enhanced.
+
+[2026-05-06 12:49:07 #20 type] 
+Type domain.DiruKontua is not enhanced.
+
+[2026-05-06 12:49:07 #21 type] 
+Type domain.Sale is not enhanced.
+
+[2026-05-06 12:49:07 #22 type.registry] 
+New type domain.Admin
+
+[2026-05-06 12:49:07 #23 type] 
+Type domain.Admin is not enhanced.
+
+[2026-05-06 12:49:07 #24 type.registry] 
+New type java.util.ArrayList<java.lang.Object>
+
+[2026-05-06 12:49:07 #25 type.registry] 
+New type java.util.ArrayList<domain.Sale>
+
+[2026-05-06 12:49:07 #26 type.registry] 
+New type java.util.ArrayList<domain.DiruKontua>
+
+[2026-05-06 12:49:07 #27 type.registry] 
+New type java.util.ArrayList<domain.Erreklamazioa>
+
+[2026-05-06 12:49:07 #28 type.registry] 
+New type java.util.ArrayList<domain.Mugimendua>
+
+[2026-05-06 12:49:07 #29 type.registry] 
+New type java.util.ArrayList<domain.Oferta>
+
+[2026-05-06 12:49:07 #30 type.registry] 
+New type java.util.ArrayList<domain.Eskaera>
+
+[2026-05-06 12:49:07 #31 type.registry] 
+New type java.util.ArrayList<domain.Saskia>
+
+[2026-05-06 12:49:07 #32 type.registry] 
+New type java.util.ArrayList<domain.BalorazioProfila>
+
+[2026-05-06 12:49:07 #33 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:23 #34 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:23 #35 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:28 #36 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:28 #37 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:30 #38 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:30 #39 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:30 #40 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:31 #41 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:31 #42 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:31 #43 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:31 #44 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:31 #45 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:31 #46 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:31 #47 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:31 #48 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #49 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #50 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #51 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #52 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #53 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #54 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #55 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #56 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #57 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #58 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:32 #59 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:36 #60 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:36 #61 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:36 #62 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:36 #63 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:51 #64 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:51 #65 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:59 #66 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:49:59 #67 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:50:13 #68 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:50:13 #69 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:50:15 #70 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:50:15 #71 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:50:15 #72 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:50:15 #73 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:50:29 #74 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:50:29 #75 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:50:50 #76 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is opened by 15044@DESKTOP-C3ESJLV
+
+[2026-05-06 12:50:50 #77 store] 
+Database 'C:\Users\Usuario\git\Market26\src\main\resources\products.temp' is closed by 15044@DESKTOP-C3ESJLV
+
