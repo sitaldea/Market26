@@ -205,7 +205,8 @@ public class User extends Erabiltzailea implements Serializable {
                 String existingSeller = first.getSeller().getEmail();
                 String newSeller = sale.getSeller().getEmail();
                 if (existingSeller != null && newSeller != null && !existingSeller.equals(newSeller)) {
-                    throw new IllegalArgumentException("Solo se pueden añadir productos de un mismo vendedor");
+                    throw new IllegalArgumentException("\r\n"
+                    		+ "Saltzaile beraren produktuak bakarrik gehi daitezke\r\n" + "");
                 }
             }
         }

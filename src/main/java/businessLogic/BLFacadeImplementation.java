@@ -264,5 +264,14 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();		
 	}
 
+	@Override
+	public double deskontuaAplikatu(double prezioa, int num) {
+		dbManager.open();
+		double res = dbManager.deskontuaAplikatu(prezioa, num);
+		dbManager.close();
+		return res;
+	}
+	
+
 
 }

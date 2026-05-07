@@ -531,5 +531,19 @@ public class DataAccess  {
 			throw ex;
 		}
 	}
+    
+    public double deskontuaAplikatu(double prezioa, int num) {
+    	db.getTransaction().begin();
+    	double deskontua = 0;
+		if(num == 2) {
+			deskontua = prezioa * 0.90;
+		} else if(num == 3) {
+			deskontua = prezioa * 0.85;
+		} else if(num >= 4) {
+			deskontua = prezioa * 0.80;
+		}
+    	db.getTransaction().commit();
+    	return deskontua;	
+    }
 
 }

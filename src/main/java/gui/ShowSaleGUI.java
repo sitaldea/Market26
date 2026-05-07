@@ -55,7 +55,7 @@ public class ShowSaleGUI extends JFrame {
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(604, 402));
+		this.setSize(new Dimension(649, 402));
 		//this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("CreateProductGUI.CreateProduct"));
 
 		fieldTitle.setText(sale.getTitle());
@@ -180,12 +180,12 @@ public class ShowSaleGUI extends JFrame {
 		btnSaskia = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.SaskiaIkusi"));
 		btnSaskia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SaskiaGUI saskiaGUI = new SaskiaGUI(userMail);
+				SaskiaGUI saskiaGUI = new SaskiaGUI(userMail, i);
 				saskiaGUI.setVisible(true);
 				thisFrame.setVisible(false);
 			}
 		});
-		btnSaskia.setBounds(489, 11, 89, 23);
+		btnSaskia.setBounds(489, 11, 134, 23);
 		
 		getContentPane().add(btnSaskia);
 		setVisible(true);
