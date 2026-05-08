@@ -114,5 +114,5 @@ public interface BLFacade  {
 	
 	@WebMethod public double deskontuaAplikatu(double prezioa, int num);
 
-
+	@WebMethod public void removeProduktuaSaskitik(Sale sale, int i, String userMail);
 }

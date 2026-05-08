@@ -272,6 +272,10 @@ public class BLFacadeImplementation  implements BLFacade {
 		return res;
 	}
 	
-
-
+	@Override
+	public void removeProduktuaSaskitik(Sale sale, int i, String userMail) {
+		dbManager.open();
+		dbManager.removeProduktuaSaskitik(sale, i, userMail);
+		dbManager.close();
+	}
 }

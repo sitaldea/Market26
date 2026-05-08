@@ -347,6 +347,11 @@ public class DataAccess  {
 			db.getTransaction().begin();
 			((User) u).addErositakoa(managedSale);
 			db.getTransaction().commit();
+			updateEgoera(managedSale, "Erosita");
+			updateDiruKop(managedSale.getSeller().getKontuak().get(0).getKontuZenb(), getDiruKop(managedSale.getSeller().getKontuak().get(0).getKontuZenb()) + managedSale.getPrice());
+			updateDiruKop(((User) u).getKontuak().get(0).getKontuZenb(), getDiruKop(((User) u).getKontuak().get(0).getKontuZenb()) - managedSale.getPrice());
+			addMugimenduak(managedSale.getPrice(), new Date(), managedSale.getTitle(), "Salmenta", managedSale.getSeller().getKontuak().get(0).getKontuZenb());
+			addMugimenduak(-managedSale.getPrice(), new Date(), managedSale.getTitle(), "Erosketa", ((User) u).getKontuak().get(0).getKontuZenb());
 		}
 	}
 
@@ -545,5 +550,24 @@ public class DataAccess  {
     	db.getTransaction().commit();
     	return deskontua;	
     }
+    
+    public void removeProduktuaSaskitik(Sale sale, int i, String userMail) {
+		db.getTransaction().begin();
+		try {
+			User u = db.find(User.class, userMail);
+			Sale s = db.find(Sale.class, sale.getSaleNumber());
+			if (u != null && s != null) {
+				u.removeProduktuaSaskitik(s, i);
+				db.getTransaction().commit();
+			} else {
+				db.getTransaction().rollback();
+			}
+		} catch (RuntimeException ex) {
+			if (db.getTransaction().isActive()) {
+				try { db.getTransaction().rollback(); } catch (Exception e) { /* ignore */ }
+			}
+			throw ex;
+		}
+	}
 
 }

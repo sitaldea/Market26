@@ -30,6 +30,7 @@ public class QuerySalesGUI extends JFrame {
 	private JFrame thisFrame; 
 	private String userMail;
 	private JButton btnSaskia;
+	private int i;
 
 	private String[] columnNamesProducts = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.Title"), 
@@ -40,7 +41,8 @@ public class QuerySalesGUI extends JFrame {
 	private JTextField jTextFieldSearch;
 	
 
-	public QuerySalesGUI(String mail) {
+	public QuerySalesGUI(String mail, int i) {
+		this.i = i;
 		this.userMail = mail;
 		tableProducts.setEnabled(false);
 		thisFrame=this;
@@ -134,9 +136,9 @@ public class QuerySalesGUI extends JFrame {
 		btnSaskia = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.SaskiaIkusi"));
 		btnSaskia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SaskiaGUI saskiaGUI = new SaskiaGUI(userMail, 0);
+				SaskiaGUI saskiaGUI = new SaskiaGUI(userMail, i);
 				saskiaGUI.setVisible(true);
-				thisFrame.setVisible(false);
+				dispose();
 			}
 		});
 		btnSaskia.setBounds(540, 11, 134, 23);

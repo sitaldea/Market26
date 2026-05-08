@@ -114,9 +114,7 @@ public class BuyProductGUI extends JFrame {
 		btnErosi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String buyerKontuZenb = comboBoxKontuak.getSelectedItem().toString();
-				String sellerKontuZenb = facade.getFirstAccountNumber(sale.getSeller().getEmail());
 				double buyerDiruKop = facade.getDiruKop(buyerKontuZenb);
-				double sellerDiruKop = facade.getDiruKop(sellerKontuZenb);
 				if(sale.getEgoera().equals("Erosita")) {
 					JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.AlreadySold"),
 							"Error",
@@ -125,11 +123,6 @@ public class BuyProductGUI extends JFrame {
 				}
 				if (buyerDiruKop > sale.getPrice()) {
 					facade.buyProduct(sale, userMail);
-					facade.updateDiruKop(buyerKontuZenb, buyerDiruKop - sale.getPrice());
-					facade.updateDiruKop(sellerKontuZenb, sellerDiruKop + sale.getPrice());
-					facade.addMugimenduak((float) -sale.getPrice(), new java.util.Date(), sale.getTitle(), "Erosketa", buyerKontuZenb);
-					facade.addMugimenduak((float) sale.getPrice(), new java.util.Date(), sale.getTitle(), "Salmenta", sellerKontuZenb);
-					facade.updateEgoera(sale, "Erosita");
 					sale.setEgoera("Erosita");
 					JOptionPane.showMessageDialog(BuyProductGUI.this, ResourceBundle.getBundle("Etiquetas").getString("BuyProductGUI.Success"));
 					BuyProductGUI.this.dispose();

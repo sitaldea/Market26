@@ -40,6 +40,7 @@ public class ShowSaleGUI extends JFrame {
 	private File selectedFile;
     private String irudia;
     private JButton btnSaskia1;
+    private ArrayList<Sale> saskiaList;
 
 	private JScrollPane scrollPaneEvents = new JScrollPane();
 	DefaultComboBoxModel<String> statusOptions = new DefaultComboBoxModel<String>();
@@ -162,6 +163,7 @@ public class ShowSaleGUI extends JFrame {
 				}else {
 					try {
 						facade.addProduktuaSaskira(sale, i, userMail);
+						
 						jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AddedToSaskia"));
 					} catch (IllegalArgumentException ex) {
 						jLabelError.setText(ex.getMessage());
@@ -182,7 +184,7 @@ public class ShowSaleGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				SaskiaGUI saskiaGUI = new SaskiaGUI(userMail, i);
 				saskiaGUI.setVisible(true);
-				thisFrame.setVisible(false);
+				dispose();
 			}
 		});
 		btnSaskia.setBounds(489, 11, 134, 23);

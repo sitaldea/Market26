@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -47,27 +48,28 @@ public class SaskiaGUI extends JFrame {
 		User user = facade.getUserAccounts(userMail);
 		s = user.getSaskiak().get(i);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 502, 300);
+		setBounds(100, 100, 502, 341);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
-		setTitle(userMail);
+		setTitle(userMail + " - Saskia " + i);
 
 		listModel = new DefaultListModel<>();
-		listProducts = new JList<>(listModel);
-		JScrollPane scrollPane = new JScrollPane(listProducts);
-		scrollPane.setBounds(12, 12, 300, 180);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 12, 300, 225);
 		contentPane.add(scrollPane);
+		listProducts = new JList<>(listModel);
+		scrollPane.setViewportView(listProducts);
 
 		lblTotal = new JLabel("Total: 0.00");
 		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTotal.setBounds(12, 204, 300, 30);
+		lblTotal.setBounds(12, 259, 300, 30);
 		contentPane.add(lblTotal);
 
-		JButton btnItxi = new JButton("Itxi");
+		JButton btnItxi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("OfertaSortuGUI.btnClose"));
 		btnItxi.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnItxi.setBounds(367, 223, 102, 30);
+		btnItxi.setBounds(374, 261, 102, 30);
 		btnItxi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SaskiaGUI.this.dispose();
@@ -75,41 +77,62 @@ public class SaskiaGUI extends JFrame {
 		});
 		contentPane.add(btnItxi);
 
-		JButton btnAplicarDesc = new JButton("Aplicar Descuento");
+		JButton btnAplicarDesc = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.btnAplicarDesc"));
 		btnAplicarDesc.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnAplicarDesc.setBounds(330, 12, 139, 40);
+		btnAplicarDesc.setBounds(330, 22, 139, 40);
 		btnAplicarDesc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUI.getBusinessLogic();
 				double prezioTotalaDeskontua = facade.deskontuaAplikatu(s.getPrezioTotala(), s.getPruduktuak().size());
-				lblTotal.setText("Prezio totala:" + "" + prezioTotalaDeskontua + "€");
+				lblTotal.setText(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.prezioTotala") + "" + prezioTotalaDeskontua + "€");
 			}
 		});
 		contentPane.add(btnAplicarDesc);
 
-		JButton btnComprar = new JButton("Comprar");
+		JButton btnComprar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.btnComprar"));
 		btnComprar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnComprar.setBounds(330, 80, 139, 40);
+		btnComprar.setBounds(330, 77, 139, 40);
 		btnComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUI.getBusinessLogic();
-				for (Sale s : s.getPruduktuak()) {
-					facade.buyProduct(s, userMail);
+				try {
+					for (Sale sale : s.getPruduktuak()) {
+						facade.buyProduct(sale, userMail);
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(SaskiaGUI.this, "Error al cambiar de cesta: " + ex.getMessage());
+					ex.printStackTrace();
 				}
-				JOptionPane.showMessageDialog(SaskiaGUI.this, "Compra realizada con éxito");
-				SaskiaGUI.this.dispose();
 			}
 		});
 		contentPane.add(btnComprar);
 		
-		JButton btnSaleGehiago = new JButton("New button");
+		JButton btnSaleGehiago = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.btnSaleGehiago"));
 		btnSaleGehiago.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		btnSaleGehiago.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnSaleGehiago.setBounds(330, 152, 139, 40);
+		btnSaleGehiago.setBounds(330, 134, 139, 40);
 		contentPane.add(btnSaleGehiago);
+		
+		JButton btnDelete = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.delete")); 
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int selectedIndex = listProducts.getSelectedIndex();
+				if (selectedIndex != -1) {
+					BLFacade facade = MainGUI.getBusinessLogic();
+					Sale selectedSale = s.getPruduktuak().get(selectedIndex);
+					facade.removeProduktuaSaskitik(selectedSale, i, userMail);
+					loadSaskiaContents();
+				} else {
+					JOptionPane.showMessageDialog(SaskiaGUI.this, "Mesedez produktu bat hautatu");
+				}
+			}
+		});
+		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnDelete.setBounds(330, 186, 139, 40);
+		contentPane.add(btnDelete);
 
 		loadSaskiaContents();
 	}
@@ -131,7 +154,6 @@ public class SaskiaGUI extends JFrame {
 				}
 			}
 		}
-		lblTotal.setText("Prezio totala:" + "" + saskia.getPrezioTotala() + "€");
+		lblTotal.setText(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.prezioTotala") + "" + saskia.getPrezioTotala() + "€");
 	}
-
 }

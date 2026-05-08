@@ -216,4 +216,30 @@ public class User extends Erabiltzailea implements Serializable {
             target.setPrezioTotala(current + sale.getPrice());
         }
     }
+    
+    public void removeProduktuaSaskitik(Sale sale, int i) {
+        if (saskiak != null && saskiak.size() > i) {
+            Saskia target = saskiak.get(i);
+            if (target != null && target.getPruduktuak() != null) {
+                if (target.getPruduktuak().remove(sale)) {
+                    double current = target.getPrezioTotala();
+                    target.setPrezioTotala(current - sale.getPrice());
+                }
+            }
+        }
+    }
+    
+    public void clearSaskia(int i) {
+        if (saskiak != null && saskiak.size() > i) {
+            Saskia target = saskiak.get(i);
+            if (target != null) {
+                target.getPruduktuak().clear();
+                target.setPrezioTotala(0.0);
+            }
+        }
+    }
+
+	public void setSaskiak(ArrayList arrayList) {
+		this.saskiak = arrayList;
+	}
 }
