@@ -40,15 +40,30 @@ public class SaskiaGUI extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * CAMBIO: Mantener el índice actual (no siempre 0)
 	 */
 	public SaskiaGUI(String mail, int i) {
 		this.userMail = mail;
 		this.i = i;
 		BLFacade facade = MainGUI.getBusinessLogic();
 		User user = facade.getUserAccounts(userMail);
+		
+		if (user.getSaskiak() == null) {
+			user.setSaskiak(new java.util.ArrayList<>());
+		}
+		
+		while (user.getSaskiak().size() <= i) {
+			Saskia berria = new Saskia();
+			berria.setPruduktuak(new java.util.ArrayList<>());
+			berria.setUser(user);
+			berria.setPrezioTotala(0.0);
+			user.getSaskiak().add(berria);
+		}
+		
 		s = user.getSaskiak().get(i);
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 502, 341);
+		setBounds(100, 100, 538, 341);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
@@ -69,7 +84,7 @@ public class SaskiaGUI extends JFrame {
 
 		JButton btnItxi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("OfertaSortuGUI.btnClose"));
 		btnItxi.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnItxi.setBounds(374, 261, 102, 30);
+		btnItxi.setBounds(410, 261, 102, 30);
 		btnItxi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SaskiaGUI.this.dispose();
@@ -79,7 +94,7 @@ public class SaskiaGUI extends JFrame {
 
 		JButton btnAplicarDesc = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.btnAplicarDesc"));
 		btnAplicarDesc.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnAplicarDesc.setBounds(330, 22, 139, 40);
+		btnAplicarDesc.setBounds(330, 40, 182, 40);
 		btnAplicarDesc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUI.getBusinessLogic();
@@ -91,30 +106,35 @@ public class SaskiaGUI extends JFrame {
 
 		JButton btnComprar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.btnComprar"));
 		btnComprar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnComprar.setBounds(330, 77, 139, 40);
+		btnComprar.setBounds(330, 105, 182, 40);
 		btnComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUI.getBusinessLogic();
 				try {
+					if (s.getPruduktuak() == null || s.getPruduktuak().isEmpty()) {
+						JOptionPane.showMessageDialog(SaskiaGUI.this, "Saskia hutsik dago");
+						return;
+					}
+					
+					// Realizar la compra de cada producto
 					for (Sale sale : s.getPruduktuak()) {
 						facade.buyProduct(sale, userMail);
 					}
+					
+					// Mover la saskia a la siguiente posición y crear una nueva vacía
+					facade.clearSaskia(i, userMail);
+					
+					JOptionPane.showMessageDialog(SaskiaGUI.this, "Erosketa ondo burutu da");
+					
+					SaskiaGUI.this.dispose();
+					
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(SaskiaGUI.this, "Error al cambiar de cesta: " + ex.getMessage());
+					JOptionPane.showMessageDialog(SaskiaGUI.this, "Error en la compra: " + ex.getMessage());
 					ex.printStackTrace();
 				}
 			}
 		});
 		contentPane.add(btnComprar);
-		
-		JButton btnSaleGehiago = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.btnSaleGehiago"));
-		btnSaleGehiago.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnSaleGehiago.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnSaleGehiago.setBounds(330, 134, 139, 40);
-		contentPane.add(btnSaleGehiago);
 		
 		JButton btnDelete = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.delete")); 
 		btnDelete.addActionListener(new ActionListener() {
@@ -131,7 +151,7 @@ public class SaskiaGUI extends JFrame {
 			}
 		});
 		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnDelete.setBounds(330, 186, 139, 40);
+		btnDelete.setBounds(330, 171, 182, 40);
 		contentPane.add(btnDelete);
 
 		loadSaskiaContents();
@@ -143,17 +163,21 @@ public class SaskiaGUI extends JFrame {
 		Saskia saskia = null;
 		listModel.clear();
 		double total = 0.0;
+		
 		if (user != null && user.getSaskiak() != null && user.getSaskiak().size() > i) {
 			saskia = user.getSaskiak().get(i);
 			if (saskia != null && saskia.getPruduktuak() != null) {
 				List<Sale> products = saskia.getPruduktuak();
-				for (Sale s : products) {
-					String name = s.getTitle();
+				for (Sale sale : products) {
+					String name = sale.getTitle();
 					listModel.addElement(name);
-					total += s.getPrice();
+					total += sale.getPrice();
 				}
 			}
 		}
-		lblTotal.setText(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.prezioTotala") + "" + saskia.getPrezioTotala() + "€");
+		
+		if (saskia != null) {
+			lblTotal.setText(ResourceBundle.getBundle("Etiquetas").getString("SaskiaGUI.prezioTotala") + "" + saskia.getPrezioTotala() + "€");
+		}
 	}
 }

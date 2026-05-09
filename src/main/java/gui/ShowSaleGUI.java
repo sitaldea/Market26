@@ -49,14 +49,14 @@ public class ShowSaleGUI extends JFrame {
 	private JLabel jLabelError = new JLabel();
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
-	private JButton  btnSaskia;
+	static int saskiaIndex = 0;
 	
 	public ShowSaleGUI(Sale sale, String mail) { 
 		this.userMail = mail;
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(649, 402));
+		this.setSize(new Dimension(680, 402));
 		//this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("CreateProductGUI.CreateProduct"));
 
 		fieldTitle.setText(sale.getTitle());
@@ -157,39 +157,26 @@ public class ShowSaleGUI extends JFrame {
 
 		btnSaskia1 = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.Saskia")); 
 		btnSaskia1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(facade.isLogin(userMail) == null) {
-					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.CantBuyOwnProduct"));
-				}else {
-					try {
-						facade.addProduktuaSaskira(sale, i, userMail);
-						
-						jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AddedToSaskia"));
-					} catch (IllegalArgumentException ex) {
-						jLabelError.setText(ex.getMessage());
-					} catch (Exception ex) {
-						jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AddToSaskiaError"));
-						ex.printStackTrace();
-					}
-				}
-			}
-		}
-		);
-		
-		btnSaskia1.setBounds(71, 309, 117, 30);
-		getContentPane().add(btnSaskia1);
-		
-		btnSaskia = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.SaskiaIkusi"));
-		btnSaskia.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				SaskiaGUI saskiaGUI = new SaskiaGUI(userMail, i);
-				saskiaGUI.setVisible(true);
-				dispose();
-			}
+		    public void actionPerformed(ActionEvent arg0) {
+		        if(facade.isLogin(userMail) == null) {
+		            jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.CantBuyOwnProduct"));
+		        }else {
+		            try {
+		                facade.addProduktuaSaskira(sale, saskiaIndex, userMail); 
+		                
+		                jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AddedToSaskia"));
+		            } catch (IllegalArgumentException ex) {
+		                jLabelError.setText(ex.getMessage());
+		            } catch (Exception ex) {
+		                jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AddToSaskiaError"));
+		                ex.printStackTrace();
+		            }
+		        }
+		    }
 		});
-		btnSaskia.setBounds(489, 11, 134, 23);
 		
-		getContentPane().add(btnSaskia);
+		btnSaskia1.setBounds(54, 309, 146, 30);
+		getContentPane().add(btnSaskia1);
 		setVisible(true);
 	}	
 	

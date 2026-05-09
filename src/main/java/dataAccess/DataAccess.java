@@ -569,5 +569,22 @@ public class DataAccess  {
 			throw ex;
 		}
 	}
-
+    
+    public void clearSaskia(int i, String userMail) {
+        db.getTransaction().begin();
+        try {
+            User u = db.find(User.class, userMail);
+            if (u != null) {
+                u.clearSaskia(i);
+                db.getTransaction().commit();
+            } else {
+                db.getTransaction().rollback();
+            }
+        } catch (RuntimeException ex) {
+            if (db.getTransaction().isActive()) {
+                try { db.getTransaction().rollback(); } catch (Exception e) { /* ignore */ }
+            }
+            throw ex;
+        }
+    }
 }

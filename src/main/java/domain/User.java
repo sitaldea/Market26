@@ -233,8 +233,15 @@ public class User extends Erabiltzailea implements Serializable {
         if (saskiak != null && saskiak.size() > i) {
             Saskia target = saskiak.get(i);
             if (target != null) {
-                target.getPruduktuak().clear();
-                target.setPrezioTotala(0.0);
+                // Desplazar todas las saskias desde la posición i hacia adelante
+                saskiak.add(i + 1, target);
+                
+                // Crear una nueva saskia vacía en la posición i
+                Saskia berria = new Saskia();
+                berria.setPruduktuak(new ArrayList<>());
+                berria.setUser(this);
+                berria.setPrezioTotala(0.0);
+                saskiak.set(i, berria);
             }
         }
     }
